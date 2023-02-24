@@ -15,14 +15,14 @@ class _SearchBarState extends State<SearchBar> {
     return Center(
       child: AnimatedPadding(
         duration: const Duration(seconds: 1),
-        padding: const EdgeInsets.only(top: 60, bottom: 20, left: 8, right: 8),
+        padding: const EdgeInsets.only(top: 5, bottom: 5, left: 8, right: 8),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
           width: showSearchBar ? 360 : 50,
           decoration: BoxDecoration(
             color: showSearchBar
                 ? backgroundColor.withOpacity(0.25)
-                : backgroundColor2.withOpacity(0.5),
+                : backgroundColor2.withOpacity(1),
             boxShadow: [
               if (showSearchBar)
                 BoxShadow(
@@ -54,6 +54,7 @@ class _SearchBarState extends State<SearchBar> {
         padding: EdgeInsets.symmetric(horizontal: 12.0),
         child: TextField(
           decoration: InputDecoration(
+            // fillColor: backgroundColor2.withOpacity(0.3),
             border: InputBorder.none,
             hintText: 'Search..',
           ),
@@ -64,6 +65,8 @@ class _SearchBarState extends State<SearchBar> {
 
   Widget searchIcon() {
     return IconButton(
+      padding: const EdgeInsets.all(8),
+      iconSize: 30,
       onPressed: () {
         if (mounted) {
           setState(() {
@@ -74,13 +77,15 @@ class _SearchBarState extends State<SearchBar> {
       tooltip: 'Search',
       icon: Icon(
         Icons.search,
-        color: backgroundColor2,
+        color: backgroundColor,
       ),
     );
   }
 
   Widget clearButton() {
     return IconButton(
+      padding: const EdgeInsets.all(3),
+      iconSize: 30,
       tooltip: 'Clear',
       onPressed: () {
         if (mounted) {

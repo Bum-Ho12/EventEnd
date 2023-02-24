@@ -6,9 +6,34 @@ Color backgroundColor2 = const Color.fromARGB(255, 17, 58, 78);
 Color navBar = const Color(0xFF81B4FF);
 Color primaryShadow = const Color.fromARGB(255, 83, 98, 105);
 
-TextStyle headline1 = TextStyle(
+TextStyle pageTitle = TextStyle(
+  color: backgroundColor2,
+  fontSize: 24,
+  fontWeight: FontWeight.w800,
+);
+TextStyle headline1Profile = TextStyle(
+  color: backgroundColor,
+  fontSize: 22,
+  fontWeight: FontWeight.w600,
+);
+TextStyle headline2Profile = TextStyle(
+  color: backgroundColor,
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+);
+TextStyle headline1detail = TextStyle(
   color: backgroundColor2,
   fontSize: 18,
+  fontWeight: FontWeight.w600,
+);
+TextStyle headline2Detail = TextStyle(
+  color: backgroundColor2,
+  fontSize: 16,
+  fontWeight: FontWeight.w200,
+);
+TextStyle headline1 = TextStyle(
+  color: backgroundColor2,
+  fontSize: 22,
   fontWeight: FontWeight.w600,
 );
 TextStyle headlineForTile = TextStyle(
@@ -21,17 +46,47 @@ TextStyle headlineTile = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w200,
 );
-TextStyle commonText = const TextStyle(
+TextStyle commonTextMain = const TextStyle(
   color: Colors.black54,
   fontSize: 12,
+);
+TextStyle commonText = const TextStyle(
+  color: Colors.black54,
+  fontSize: 14,
 );
 
 class RiveUtils {
   static StateMachineController getRController(Artboard artboard,
-      {stateMachineName = 'Sate Machine 1'}) {
+      {stateMachineName = 'State Machine 1'}) {
     StateMachineController? controller =
         StateMachineController.fromArtboard(artboard, stateMachineName);
     artboard.addController(controller!);
     return controller;
   }
+}
+
+class SlideRightRoute extends PageRouteBuilder {
+  final Widget? page;
+  SlideRightRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page!,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(-1, 0),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
+              ),
+        );
 }

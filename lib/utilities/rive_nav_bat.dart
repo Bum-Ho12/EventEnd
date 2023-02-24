@@ -15,7 +15,7 @@ class AnimatedWidgetBar extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       height: 6,
-      width: isActive ? 12 : 0,
+      width: isActive ? 20 : 0,
       margin: const EdgeInsets.only(bottom: 2),
       decoration: BoxDecoration(
         color: navBar,
@@ -54,8 +54,8 @@ List<RiveAsset> bottomBarNavs = [
       title: 'Search'),
   RiveAsset(
       src: "assets/icons.riv",
-      artboard: "HOME",
-      stateMachineName: "HOME_interactivity",
+      artboard: "LIKE/STAR",
+      stateMachineName: "STAR_Interactivity",
       title: 'Home'),
   RiveAsset(
       src: "assets/icons.riv",
