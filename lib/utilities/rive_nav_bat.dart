@@ -18,7 +18,7 @@ class AnimatedWidgetBar extends StatelessWidget {
       width: isActive ? 20 : 0,
       margin: const EdgeInsets.only(bottom: 2),
       decoration: BoxDecoration(
-        color: navBar,
+        color: ThemeApplication.lightTheme.navBar,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
     );

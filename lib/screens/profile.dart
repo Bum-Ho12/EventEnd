@@ -9,6 +9,14 @@ class Profile extends StatefulWidget {
   State<Profile> createState() => _ProfileState();
 }
 
+List profilePage = [
+  ['General Settings'],
+  ['Notifications'],
+  ['Licenses'],
+  ['About Eventend'],
+  ['Version 0.0.1'],
+];
+
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
@@ -33,7 +41,7 @@ class _ProfileState extends State<Profile> {
                     style: headline2Profile,
                   )
                 ]),
-            backgroundColor: backgroundColor2,
+            backgroundColor: ThemeApplication.lightTheme.backgroundColor2,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(100),
@@ -46,7 +54,7 @@ class _ProfileState extends State<Profile> {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundColor: backgroundColor,
+                    backgroundColor: ThemeApplication.lightTheme.backgroundColor,
                     child: Image.asset('assets/images/lp_image.png',
                         fit: BoxFit.fill),
                   ),
@@ -69,7 +77,7 @@ class _ProfileState extends State<Profile> {
                         onTap: () {},
                         child: Icon(
                           Icons.edit_outlined,
-                          color: backgroundColor,
+                          color: ThemeApplication.lightTheme.backgroundColor,
                         ),
                       ),
                     ],
@@ -86,27 +94,28 @@ class _ProfileState extends State<Profile> {
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 6,
+                  itemCount: profilePage.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      color: backgroundColor,
+                      color: ThemeApplication.lightTheme.backgroundColor,
                       child: Column(
                         children: [
                           Row(
                             children: [
                               Container(
+                                  color: ThemeApplication.lightTheme.backgroundColor,
                                   height: 60,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 4),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child:
-                                      Text('Settings', style: headlineForTile)),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  padding:
+                                      const EdgeInsets.only(top: 20, left: 10),
+                                  child: Text(profilePage[index][0],
+                                      style: headlineForTile)),
                               const Spacer(),
                               Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 size: 20,
-                                color: backgroundColor2,
+                                color: ThemeApplication.lightTheme.backgroundColor2,
                               )
                             ],
                           ),

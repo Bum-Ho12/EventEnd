@@ -21,13 +21,13 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                color: backgroundColor,
+                color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.1),
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   child: Text(
-                    'EventEnd',
+                    'Eventend',
                     style: pageTitle,
                   ),
                 ),
@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
               Container(
-                color: backgroundColor,
+                color: ThemeApplication.lightTheme.backgroundColor,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: Column(

@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeApplication.lightTheme.backgroundColor,
       body: tabs[_currentIndex],
       bottomNavigationBar: SafeArea(
         child: Container(
@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
           margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: backgroundColor2,
+            color: ThemeApplication.lightTheme.backgroundColor2,
             borderRadius: const BorderRadius.all(Radius.circular(25)),
           ),
           child: Row(

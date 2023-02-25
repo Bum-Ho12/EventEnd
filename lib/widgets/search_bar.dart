@@ -1,5 +1,7 @@
+import 'package:eventend/providers/search_provider.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({super.key});
@@ -10,6 +12,21 @@ class SearchBar extends StatefulWidget {
 
 class _SearchBarState extends State<SearchBar> {
   bool showSearchBar = false;
+  TextEditingController _searchText = TextEditingController();
+  @override
+  void initState() {
+    final SearchProvider searchProvider =
+        Provider.of<SearchProvider>(context, listen: false);
+    super.initState();
+    _searchText = TextEditingController(text: searchProvider.searched);
+  }
+
+  @override
+  void dispose() {
+    _searchText.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -21,12 +38,12 @@ class _SearchBarState extends State<SearchBar> {
           width: showSearchBar ? 360 : 50,
           decoration: BoxDecoration(
             color: showSearchBar
-                ? backgroundColor.withOpacity(0.25)
-                : backgroundColor2.withOpacity(1),
+                ? ThemeApplication.lightTheme.backgroundColor.withOpacity(0.25)
+                : ThemeApplication.lightTheme.backgroundColor2.withOpacity(1),
             boxShadow: [
               if (showSearchBar)
                 BoxShadow(
-                  color: backgroundColor,
+                  color: ThemeApplication.lightTheme.backgroundColor,
                   blurRadius: 0.1,
                   spreadRadius: 0.1,
                 ),
@@ -49,12 +66,14 @@ class _SearchBarState extends State<SearchBar> {
   }
 
   Widget searchEntry() {
-    return const Expanded(
+    final SearchProvider searchProvider = Provider.of<SearchProvider>(context);
+    return Expanded(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: TextField(
-          decoration: InputDecoration(
-            // fillColor: backgroundColor2.withOpacity(0.3),
+          controller: _searchText,
+          onChanged: searchProvider.setSearched,
+          decoration: const InputDecoration(
             border: InputBorder.none,
             hintText: 'Search..',
           ),
@@ -77,7 +96,7 @@ class _SearchBarState extends State<SearchBar> {
       tooltip: 'Search',
       icon: Icon(
         Icons.search,
-        color: backgroundColor,
+        color: ThemeApplication.lightTheme.backgroundColor,
       ),
     );
   }
@@ -96,12 +115,12 @@ class _SearchBarState extends State<SearchBar> {
       },
       icon: DecoratedBox(
         decoration: BoxDecoration(
-          color: backgroundColor2,
+          color: ThemeApplication.lightTheme.backgroundColor2,
           borderRadius: BorderRadius.circular(360),
         ),
         child: Icon(
           Icons.close,
-          color: backgroundColor,
+          color: ThemeApplication.lightTheme.backgroundColor,
         ),
       ),
     );

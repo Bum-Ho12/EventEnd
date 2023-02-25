@@ -1,6 +1,7 @@
+import 'package:eventend/screens/events.dart';
+import 'package:eventend/screens/service.dart';
+import 'package:eventend/screens/subscribed.dart';
 import 'package:flutter/material.dart';
-
-import '../list_tile_card.dart';
 import '../utilities/personalization.dart';
 
 class Favorite extends StatefulWidget {
@@ -13,50 +14,51 @@ class Favorite extends StatefulWidget {
 class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
-            leading: Container(),
-            leadingWidth: 0,
-            backgroundColor: backgroundColor,
-            scrolledUnderElevation: 0,
-            title: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('My Favorite', style: pageTitle),
-            ),
-            floating: true,
-          ),
-        ],
-        body: ListView(
-          children: [
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 20),
-                      child: Text(
-                        'Stored',
-                        style: headline1,
-                      ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: ThemeApplication.lightTheme.backgroundColor,
+        body: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  SliverAppBar(
+                    leading: Container(),
+                    leadingWidth: 0,
+                    backgroundColor: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.1),
+                    scrolledUnderElevation: 0,
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('My Favorite', style: pageTitle),
                     ),
-                  ],
-                ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return const HomeTile();
-                    })
+                    floating: true,
+                    bottom: TabBar(
+                        indicatorColor: ThemeApplication.lightTheme.backgroundColor2,
+                        indicatorWeight: 1.5,
+                        indicator: BoxDecoration(
+                          color: ThemeApplication.lightTheme.backgroundColor,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        indicatorPadding:
+                            const EdgeInsets.symmetric(horizontal: 10),
+                        labelStyle: headline2Profile,
+                        labelColor: ThemeApplication.lightTheme.backgroundColor2,
+                        tabs: const [
+                          Tab(text: 'Service'),
+                          Tab(text: 'Subscription'),
+                          Tab(text: 'Events')
+                        ]),
+                  ),
+                ],
+            body: const TabBarView(
+              children: [
+                Service(),
+                Subscribed(),
+                Events(),
               ],
-            ),
-          ],
-        ),
+            )),
       ),
     );
   }

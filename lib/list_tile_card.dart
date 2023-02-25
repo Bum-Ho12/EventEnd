@@ -18,29 +18,29 @@ class _HomeTileState extends State<HomeTile> {
         Navigator.push(context, SlideRightRoute(page: const CardPage()));
       },
       child: Container(
-        color: backgroundColor,
+        color: ThemeApplication.lightTheme.backgroundColor,
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(vertical: 5),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 1),
         child: Row(
           children: [
             Expanded(
               flex: 2,
               child: Stack(
                 children: [
-                  Image.asset('assets/images/lp_image.png',
+                  Image.asset('assets/images/band.jpg',
                       fit: BoxFit.fill, width: 200),
                   Positioned(
                       right: 1,
                       top: 2,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: backgroundColor,
+                          color: ThemeApplication.lightTheme.backgroundColor,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(2)),
                           border: Border.all(
                               width: 0.5,
-                              color: backgroundColor2.withOpacity(0.3)),
+                              color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.3)),
                         ),
                         padding: const EdgeInsets.all(2),
                         child: const Text('Free'),
@@ -87,19 +87,21 @@ class _HomeTileState extends State<HomeTile> {
                         onTap: () {},
                         child: Icon(
                           Icons.share,
-                          color: backgroundColor2,
+                          color: ThemeApplication.lightTheme.backgroundColor2,
+                          size: 30,
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 20),
                       InkWell(
                         onTap: () {},
                         child: Icon(
                           Icons.favorite_outline,
-                          color: backgroundColor2,
+                          color: ThemeApplication.lightTheme.backgroundColor2,
+                          size: 30,
                         ),
                       ),
                       const SizedBox(
-                        width: 5,
+                        width: 10,
                       )
                     ],
                   )

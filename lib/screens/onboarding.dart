@@ -16,7 +16,7 @@ class _OnboardingState extends State<Onboarding> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          color: backgroundColor,
+          color: ThemeApplication.lightTheme.backgroundColor,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -99,7 +99,7 @@ class _OnboardingState extends State<Onboarding> {
                             const LoginPage()),
                   );
                 },
-                color: backgroundColor2.withOpacity(0.8),
+                color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.8),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(24))),
                 child: Container(
@@ -112,7 +112,7 @@ class _OnboardingState extends State<Onboarding> {
                         'Get Started',
                         style: headline2Profile,
                       ),
-                      Icon(Icons.arrow_forward_ios, color: backgroundColor)
+                      Icon(Icons.arrow_forward_ios, color: ThemeApplication.lightTheme.backgroundColor)
                     ],
                   ),
                 ),
