@@ -1,14 +1,21 @@
 import 'package:eventend/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 
 class ThemeApplication {
-  
+  bool? changeTheme;
+
+  getTheme(BuildContext context) {
+    changeTheme = context.watch<AppTheme>().setTheme as bool;
+  }
+
   static ThemeApplier lightTheme = ThemeApplier(
     backgroundColor: Colors.white,
     backgroundColor2: const Color.fromARGB(255, 17, 58, 78),
     navBar: const Color(0xFF81B4FF),
     primaryShadow: const Color.fromARGB(255, 83, 98, 105),
+    shimmerColor: const Color.fromARGB(255, 203, 209, 212),
   );
 
   static ThemeApplier darkTheme = ThemeApplier(
@@ -16,13 +23,9 @@ class ThemeApplication {
     backgroundColor2: const Color.fromARGB(255, 180, 199, 209),
     navBar: const Color(0xFF81B4FF),
     primaryShadow: const Color.fromARGB(255, 224, 226, 228),
+    shimmerColor: const Color.fromARGB(255, 203, 209, 212),
   );
 }
-
-// Color backgroundColor = Colors.white;
-// Color backgroundColor2 = const Color.fromARGB(255, 17, 58, 78);
-// Color navBar = const Color(0xFF81B4FF);
-// Color primaryShadow = const Color.fromARGB(255, 83, 98, 105);
 
 TextStyle pageTitle = TextStyle(
   color: ThemeApplication.lightTheme.backgroundColor2,

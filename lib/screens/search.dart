@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../list_tile_card.dart';
+import '../widgets/list_card_shimmer.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -15,6 +16,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,8 @@ class _SearchScreenState extends State<SearchScreen> {
           SliverAppBar(
             leading: Container(),
             leadingWidth: 0,
-            backgroundColor: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.1),
+            backgroundColor:
+                ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.1),
             title: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('Search', style: pageTitle),
@@ -45,7 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
             Container(
               color: ThemeApplication.lightTheme.backgroundColor,
               child: context.watch<SearchProvider>().searched.isNotEmpty
-                  ? const Center(child: LoaderForSearch())
+                  ? const Center(child: WorldLoader())
                   : Column(
                       children: [
                         Row(
@@ -60,12 +63,21 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           ],
                         ),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 6,
-                            itemBuilder: (context, index) {
-                              return const HomeTile();
+                        FutureBuilder(
+                            future:
+                                Future.delayed(const Duration(seconds: 2), () {
+                              isLoading = false;
+                            }),
+                            builder: (context, _) {
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: 6,
+                                  itemBuilder: (context, index) {
+                                    return isLoading
+                                        ? const HomeTileShimmer()
+                                        : const HomeTile();
+                                  });
                             })
                       ],
                     ),

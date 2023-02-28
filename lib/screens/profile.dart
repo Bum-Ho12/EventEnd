@@ -1,3 +1,4 @@
+import 'package:eventend/widgets/rive_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/personalization.dart';
@@ -54,16 +55,17 @@ class _ProfileState extends State<Profile> {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundColor: ThemeApplication.lightTheme.backgroundColor,
+                    backgroundColor:
+                        ThemeApplication.lightTheme.backgroundColor,
                     child: Image.asset('assets/images/lp_image.png',
                         fit: BoxFit.fill),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
@@ -73,13 +75,31 @@ class _ProfileState extends State<Profile> {
                           style: headline1Profile,
                         ),
                       ),
-                      InkWell(
-                        onTap: () {},
-                        child: Icon(
-                          Icons.edit_outlined,
-                          color: ThemeApplication.lightTheme.backgroundColor,
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal:
+                                MediaQuery.of(context).size.width * 0.25),
+                        child: MaterialButton(
+                          height: 25,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24)),
+                          onPressed: () {},
+                          color: ThemeApplication.lightTheme.backgroundColor
+                              .withOpacity(0.4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Edit Profile',
+                                style: headline2Profile,
+                              ),
+                              const PenEdit(),
+                            ],
+                          ),
                         ),
-                      ),
+                      )
                     ],
                   )
                 ],
@@ -91,6 +111,106 @@ class _ProfileState extends State<Profile> {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: ListView(
             children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 60),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThemeApplication.lightTheme.backgroundColor2,
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Traffic',
+                                      style: headline2Profile,
+                                    ),
+                                    Divider(
+                                      color: ThemeApplication
+                                          .lightTheme.backgroundColor,
+                                    ),
+                                    Text(
+                                      '200',
+                                      style: headline2Profile,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Views',
+                                      style: headline2Profile,
+                                    ),
+                                    Divider(
+                                      color: ThemeApplication
+                                          .lightTheme.backgroundColor,
+                                    ),
+                                    Text(
+                                      '200',
+                                      style: headline2Profile,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Posts',
+                                      style: headline2Profile,
+                                    ),
+                                    Divider(
+                                      color: ThemeApplication
+                                          .lightTheme.backgroundColor,
+                                    ),
+                                    Text(
+                                      '12',
+                                      style: headline2Profile,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        MaterialButton(
+                          onPressed: () {},
+                          height: 25,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24)),
+                          color: ThemeApplication.lightTheme.backgroundColor
+                              .withOpacity(0.4),
+                          child: Text(
+                            'View Posts',
+                            style: headline2Profile,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -103,7 +223,8 @@ class _ProfileState extends State<Profile> {
                           Row(
                             children: [
                               Container(
-                                  color: ThemeApplication.lightTheme.backgroundColor,
+                                  color: ThemeApplication
+                                      .lightTheme.backgroundColor,
                                   height: 60,
                                   width:
                                       MediaQuery.of(context).size.width * 0.9,
@@ -115,7 +236,8 @@ class _ProfileState extends State<Profile> {
                               Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 size: 20,
-                                color: ThemeApplication.lightTheme.backgroundColor2,
+                                color: ThemeApplication
+                                    .lightTheme.backgroundColor2,
                               )
                             ],
                           ),

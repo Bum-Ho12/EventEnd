@@ -5,17 +5,17 @@ import 'package:rive/rive.dart';
 import '../utilities/personalization.dart';
 import '../utilities/rive_nav_bat.dart';
 
-class LoaderForSearch extends StatefulWidget {
-  const LoaderForSearch({super.key});
+class WorldLoader extends StatefulWidget {
+  const WorldLoader({super.key});
 
   @override
-  State<LoaderForSearch> createState() => _LoaderForSearchState();
+  State<WorldLoader> createState() => _WorldLoaderState();
 }
 
-class _LoaderForSearchState extends State<LoaderForSearch> {
+class _WorldLoaderState extends State<WorldLoader> {
   RiveAsset loader = RiveAsset(
       src: 'assets/viro_splash.riv',
-      artboard: "Loading",
+      artboard: "Loading Final",
       stateMachineName: "State Machine 1",
       title: 'Loader');
   @override

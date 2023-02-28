@@ -1,8 +1,10 @@
 import 'package:eventend/list_tile_card.dart';
 import 'package:eventend/utilities/personalization.dart';
+import 'package:eventend/widgets/list_card_shimmer.dart';
 import 'package:flutter/material.dart';
 
 import '../card.dart';
+import '../widgets/card_shimmer.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,8 +14,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 5), () {
+      isLoading = false;
+    });
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -21,7 +27,8 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.1),
+                color: ThemeApplication.lightTheme.backgroundColor2
+                    .withOpacity(0.1),
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding:
@@ -32,33 +39,30 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Container(
-                  //   color: backgroundColor,
-                  //   child: Row(
-                  //     children: [
-                  //       Text(
-                  //         'Suggested',
-                  //         style: headline1,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    height: 250,
-                    child: ListView.builder(
-                        itemCount: 4,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return const SuggestedCard();
-                        }),
-                  ),
-                ],
-              ),
+              FutureBuilder(
+                  future: Future.delayed(const Duration(seconds: 2), () {
+                    isLoading = false;
+                  }),
+                  builder: (context, _) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          height: 250,
+                          child: ListView.builder(
+                              itemCount: 4,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return isLoading
+                                    ? const SuggestedCardShimmer()
+                                    : const SuggestedCard();
+                              }),
+                        ),
+                      ],
+                    );
+                  }),
               Container(
                 color: ThemeApplication.lightTheme.backgroundColor,
                 child: Padding(
@@ -70,14 +74,23 @@ class _HomeState extends State<Home> {
                         'Recent',
                         style: headline1,
                       ),
-                      ListView.builder(
-                        itemCount: 8,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return const HomeTile();
-                        },
-                      ),
+                      FutureBuilder(
+                          future:
+                              Future.delayed(const Duration(seconds: 2), () {
+                            isLoading = false;
+                          }),
+                          builder: (context, _) {
+                            return ListView.builder(
+                              itemCount: 8,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return isLoading
+                                    ? const HomeTileShimmer()
+                                    : const HomeTile();
+                              },
+                            );
+                          }),
                     ],
                   ),
                 ),
