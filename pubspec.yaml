@@ -31,6 +31,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   rive: ^0.10.2
   carousel_slider: ^4.1.1
+  drag_and_drop_lists: ^0.3.3
   flutter_svg: ^2.0.2
   provider: ^6.0.5
   image: ^4.0.15

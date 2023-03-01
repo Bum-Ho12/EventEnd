@@ -38,27 +38,3 @@ class _WorldLoaderState extends State<WorldLoader> {
     );
   }
 }
-
-// class RiveAssetForLoader {
-//   late final String artboard, stateMachineName, title, src;
-//   late SMIBool? input;
-//   RiveAssetForLoader({
-//     required this.src,
-//     required this.artboard,
-//     required this.stateMachineName,
-//     required this.title,
-//     this.input,
-//   });
-
-//   set setInput(SMIBool status) {
-//     input = status;
-//   }
-// }
-
-// List<RiveAsset> riveAssets = [
-//   RiveAsset(
-//       src: 'assets/ball_loader.riv',
-//       artboard: "HOME",
-//       stateMachineName: "State Machine 1",
-//       title: 'Loader'),
-// ];

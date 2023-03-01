@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../utilities/personalization.dart';
 import '../widgets/post_text_widget.dart';
-import 'post_second.dart';
 
-class PostService extends StatefulWidget {
-  const PostService({super.key});
+class PostServicePageTwo extends StatefulWidget {
+  const PostServicePageTwo({super.key});
 
   @override
-  State<PostService> createState() => _PostServiceState();
+  State<PostServicePageTwo> createState() => _PostServicePageTwoState();
 }
 
-class _PostServiceState extends State<PostService> {
+class _PostServicePageTwoState extends State<PostServicePageTwo> {
   late final String name;
   late final String about;
   late final double price;
@@ -51,19 +50,24 @@ class _PostServiceState extends State<PostService> {
                             ? MediaQuery.of(context).size.height * 0.05
                             : 20),
                     const TextFieldForProduct(
-                      content: 'Title',
+                      content: 'Description',
                       iconForForm: '',
                     ),
-                    const TextFieldForProduct(
-                      content: 'Date',
-                      iconForForm: '',
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          'Paybill',
+                          style: headlineTile,
+                        ),
+                        Icon(
+                          Icons.receipt,
+                          color: ThemeApplication.lightTheme.backgroundColor2,
+                        )
+                      ],
                     ),
                     const TextFieldForProduct(
-                      content: 'Website/portfolio link',
-                      iconForForm: '',
-                    ),
-                    const TextFieldForProduct(
-                      content: 'Location',
+                      content: '',
                       iconForForm: '',
                     ),
                     const TextFieldForProduct(
@@ -81,26 +85,12 @@ class _PostServiceState extends State<PostService> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    SlideRightRoute(page: const PostServicePageTwo()),
-                  );
-                },
+                onPressed: () {},
                 color: ThemeApplication.lightTheme.backgroundColor2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Next', style: headline2Profile),
-                    Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      color: ThemeApplication.lightTheme.backgroundColor,
-                    )
-                  ],
-                ),
+                child: Text('Post', style: headline2Profile),
               )
             ],
           ),
