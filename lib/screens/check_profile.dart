@@ -1,10 +1,13 @@
+import 'package:eventend/classes/service_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:link_preview_generator/link_preview_generator.dart';
 
 import '../utilities/personalization.dart';
 
 class ProfileViewPage extends StatefulWidget {
-  const ProfileViewPage({super.key});
+  final Service data;
+  const ProfileViewPage({required this.data, super.key});
 
   @override
   State<ProfileViewPage> createState() => _ProfileViewPageState();
@@ -39,7 +42,8 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
               'assets/icons/menu.svg',
               height: 24,
               width: 24,
-              theme: SvgTheme(currentColor: ThemeApplication.lightTheme.backgroundColor2),
+              theme: SvgTheme(
+                  currentColor: ThemeApplication.lightTheme.backgroundColor2),
             ),
           ),
         ],
@@ -51,7 +55,8 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
             children: [
               Container(
                 height: 300,
-                color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.2),
+                color: ThemeApplication.lightTheme.backgroundColor2
+                    .withOpacity(0.2),
                 child: Stack(
                   children: [
                     SizedBox(
@@ -67,8 +72,8 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                       right: MediaQuery.of(context).size.width * 0.5 - 75,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(369),
-                        child: Image.asset(
-                          'assets/images/catering.jpg',
+                        child: Image.network(
+                          'https://eventend.pythonanywhere.com${widget.data.organizerProfilePicture}',
                           height: 150,
                           width: 150,
                           fit: BoxFit.fill,
@@ -81,9 +86,63 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Text(
-                  'Title of Vendor',
-                  style: headline1,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Text(
+                    widget.data.organizer,
+                    style: headline1,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 70,
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  child: LinkPreviewGenerator(
+                    link: widget.data.socialMediaLink,
+                    linkPreviewStyle: LinkPreviewStyle.small,
+                    onTap: () {},
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 0.0,
+                        spreadRadius: 0.0,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.access_time,
+                  color: ThemeApplication.lightTheme.backgroundColor2
+                      .withOpacity(0.7),
+                ),
+                title: Text(
+                  'Service Price',
+                  style: headline1detail,
+                ),
+                subtitle: Text(
+                  'Kshs. ${widget.data.price}',
+                  style: headline2Detail,
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.location_on,
+                  color: ThemeApplication.lightTheme.backgroundColor2
+                      .withOpacity(0.7),
+                ),
+                title: Text(
+                  'Business Location',
+                  style: headline1detail,
+                ),
+                subtitle: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Text(
+                    'Lorem ipsum makaveli',
+                    style: headline2Detail,
+                  ),
                 ),
               ),
               Padding(
@@ -91,13 +150,25 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Website or portfolio',
-                      style: headline2detail,
+                    SizedBox(
+                      height: 70,
+                      width: MediaQuery.of(context).size.width * 0.55,
+                      child: LinkPreviewGenerator(
+                        link: widget.data.webLink,
+                        linkPreviewStyle: LinkPreviewStyle.small,
+                        boxShadow: const [
+                          BoxShadow(
+                            blurRadius: 0.0,
+                            spreadRadius: 0.0,
+                          ),
+                        ],
+                        onTap: () {},
+                      ),
                     ),
                     const Spacer(),
                     MaterialButton(
-                      color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.7),
+                      color: ThemeApplication.lightTheme.backgroundColor2
+                          .withOpacity(0.7),
                       elevation: 0.0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(24))),
@@ -110,48 +181,24 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                   ],
                 ),
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.access_time,
-                  color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.7),
-                ),
-                title: Text(
-                  'Open Days',
-                  style: headline1detail,
-                ),
-                subtitle: Text(
-                  'Monday - Friday 08:00 - 18:00 GMT + 03:00',
-                  style: headline2Detail,
-                ),
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.location_on,
-                  color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.7),
-                ),
-                title: Text(
-                  'Business Location',
-                  style: headline1detail,
-                ),
-                subtitle: Text(
-                  'Lorem ipsum makaveli',
-                  style: headline2Detail,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    'Brief Description',
+                    style: headline1,
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Brief Description',
-                  style: headline1,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Lorem ipsum dolor sit amet, consenter advising elite, sed do elusion '
-                  'tempore incident ut laborer et dolores magna aliquant. Ut enid ad minim venial, '
-                  'quia nostrum exercitation ullages labors nisi ut aliquot ex ea commode consequent.',
-                  style: commonTextMain,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    widget.data.description,
+                    style: commonTextMain,
+                  ),
                 ),
               ),
             ],
@@ -167,7 +214,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
           MaterialButton(
             onPressed: () {},
             color: ThemeApplication.lightTheme.backgroundColor2,
-            child: Text('Subscribe', style: headline1Profile),
+            child: Text('Connect', style: headline1Profile),
           ),
         ],
       ),

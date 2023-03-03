@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:link_preview_generator/link_preview_generator.dart';
 
+import '../classes/concert_class.dart';
 import '../utilities/personalization.dart';
 
 class CardPage extends StatefulWidget {
-  const CardPage({super.key});
+  final Concert data;
+  const CardPage({required this.data, super.key});
 
   @override
   State<CardPage> createState() => _CardPageState();
@@ -60,16 +63,16 @@ class _CardPageState extends State<CardPage> {
               SizedBox(
                 height: 200,
                 width: MediaQuery.of(context).size.width,
-                child: Image.asset(
-                  'assets/images/band.jpg',
-                  fit: BoxFit.fill,
+                child: Image.network(
+                  'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
+                  fit: BoxFit.contain,
                 ),
               ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Text(
-                  'Title of the Post',
+                  widget.data.title,
                   style: headline1,
                 ),
               ),
@@ -79,14 +82,20 @@ class _CardPageState extends State<CardPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ClipOval(
-                      child: Image.asset('assets/images/band.jpg',
-                          height: 80, width: 80, fit: BoxFit.fill),
+                      child: Image.network(
+                          'https://eventend.pythonanywhere.com${widget.data.organizeProfilePicture}',
+                          height: 80,
+                          width: 80,
+                          fit: BoxFit.fill),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Title of vendor',
-                        style: headline1detail,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Text(
+                          widget.data.organizer,
+                          style: headline1detail,
+                        ),
                       ),
                     ),
                     const Spacer(),
@@ -111,13 +120,19 @@ class _CardPageState extends State<CardPage> {
                   color: ThemeApplication.lightTheme.backgroundColor2
                       .withOpacity(0.7),
                 ),
-                title: Text(
-                  'Date of event',
-                  style: headline1detail,
+                title: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    'Event Date: ${widget.data.eventDate}',
+                    style: headline1detail,
+                  ),
                 ),
-                subtitle: Text(
-                  '14:00 - 18:00 GMT + 03:00',
-                  style: headline2Detail,
+                subtitle: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    'Start: ${widget.data.fromHour} - ${widget.data.toHour} GMT + 03:00',
+                    style: headline2Detail,
+                  ),
                 ),
               ),
               ListTile(
@@ -126,13 +141,19 @@ class _CardPageState extends State<CardPage> {
                   color: ThemeApplication.lightTheme.backgroundColor2
                       .withOpacity(0.7),
                 ),
-                title: Text(
-                  'Location Venue',
-                  style: headline1detail,
+                title: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    'Venue: ${widget.data.location}',
+                    style: headline1detail,
+                  ),
                 ),
-                subtitle: Text(
-                  'Lorem ipsum makaveli',
-                  style: headline2Detail,
+                subtitle: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    '${widget.data.toHour} - ${widget.data.fromHour} Hours',
+                    style: headline2Detail,
+                  ),
                 ),
               ),
               ListTile(
@@ -142,7 +163,7 @@ class _CardPageState extends State<CardPage> {
                       .withOpacity(0.7),
                 ),
                 title: Text(
-                  'Ksh. 141.95',
+                  'Ksh. ${widget.data.price}',
                   style: headline1detail,
                 ),
                 subtitle: Text(
@@ -160,10 +181,8 @@ class _CardPageState extends State<CardPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consenter advising elite, sed do elusion '
-                  'tempore incident ut laborer et dolores magna aliquant. Ut enid ad minim venial, '
-                  'quia nostrum exercitation ullages labors nisi ut aliquot ex ea commode consequent.',
-                  style: commonTextMain,
+                  widget.data.description,
+                  style: commonText,
                 ),
               ),
               Padding(
@@ -173,9 +192,24 @@ class _CardPageState extends State<CardPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Website or portfolio',
-                        style: headline2detail,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width * 0.55,
+                            child: LinkPreviewGenerator(
+                              link: widget.data.webLink,
+                              linkPreviewStyle: LinkPreviewStyle.small,
+                              onTap: () {},
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 0.0,
+                                  spreadRadius: 0.0,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const Spacer(),
@@ -212,7 +246,7 @@ class _CardPageState extends State<CardPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            'Kshs. 141.95',
+            'Kshs. ${widget.data.price}',
             style: headline1detail,
           ),
           MaterialButton(

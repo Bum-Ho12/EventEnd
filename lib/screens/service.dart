@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-
-import '../list_tile_card.dart';
 import '../utilities/personalization.dart';
 import '../widgets/list_card_shimmer.dart';
 
-class Service extends StatefulWidget {
-  const Service({super.key});
+class ServiceFavorites extends StatefulWidget {
+  const ServiceFavorites({super.key});
 
   @override
-  State<Service> createState() => _ServiceState();
+  State<ServiceFavorites> createState() => _ServiceFavoritesState();
 }
 
-class _ServiceState extends State<Service> {
+class _ServiceFavoritesState extends State<ServiceFavorites> {
   bool isLoading = true;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +41,7 @@ class _ServiceState extends State<Service> {
                       itemBuilder: (context, index) {
                         return isLoading
                             ? const HomeTileShimmer()
-                            : const HomeTile();
+                            : const HomeTileShimmer(); //const HomeTile();
                       });
                 })
           ],

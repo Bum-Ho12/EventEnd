@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../list_tile_card.dart';
 import '../widgets/list_card_shimmer.dart';
 // import '../utilities/personalization.dart';
 
@@ -20,21 +18,20 @@ class _EventsState extends State<Events> {
         Column(
           children: [
             FutureBuilder(
-                  future: Future.delayed(const Duration(seconds: 2), () {
-                    isLoading = false;
-                  }),
-              builder: (context,_) {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return isLoading
-                                    ? const HomeTileShimmer()
-                                    :const HomeTile();
-                    });
-              }
-            )
+                future: Future.delayed(const Duration(seconds: 2), () {
+                  isLoading = false;
+                }),
+                builder: (context, _) {
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: 6,
+                      itemBuilder: (context, index) {
+                        return isLoading
+                            ? const HomeTileShimmer()
+                            : const HomeTileShimmer(); //const HomeTile();
+                      });
+                })
           ],
         ),
       ],

@@ -4,8 +4,6 @@ import 'package:eventend/widgets/loader_for_search.dart';
 import 'package:eventend/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../list_tile_card.dart';
 import '../widgets/list_card_shimmer.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -76,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   itemBuilder: (context, index) {
                                     return isLoading
                                         ? const HomeTileShimmer()
-                                        : const HomeTile();
+                                        : const HomeTileShimmer(); //const HomeTile();
                                   });
                             })
                       ],

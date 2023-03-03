@@ -24,7 +24,9 @@ class _FavoriteState extends State<Favorite> {
                   SliverAppBar(
                     leading: Container(),
                     leadingWidth: 0,
-                    backgroundColor: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.1),
+                    backgroundColor: ThemeApplication
+                        .lightTheme.backgroundColor2
+                        .withOpacity(0.1),
                     scrolledUnderElevation: 0,
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -32,7 +34,8 @@ class _FavoriteState extends State<Favorite> {
                     ),
                     floating: true,
                     bottom: TabBar(
-                        indicatorColor: ThemeApplication.lightTheme.backgroundColor2,
+                        indicatorColor:
+                            ThemeApplication.lightTheme.backgroundColor2,
                         indicatorWeight: 1.5,
                         indicator: BoxDecoration(
                           color: ThemeApplication.lightTheme.backgroundColor,
@@ -44,7 +47,8 @@ class _FavoriteState extends State<Favorite> {
                         indicatorPadding:
                             const EdgeInsets.symmetric(horizontal: 10),
                         labelStyle: headline2Profile,
-                        labelColor: ThemeApplication.lightTheme.backgroundColor2,
+                        labelColor:
+                            ThemeApplication.lightTheme.backgroundColor2,
                         tabs: const [
                           Tab(text: 'Service'),
                           Tab(text: 'Subscription'),
@@ -54,7 +58,7 @@ class _FavoriteState extends State<Favorite> {
                 ],
             body: const TabBarView(
               children: [
-                Service(),
+                ServiceFavorites(),
                 Subscribed(),
                 Events(),
               ],

@@ -1,10 +1,12 @@
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
+import 'classes/concert_class.dart';
 import 'screens/detail.dart';
 
 class HomeTile extends StatefulWidget {
-  const HomeTile({super.key});
+  final Concert data;
+  const HomeTile({required this.data, super.key});
 
   @override
   State<HomeTile> createState() => _HomeTileState();
@@ -15,7 +17,7 @@ class _HomeTileState extends State<HomeTile> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, SlideRightRoute(page: const CardPage()));
+        Navigator.push(context, SlideRightRoute(page: CardPage(data:widget.data)));
       },
       child: Container(
         color: ThemeApplication.lightTheme.backgroundColor,
@@ -28,8 +30,11 @@ class _HomeTileState extends State<HomeTile> {
               flex: 2,
               child: Stack(
                 children: [
-                  Image.asset('assets/images/band.jpg',
-                      fit: BoxFit.fill, width: 200),
+                  Image.network(
+                      'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
+                      fit: BoxFit.fill,
+                      height: 120,
+                      width: 200),
                   Positioned(
                       right: 1,
                       top: 2,
@@ -40,7 +45,9 @@ class _HomeTileState extends State<HomeTile> {
                               const BorderRadius.all(Radius.circular(2)),
                           border: Border.all(
                               width: 0.5,
-                              color: ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.3)),
+                              color: ThemeApplication
+                                  .lightTheme.backgroundColor2
+                                  .withOpacity(0.3)),
                         ),
                         padding: const EdgeInsets.all(2),
                         child: const Text('Free'),
@@ -64,17 +71,17 @@ class _HomeTileState extends State<HomeTile> {
                         thickness: 0.5,
                       ),
                       Text(
-                        '14.00 GMT + 3:00',
+                        widget.data.fromHour,
                         style: commonText,
                       ),
                     ],
                   ),
                   Text(
-                    'Title of the list tile',
+                    widget.data.title,
                     style: headlineTile,
                   ),
                   Text(
-                    'Extra information of the tile',
+                    widget.data.description,
                     style: commonTextMain,
                   ),
                   const SizedBox(

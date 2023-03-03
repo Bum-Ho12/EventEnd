@@ -14,6 +14,7 @@ class ThemeApplication {
     backgroundColor: Colors.white,
     backgroundColor2: const Color.fromARGB(255, 17, 58, 78),
     navBar: const Color(0xFF81B4FF),
+    warningColor: Colors.redAccent,
     primaryShadow: const Color.fromARGB(255, 83, 98, 105),
     shimmerColor: const Color.fromARGB(255, 203, 209, 212),
   );
@@ -24,6 +25,7 @@ class ThemeApplication {
     navBar: const Color(0xFF81B4FF),
     primaryShadow: const Color.fromARGB(255, 224, 226, 228),
     shimmerColor: const Color.fromARGB(255, 203, 209, 212),
+    warningColor: Colors.redAccent,
   );
 }
 
@@ -51,6 +53,7 @@ TextStyle headline2Detail = TextStyle(
   color: ThemeApplication.lightTheme.backgroundColor2,
   fontSize: 16,
   fontWeight: FontWeight.w200,
+  overflow: TextOverflow.fade,
 );
 TextStyle headline2detail = TextStyle(
   color: ThemeApplication.lightTheme.navBar,

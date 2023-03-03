@@ -15,11 +15,13 @@ class ThemeApplier {
   Color navBar;
   Color primaryShadow;
   Color shimmerColor;
+  Color warningColor;
   ThemeApplier({
     required this.backgroundColor,
     required this.backgroundColor2,
     required this.navBar,
     required this.primaryShadow,
     required this.shimmerColor,
+    required this.warningColor,
   });
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../classes/user_class.dart';
 import '../utilities/personalization.dart';
 
 class ChangeProfile extends StatefulWidget {
-  const ChangeProfile({super.key});
+  final Account account;
+  const ChangeProfile({required this.account, super.key});
 
   @override
   State<ChangeProfile> createState() => _ChangeProfileState();
@@ -54,8 +56,8 @@ class _ChangeProfileState extends State<ChangeProfile> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(369),
-                            child: Image.asset(
-                              'assets/images/catering.jpg',
+                            child: Image.network(
+                              'https://eventend.pythonanywhere.com${widget.account.profilePicture}',
                               height: 150,
                               width: 150,
                               fit: BoxFit.fill,
@@ -90,7 +92,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Text(
-                  'Title of Vendor',
+                  widget.account.name,
                   style: headline1,
                 ),
               ),
@@ -99,9 +101,13 @@ class _ChangeProfileState extends State<ChangeProfile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Website or portfolio',
-                      style: headline2detail,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: Text(
+                        widget.account.socialMediaLink,
+                        style: headline2detail,
+                        maxLines: 3,
+                      ),
                     ),
                     const Spacer(),
                   ],
@@ -117,9 +123,19 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   'Open Days',
                   style: headline1detail,
                 ),
-                subtitle: Text(
-                  'Monday - Friday 08:00 - 18:00 GMT + 03:00',
-                  style: headline2Detail,
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${widget.account.weekdayFrom.toString()}-'
+                      '${widget.account.weekdayTo..toString()}',
+                      style: headline2Detail,
+                    ),
+                    Text(
+                      '${widget.account.fromHour} - ${widget.account.toHour}',
+                      style: headline2Detail,
+                    )
+                  ],
                 ),
               ),
               ListTile(
@@ -133,23 +149,25 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   style: headline1detail,
                 ),
                 subtitle: Text(
-                  'Lorem ipsum makaveli',
+                  widget.account.location,
                   style: headline2Detail,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Brief Description',
-                  style: headline1,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    'Brief Description',
+                    style: headline1,
+                    maxLines: 6,
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consenter advising elite, sed do elusion '
-                  'tempore incident ut laborer et dolores magna aliquant. Ut enid ad minim venial, '
-                  'quia nostrum exercitation ullages labors nisi ut aliquot ex ea commode consequent.',
+                  widget.account.description,
                   style: commonTextMain,
                 ),
               ),
