@@ -56,12 +56,32 @@ class _ChangeProfileState extends State<ChangeProfile> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(369),
-                            child: Image.network(
-                              'https://eventend.pythonanywhere.com${widget.account.profilePicture}',
-                              height: 150,
-                              width: 150,
-                              fit: BoxFit.fill,
-                            ),
+                            child: widget.account.profilePicture != ''
+                                ? Image.network(
+                                    'https://eventend.pythonanywhere.com${widget.account.profilePicture}',
+                                    height: 150,
+                                    width: 150,
+                                    fit: BoxFit.fill,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return const Center(
+                                          child: Text('Loading...'));
+                                    },
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            const Icon(
+                                      Icons.person,
+                                      size: 100,
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.person,
+                                    color: ThemeApplication
+                                        .lightTheme.backgroundColor2
+                                        .withOpacity(0.6),
+                                    size: 100,
+                                  ),
                           ),
                           Positioned(
                             bottom: 1,

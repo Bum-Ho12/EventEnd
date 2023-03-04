@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../card.dart';
+import '../providers/network_provider.dart';
 import '../widgets/card_shimmer.dart';
 
 class Home extends StatefulWidget {
@@ -22,6 +23,7 @@ class _HomeState extends State<Home> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ConcertProvider>(context, listen: false).getAllConcerts();
       Provider.of<ServiceProvider>(context, listen: false).getAllServices();
+      Provider.of<NetworkProvider>(context, listen: false).checkNetwork();
     });
     super.initState();
   }

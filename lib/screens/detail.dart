@@ -82,16 +82,24 @@ class _CardPageState extends State<CardPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ClipOval(
-                      child: Image.network(
-                          'https://eventend.pythonanywhere.com${widget.data.organizeProfilePicture}',
-                          height: 80,
-                          width: 80,
-                          fit: BoxFit.fill),
+                      child: widget.data.organizeProfilePicture.toString() != ''
+                          ? Image.network(
+                              'https://eventend.pythonanywhere.com${widget.data.organizeProfilePicture}',
+                              height: 60,
+                              width: 60,
+                              fit: BoxFit.fill)
+                          : Icon(
+                              Icons.person,
+                              color: ThemeApplication
+                                  .lightTheme.backgroundColor2
+                                  .withOpacity(0.6),
+                              size: 100,
+                            ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        width: MediaQuery.of(context).size.width * 0.6,
                         child: Text(
                           widget.data.organizer,
                           style: headline1detail,
@@ -99,18 +107,6 @@ class _CardPageState extends State<CardPage> {
                       ),
                     ),
                     const Spacer(),
-                    MaterialButton(
-                      color: ThemeApplication.lightTheme.backgroundColor2
-                          .withOpacity(0.7),
-                      elevation: 0.0,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(24))),
-                      onPressed: () {},
-                      child: Text(
-                        'Subscribe',
-                        style: headline2Profile,
-                      ),
-                    )
                   ],
                 ),
               ),

@@ -22,7 +22,8 @@ class LoginApp {
         sharedPreferences.setString("token", jsonResponse['token']);
         sharedPreferences.setString("email", jsonResponse['email']);
         sharedPreferences.setString("username", jsonResponse['username']);
-        sharedPreferences.setString('profile_pic', jsonResponse['profile_pic']);
+        sharedPreferences.setString(
+            'profile_picture', jsonResponse['profile_picture']);
         sharedPreferences.setBool('isLoggedIn', true);
         sharedPreferences.setString("password", password);
         // print(sharedPreferences.getKeys());

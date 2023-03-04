@@ -16,6 +16,7 @@ class ProfileViewPage extends StatefulWidget {
 class _ProfileViewPageState extends State<ProfileViewPage> {
   @override
   Widget build(BuildContext context) {
+    String domain = Uri.parse(widget.data.webLink).host;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -72,12 +73,32 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                       right: MediaQuery.of(context).size.width * 0.5 - 75,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(369),
-                        child: Image.network(
-                          'https://eventend.pythonanywhere.com${widget.data.organizerProfilePicture}',
-                          height: 150,
-                          width: 150,
-                          fit: BoxFit.fill,
-                        ),
+                        child: widget.data.organizerProfilePicture.toString() !=
+                                ''
+                            ? Image.network(
+                                'https://eventend.pythonanywhere.com${widget.data.organizerProfilePicture}',
+                                height: 150,
+                                width: 150,
+                                fit: BoxFit.fill,
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return const Center(
+                                      child: Text('Loading...'));
+                                },
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(
+                                  Icons.person,
+                                  size: 100,
+                                ),
+                              )
+                            : Icon(
+                                Icons.person,
+                                color: ThemeApplication
+                                    .lightTheme.backgroundColor2
+                                    .withOpacity(0.6),
+                                size: 100,
+                              ),
                       ),
                     )
                   ],
@@ -94,24 +115,35 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 70,
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: LinkPreviewGenerator(
-                    link: widget.data.socialMediaLink,
-                    linkPreviewStyle: LinkPreviewStyle.small,
-                    onTap: () {},
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
+              domain == "www.instagram.com"
+                  ? IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        'assets/icons/instagram.svg',
+                        height: 64,
+                        width: 64,
                       ),
-                    ],
-                  ),
-                ),
-              ),
+                    )
+                  : domain == 'www.linkedin.com'
+                      ? IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          icon: SvgPicture.asset(
+                            'assets/icons/linkedin.svg',
+                            height: 64,
+                            width: 64,
+                          ),
+                        )
+                      : IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          icon: SvgPicture.asset(
+                            'assets/icons/twitter.svg',
+                            height: 64,
+                            width: 64,
+                          ),
+                        ),
               ListTile(
                 leading: Icon(
                   Icons.access_time,

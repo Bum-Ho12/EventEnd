@@ -1,4 +1,5 @@
 import 'package:eventend/providers/concert_provider.dart';
+import 'package:eventend/providers/network_provider.dart';
 import 'package:eventend/providers/search_provider.dart';
 import 'package:eventend/providers/service_provider.dart';
 import 'package:eventend/screens/home_page.dart';
@@ -14,6 +15,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => SearchProvider()),
         ChangeNotifierProvider(create: (_) => ConcertProvider()),
         ChangeNotifierProvider(create: (_) => ServiceProvider()),
+        ChangeNotifierProvider(create: (_) => NetworkProvider()),
       ],
       child: const MyApp(),
     ),
@@ -28,8 +30,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-  // function that checks if user is logged in or not
+  var isDeviceConnected = false;
   @override
   void initState() {
     super.initState();
@@ -43,7 +44,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       if (preferences.containsKey('email')) {
         setState(() {
-          isLoggedIn = !isLoggedIn;
+          isLoggedIn = true;
         });
       }
     });

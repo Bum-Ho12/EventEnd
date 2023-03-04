@@ -17,7 +17,8 @@ class _HomeTileState extends State<HomeTile> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, SlideRightRoute(page: CardPage(data:widget.data)));
+        Navigator.push(
+            context, SlideRightRoute(page: CardPage(data: widget.data)));
       },
       child: Container(
         color: ThemeApplication.lightTheme.backgroundColor,
@@ -31,10 +32,17 @@ class _HomeTileState extends State<HomeTile> {
               child: Stack(
                 children: [
                   Image.network(
-                      'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
-                      fit: BoxFit.fill,
-                      height: 120,
-                      width: 200),
+                    'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
+                    fit: BoxFit.fill,
+                    height: 120,
+                    width: 200,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const Center(child: Text('Loading...'));
+                    },
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Text('Error Loading the image!'),
+                  ),
                   Positioned(
                       right: 1,
                       top: 2,

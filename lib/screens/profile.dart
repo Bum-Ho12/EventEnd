@@ -27,24 +27,26 @@ class _ProfileState extends State<Profile> {
 
   Future<void> getAccount() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    account = Account(
-      name: sharedPreferences.getString('username')!,
-      token: sharedPreferences.getString('token')!,
-      email: sharedPreferences.getString('email')!,
-      password: sharedPreferences.getString('password')!,
-      category: sharedPreferences.getInt('category')!,
-      weekdayFrom: sharedPreferences.getInt("weekday_from")!,
-      weekdayTo: sharedPreferences.getInt("weekday_to")!,
-      location: sharedPreferences.getString("location")!,
-      fromHour: sharedPreferences.getString("from_hour")!,
-      toHour: sharedPreferences.getString("to_hour")!,
-      socialMediaLink: sharedPreferences.getString("social_media_link")!,
-      description: sharedPreferences.getString("description")!,
-      phoneNumber: sharedPreferences.getString("phone_number")!,
-      long: sharedPreferences.getDouble("long")!,
-      lat: sharedPreferences.getDouble("lat")!,
-      profilePicture: sharedPreferences.getString('profile_picture')!,
-    );
+    if (sharedPreferences.containsKey('email')) {
+      account = Account(
+        name: sharedPreferences.getString('username')!,
+        token: sharedPreferences.getString('token')!,
+        email: sharedPreferences.getString('email')!,
+        password: sharedPreferences.getString('password')!,
+        category: sharedPreferences.getInt('category')!,
+        weekdayFrom: sharedPreferences.getInt("weekday_from")!,
+        weekdayTo: sharedPreferences.getInt("weekday_to")!,
+        location: sharedPreferences.getString("location")!,
+        fromHour: sharedPreferences.getString("from_hour")!,
+        toHour: sharedPreferences.getString("to_hour")!,
+        socialMediaLink: sharedPreferences.getString("social_media_link")!,
+        description: sharedPreferences.getString("description")!,
+        phoneNumber: sharedPreferences.getString("phone_number")!,
+        long: sharedPreferences.getDouble("long")!,
+        lat: sharedPreferences.getDouble("lat")!,
+        profilePicture: sharedPreferences.getString('profile_picture')!,
+      );
+    }
   }
 
   @override
@@ -91,15 +93,23 @@ class _ProfileState extends State<Profile> {
                           child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(100)),
-                            child: Image.network(
-                              'https://eventend.pythonanywhere.com${account.profilePicture}',
-                              fit: BoxFit.fill,
-                              height: 100,
-                              errorBuilder: (BuildContext context,
-                                  Object object, StackTrace? trace) {
-                                return Text(object.toString());
-                              },
-                            ),
+                            child: account.profilePicture.toString() != ''
+                                ? Image.network(
+                                    'https://eventend.pythonanywhere.com${account.profilePicture}',
+                                    fit: BoxFit.fill,
+                                    height: 100,
+                                    errorBuilder: (BuildContext context,
+                                        Object object, StackTrace? trace) {
+                                      return Text(object.toString());
+                                    },
+                                  )
+                                : Icon(
+                                    Icons.person,
+                                    color: ThemeApplication
+                                        .lightTheme.backgroundColor2
+                                        .withOpacity(0.6),
+                                    size: 100,
+                                  ),
                           ),
                         ),
                         const SizedBox(
