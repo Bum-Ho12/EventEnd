@@ -88,9 +88,19 @@ class _ProfileState extends State<Profile> {
                           radius: 50,
                           backgroundColor:
                               ThemeApplication.lightTheme.backgroundColor,
-                          child: Image.network(
+                          child: ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(100)),
+                            child: Image.network(
                               'https://eventend.pythonanywhere.com${account.profilePicture}',
-                              fit: BoxFit.fill),
+                              fit: BoxFit.fill,
+                              height: 100,
+                              errorBuilder: (BuildContext context,
+                                  Object object, StackTrace? trace) {
+                                return Text(object.toString());
+                              },
+                            ),
+                          ),
                         ),
                         const SizedBox(
                           height: 5,

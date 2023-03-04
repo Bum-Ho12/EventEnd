@@ -16,9 +16,9 @@ class ConcertFetch {
       final concerts = json.map((e) {
         return Concert(
           title: e['title'],
-          organizer: e['organizer'],
-          organizerId: e['organizer_id'],
-          organizeProfilePicture: e['organizer_profile_picture'],
+          organizer: e['concert']['organizer'],
+          organizerId: e['concert']['organizer_id'],
+          organizeProfilePicture: e['concert']['organizer_profile_picture'],
           concertPicture: e['concert_picture'],
           eventDate: e['event_date'],
           fromHour: e['from_hour'],

@@ -16,9 +16,9 @@ class ServiceFetch {
       final concerts = json.map((e) {
         return Service(
           title: e['title'],
-          organizer: e['organizer'],
-          organizerId: e['organizer_id'],
-          organizerProfilePicture: e['organizer_profile_picture'],
+          organizer: e['service']['organizer'],
+          organizerId: e['service']['organizer_id'],
+          organizerProfilePicture: e['service']['organizer_profile_picture'],
           long: e['long'],
           lat: e['lat'],
           description: e['description'],
@@ -26,7 +26,7 @@ class ServiceFetch {
           permit: e['permit'],
           webLink: e['web_link'],
           traffic: e['traffic'],
-          socialMediaLink: e['organizer_media_link'],
+          socialMediaLink: e['service']['organizer_media_link'],
         );
       }).toList();
       return concerts;

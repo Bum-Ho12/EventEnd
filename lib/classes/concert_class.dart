@@ -1,9 +1,7 @@
-
-
 class Concert {
   final String title;
   final String organizer;
-  final String organizerId;
+  final int organizerId;
   final String organizeProfilePicture;
   final String concertPicture;
   final String eventDate;

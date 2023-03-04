@@ -1,7 +1,7 @@
 class Service {
   final String title;
   final String organizer;
-  final String organizerId;
+  final int organizerId;
   final String organizerProfilePicture;
   final String long;
   final String lat;
