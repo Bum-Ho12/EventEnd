@@ -186,41 +186,41 @@ class _CardPageState extends State<CardPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    Text(
+                      'website: ',
+                      style: headline1detail,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 100,
-                            width: MediaQuery.of(context).size.width * 0.55,
-                            child: LinkPreviewGenerator(
-                              link: widget.data.webLink,
-                              linkPreviewStyle: LinkPreviewStyle.small,
-                              onTap: () {},
-                              boxShadow: const [
-                                BoxShadow(
-                                  blurRadius: 0.0,
-                                  spreadRadius: 0.0,
-                                ),
-                              ],
+                      child: SizedBox(
+                        height: 100,
+                        width: MediaQuery.of(context).size.width * 0.65,
+                        child: LinkPreviewGenerator(
+                          link: widget.data.webLink,
+                          linkPreviewStyle: LinkPreviewStyle.small,
+                          onTap: () {},
+                          boxShadow: const [
+                            BoxShadow(
+                              blurRadius: 0.0,
+                              spreadRadius: 0.0,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                    const Spacer(),
-                    MaterialButton(
-                      color: ThemeApplication.lightTheme.backgroundColor2
-                          .withOpacity(0.7),
-                      elevation: 0.0,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(24))),
-                      onPressed: () {},
-                      child: Text(
-                        'Visit Website',
-                        style: headline2Profile,
-                      ),
-                    )
+                    // const Spacer(),
+                    // MaterialButton(
+                    //   color: ThemeApplication.lightTheme.backgroundColor2
+                    //       .withOpacity(0.7),
+                    //   elevation: 0.0,
+                    //   shape: const RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.all(Radius.circular(24))),
+                    //   onPressed: () {},
+                    //   child: Text(
+                    //     'Visit Website',
+                    //     style: headline2Profile,
+                    //   ),
+                    // )
                   ],
                 ),
               ),

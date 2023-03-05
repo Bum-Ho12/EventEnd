@@ -115,35 +115,64 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                   ),
                 ),
               ),
-              domain == "www.instagram.com"
-                  ? IconButton(
-                      padding: EdgeInsets.zero,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Portfolio: ',
+                      style: headline1detail,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: domain == "www.instagram.com"
+                          ? IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {},
+                              icon: SvgPicture.asset(
+                                'assets/icons/instagram.svg',
+                                height: 64,
+                                width: 64,
+                              ),
+                            )
+                          : domain == 'www.linkedin.com'
+                              ? IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {},
+                                  icon: SvgPicture.asset(
+                                    'assets/icons/linkedin.svg',
+                                    height: 64,
+                                    width: 64,
+                                  ),
+                                )
+                              : IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {},
+                                  icon: SvgPicture.asset(
+                                    'assets/icons/twitter.svg',
+                                    height: 64,
+                                    width: 64,
+                                  ),
+                                ),
+                    ),
+                    const Spacer(),
+                    MaterialButton(
+                      color: ThemeApplication.lightTheme.backgroundColor2
+                          .withOpacity(0.7),
+                      elevation: 0.0,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(24))),
                       onPressed: () {},
-                      icon: SvgPicture.asset(
-                        'assets/icons/instagram.svg',
-                        height: 64,
-                        width: 64,
+                      child: Text(
+                        'Check Out',
+                        style: headline2Profile,
                       ),
                     )
-                  : domain == 'www.linkedin.com'
-                      ? IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: SvgPicture.asset(
-                            'assets/icons/linkedin.svg',
-                            height: 64,
-                            width: 64,
-                          ),
-                        )
-                      : IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: SvgPicture.asset(
-                            'assets/icons/twitter.svg',
-                            height: 64,
-                            width: 64,
-                          ),
-                        ),
+                  ],
+                ),
+              ),
               ListTile(
                 leading: Icon(
                   Icons.access_time,
@@ -172,7 +201,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                 subtitle: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.7,
                   child: Text(
-                    'Lorem ipsum makaveli',
+                    widget.data.long,
                     style: headline2Detail,
                   ),
                 ),
@@ -181,10 +210,15 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Text(
+                      'website: ',
+                      style: headline1detail,
+                    ),
                     SizedBox(
                       height: 70,
-                      width: MediaQuery.of(context).size.width * 0.55,
+                      width: MediaQuery.of(context).size.width * 0.65,
                       child: LinkPreviewGenerator(
                         link: widget.data.webLink,
                         linkPreviewStyle: LinkPreviewStyle.small,
@@ -197,19 +231,6 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                         onTap: () {},
                       ),
                     ),
-                    const Spacer(),
-                    MaterialButton(
-                      color: ThemeApplication.lightTheme.backgroundColor2
-                          .withOpacity(0.7),
-                      elevation: 0.0,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(24))),
-                      onPressed: () {},
-                      child: Text(
-                        'Visit Website',
-                        style: headline2Profile,
-                      ),
-                    )
                   ],
                 ),
               ),

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:eventend/network_services/network_call.dart';
-// import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class NetworkConnectivity {
   bool isDeviceConnected = false;
@@ -15,10 +14,6 @@ class NetworkConnectivity {
         if (response == true) {
           isDeviceConnected = response;
         }
-        // response = await InternetConnectionChecker().hasConnection;
-        // if (response == true) {
-        //   isDeviceConnected = response;
-        // }
       }
     });
     return isDeviceConnected;

@@ -21,89 +21,106 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<ConcertProvider>(context, listen: false).getAllConcerts();
-      Provider.of<ServiceProvider>(context, listen: false).getAllServices();
       Provider.of<NetworkProvider>(context, listen: false).checkNetwork();
     });
     super.initState();
   }
 
+  Future<void> initializeProviders() async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<ConcertProvider>(context, listen: false).getAllConcerts();
+      Provider.of<ServiceProvider>(context, listen: false).getAllServices();
+    });
+  }
+
+  Future<void> initializeNothing() async {}
+
   bool isLoading = true;
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 2), () {
       isLoading = false;
     });
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                color: ThemeApplication.lightTheme.backgroundColor2
-                    .withOpacity(0.1),
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                  child: Text(
-                    'Eventend',
-                    style: pageTitle,
-                  ),
-                ),
-              ),
-              Consumer<ServiceProvider>(builder: (context, value, child) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      height: 250,
-                      child: ListView.builder(
-                          itemCount: value.services.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return value.isLoading
-                                ? const SuggestedCardShimmer()
-                                : SuggestedCard(data: value.services[index]);
-                          }),
-                    ),
-                  ],
-                );
-              }),
-              Container(
-                color: ThemeApplication.lightTheme.backgroundColor,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
+        body: Consumer<NetworkProvider>(builder: (context, value, child) {
+          return FutureBuilder(
+              future: value.isDeviceConnected
+                  ? initializeProviders()
+                  : initializeNothing(),
+              builder: (context, _) {
+                return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Recent',
-                        style: headline1,
+                      Container(
+                        color: ThemeApplication.lightTheme.backgroundColor2
+                            .withOpacity(0.1),
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          child: Text(
+                            'Eventend',
+                            style: pageTitle,
+                          ),
+                        ),
                       ),
-                      Consumer<ConcertProvider>(
+                      Consumer<ServiceProvider>(
                           builder: (context, value, child) {
-                        return ListView.builder(
-                          itemCount: value.concerts.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return value.isLoading
-                                ? const HomeTileShimmer()
-                                : HomeTile(data: value.concerts[index]);
-                          },
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              height: 250,
+                              child: ListView.builder(
+                                  itemCount: value.services.length,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return value.isLoading
+                                        ? const SuggestedCardShimmer()
+                                        : SuggestedCard(
+                                            data: value.services[index]);
+                                  }),
+                            ),
+                          ],
                         );
                       }),
+                      Container(
+                        color: ThemeApplication.lightTheme.backgroundColor,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Recent',
+                                style: headline1,
+                              ),
+                              Consumer<ConcertProvider>(
+                                  builder: (context, value, child) {
+                                return ListView.builder(
+                                  itemCount: value.concerts.length,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return value.isLoading
+                                        ? const HomeTileShimmer()
+                                        : HomeTile(data: value.concerts[index]);
+                                  },
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ),
-            ],
-          ),
-        ),
+                );
+              });
+        }),
       ),
     );
   }

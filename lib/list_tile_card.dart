@@ -44,22 +44,24 @@ class _HomeTileState extends State<HomeTile> {
                         const Text('Error Loading the image!'),
                   ),
                   Positioned(
-                      right: 1,
-                      top: 2,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ThemeApplication.lightTheme.backgroundColor,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(2)),
-                          border: Border.all(
-                              width: 0.5,
-                              color: ThemeApplication
-                                  .lightTheme.backgroundColor2
-                                  .withOpacity(0.3)),
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: const Text('Free'),
-                      ))
+                    right: 1,
+                    top: 2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: ThemeApplication.lightTheme.backgroundColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(2)),
+                        border: Border.all(
+                            width: 0.5,
+                            color: ThemeApplication.lightTheme.backgroundColor2
+                                .withOpacity(0.3)),
+                      ),
+                      padding: const EdgeInsets.all(2),
+                      child: widget.data.price.isEmpty
+                          ? const Text('Free')
+                          : const Text('Priced'),
+                    ),
+                  ),
                 ],
               ),
             ),

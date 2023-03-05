@@ -31,12 +31,9 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   rive: ^0.10.2
   carousel_slider: ^4.1.1
-  drag_and_drop_lists: ^0.3.3
   shared_preferences: ^2.0.18
   link_preview_generator: ^1.2.0
-  any_link_preview: ^3.0.0
   connectivity_plus: ^3.0.3
-  internet_connection_checker: ^1.0.0+1
   flutter_svg: ^2.0.2
   provider: ^6.0.5
   http: ^0.13.5

@@ -10,5 +10,6 @@
         "RGBO",
         "viro",
         "vsync"
-    ]
+    ],
+    "cmake.sourceDirectory": "${workspaceFolder}/linux"
 }

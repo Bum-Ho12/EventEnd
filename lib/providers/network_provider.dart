@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../network_services/connectivity.dart';
 
 class NetworkProvider extends ChangeNotifier {
+
   final _networkCheck = NetworkConnectivity();
   bool isLoading = false;
   bool _isConnected = false;
