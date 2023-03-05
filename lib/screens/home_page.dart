@@ -55,10 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ? const Favorite()
                       : const NetworkErrorScreen(),
                 ),
-                Center(
-                  child: value.isDeviceConnected == true
-                      ? const Profile()
-                      : const NetworkErrorScreen(),
+                const Center(
+                  child: Profile(),
                 ),
               ];
               return tabs[_currentIndex];

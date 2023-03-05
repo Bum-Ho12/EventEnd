@@ -18,7 +18,7 @@ class _NetworkErrorScreenState extends State<NetworkErrorScreen> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
@@ -29,8 +29,9 @@ class _NetworkErrorScreenState extends State<NetworkErrorScreen> {
             Text(
               'There is a problem with your \n'
               'Internet Connection',
-              style: headline1detail,
+              style: commonText,
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             MaterialButton(
               color:
                   ThemeApplication.lightTheme.backgroundColor2.withOpacity(0.7),
@@ -47,6 +48,7 @@ class _NetworkErrorScreenState extends State<NetworkErrorScreen> {
                 style: headline2Profile,
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
           ],
         ),
       ),
