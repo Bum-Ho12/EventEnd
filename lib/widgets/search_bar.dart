@@ -1,4 +1,5 @@
 import 'package:eventend/providers/search_provider.dart';
+import 'package:eventend/providers/search_service_provider.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +16,8 @@ class _SearchBarState extends State<SearchBar> {
   TextEditingController _searchText = TextEditingController();
   @override
   void initState() {
-    final SearchProvider searchProvider =
-        Provider.of<SearchProvider>(context, listen: false);
+    final ConcertSearchProvider searchProvider =
+        Provider.of<ConcertSearchProvider>(context, listen: false);
     super.initState();
     _searchText = TextEditingController(text: searchProvider.searched);
   }
@@ -66,13 +67,19 @@ class _SearchBarState extends State<SearchBar> {
   }
 
   Widget searchEntry() {
-    final SearchProvider searchProvider = Provider.of<SearchProvider>(context);
+    final ServiceSearchProvider serviceSearchProvider =
+        Provider.of<ServiceSearchProvider>(context);
+    final ConcertSearchProvider concertSearchProvider =
+        Provider.of<ConcertSearchProvider>(context);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: TextField(
           controller: _searchText,
-          onChanged: searchProvider.setSearched,
+          onChanged: (value) {
+            serviceSearchProvider.setSearched(value);
+            concertSearchProvider.setSearched(value);
+          },
           decoration: const InputDecoration(
             border: InputBorder.none,
             hintText: 'Search..',

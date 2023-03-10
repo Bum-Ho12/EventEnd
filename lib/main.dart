@@ -1,21 +1,27 @@
 import 'package:eventend/providers/concert_provider.dart';
+import 'package:eventend/providers/favorites_provider.dart';
 import 'package:eventend/providers/network_provider.dart';
 import 'package:eventend/providers/search_provider.dart';
+import 'package:eventend/providers/search_service_provider.dart';
 import 'package:eventend/providers/service_provider.dart';
 import 'package:eventend/screens/home_page.dart';
 import 'package:eventend/screens/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'providers/service_favorites_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SearchProvider()),
+        ChangeNotifierProvider(create: (_) => ConcertSearchProvider()),
         ChangeNotifierProvider(create: (_) => ConcertProvider()),
         ChangeNotifierProvider(create: (_) => ServiceProvider()),
         ChangeNotifierProvider(create: (_) => NetworkProvider()),
+        ChangeNotifierProvider(create: (_) => FavoriteConcertProvider()),
+        ChangeNotifierProvider(create: (_) => FavoriteServiceProvider()),
+        ChangeNotifierProvider(create: (_) => ServiceSearchProvider()),
       ],
       child: const MyApp(),
     ),

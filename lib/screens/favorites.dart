@@ -1,6 +1,5 @@
-import 'package:eventend/screens/events.dart';
-import 'package:eventend/screens/service.dart';
-import 'package:eventend/screens/subscribed.dart';
+import 'package:eventend/screens/favorites/events.dart';
+import 'package:eventend/screens/favorites/service.dart';
 import 'package:flutter/material.dart';
 import '../utilities/personalization.dart';
 
@@ -15,7 +14,7 @@ class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: ThemeApplication.lightTheme.backgroundColor,
         body: NestedScrollView(
@@ -51,7 +50,7 @@ class _FavoriteState extends State<Favorite> {
                             ThemeApplication.lightTheme.backgroundColor2,
                         tabs: const [
                           Tab(text: 'Service'),
-                          Tab(text: 'Subscription'),
+                          // Tab(text: 'Subscription'),
                           Tab(text: 'Events')
                         ]),
                   ),
@@ -59,7 +58,7 @@ class _FavoriteState extends State<Favorite> {
             body: const TabBarView(
               children: [
                 ServiceFavorites(),
-                Subscribed(),
+                // Subscribed(),
                 Events(),
               ],
             )),

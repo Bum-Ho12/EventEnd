@@ -2,7 +2,7 @@ import 'package:eventend/classes/service_class.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/check_profile.dart';
+import 'screens/homescreen/check_profile.dart';
 
 class SuggestedCard extends StatefulWidget {
   final Service data;

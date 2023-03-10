@@ -1,16 +1,15 @@
 import 'package:eventend/classes/user_class.dart';
-import 'package:eventend/screens/change_profile.dart';
-import 'package:eventend/screens/notification_page.dart';
-import 'package:eventend/screens/settings.dart';
+import 'package:eventend/screens/profile/notification_page.dart';
+import 'package:eventend/screens/profile/settings.dart';
 import 'package:eventend/widgets/rive_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../forms/change_profile.dart';
 import '../providers/network_provider.dart';
 import '../utilities/personalization.dart';
-import 'list_of_posts.dart';
-import 'post_options.dart';
+import 'profile/list_of_posts.dart';
+import 'profile/post_options.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -402,6 +401,12 @@ class _ProfileState extends State<Profile> {
                           MaterialButton(
                             onPressed: value.isDeviceConnected == true
                                 ? () async {
+                                    Navigator.popUntil(
+                                      context,
+                                      ModalRoute.withName(
+                                        Navigator.defaultRouteName,
+                                      ),
+                                    );
                                     SharedPreferences sharedPreferences =
                                         await SharedPreferences.getInstance();
                                     sharedPreferences.remove('email');
@@ -419,7 +424,22 @@ class _ProfileState extends State<Profile> {
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 8.0, horizontal: 20),
-                              child: Text('SIGN OUT', style: headline2Profile),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Icon(
+                                    Icons.exit_to_app,
+                                    color: ThemeApplication
+                                        .lightTheme.backgroundColor,
+                                    size: 30,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text('SIGN OUT', style: headline2Profile),
+                                ],
+                              ),
                             ),
                           )
                         ],

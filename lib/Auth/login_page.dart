@@ -62,9 +62,6 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(top: 8, bottom: 16),
                       child: TextFormField(
                         controller: emailController,
-                        // onChanged: (value) {
-                        //   emailController.text = value;
-                        // },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24)),
@@ -100,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                               'assets/icons/password.svg',
                               height: 24,
                               width: 24,
-                              // color: backgroundColor2,
                             ),
                           ),
                         ),
@@ -113,8 +109,6 @@ class _LoginPageState extends State<LoginPage> {
                             emailController.text.trim(),
                             passwordController.text.trim(),
                           );
-                          // Navigator.push(context,
-                          //     SlideRightRoute(page: const MyHomePage()));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: ThemeApplication
@@ -233,11 +227,9 @@ class _LoginPageState extends State<LoginPage> {
           sharedPreferences.setString("password", passwordController.text);
           Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
         }
-      } else {
-        // print(response.body);
-      }
+      } else {}
     } catch (e) {
-      // print(e);
+      throw e.toString();
     }
   }
 }

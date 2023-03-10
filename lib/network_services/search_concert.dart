@@ -1,20 +1,26 @@
 import 'dart:convert';
-
-import 'package:eventend/classes/concert_class.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import '../classes/concert_search_class.dart';
 
-class ConcertFetch {
-  Future<List<Concert>> getAll() async {
-    const url = 'https://eventend.pythonanywhere.com/category/';
+class ConcertSearchFetch {
+  Future<List<ConcertSearch>> getAllSearched(element) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString('token');
+    String url =
+        'https://eventend.pythonanywhere.com/search_concert?search=$element';
     final uri = Uri.parse(url);
+    Map<String, String> headers = {"Authorization": "Token $token"};
     final req = http.MultipartRequest('GET', uri);
-    req.fields['category'] = 'concerts';
+    req.headers.addAll(headers);
     final res = await req.send();
     final response = await http.Response.fromStream(res);
+
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body) as List;
-      final concerts = json.map((e) {
-        return Concert(
+      final json = jsonDecode(response.body);
+      final data = json["results"] as List;
+      final concerts = data.map((e) {
+        return ConcertSearch(
           id: e['id'],
           title: e['title'],
           organizer: e['concert']['organizer'],

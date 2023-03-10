@@ -1,4 +1,5 @@
 class Service {
+  final int id;
   final String title;
   final String organizer;
   final int organizerId;
@@ -13,6 +14,7 @@ class Service {
   final int traffic;
 
   Service({
+    required this.id,
     required this.title,
     required this.organizer,
     required this.organizerId,

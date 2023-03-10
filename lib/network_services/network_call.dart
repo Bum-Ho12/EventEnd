@@ -5,9 +5,14 @@ class NetworkCall {
   Future<bool> internetConnection() async {
     bool connection = false;
     final uri = Uri.parse(url);
-    final response = await http.get(uri);
-    if (response.statusCode == 200) {
-      connection = true;
+    try {
+      final response = await http.get(uri);
+      if (response.statusCode == 200) {
+        connection = true;
+      }
+    } catch (e) {
+      connection = false;
+      throw e.toString();
     }
     return connection;
   }

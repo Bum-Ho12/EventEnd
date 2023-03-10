@@ -44,6 +44,7 @@ class _HomeState extends State<Home> {
     return SafeArea(
       child: Scaffold(
         body: Consumer<NetworkProvider>(builder: (context, value, child) {
+          bool isConnected = value.isDeviceConnected;
           return FutureBuilder(
               future: value.isDeviceConnected
                   ? initializeProviders()
@@ -75,14 +76,17 @@ class _HomeState extends State<Home> {
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               height: 250,
                               child: ListView.builder(
-                                  itemCount: value.services.length,
+                                  itemCount:
+                                      isConnected ? value.services.length : 3,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
-                                    return value.isLoading
-                                        ? const SuggestedCardShimmer()
-                                        : SuggestedCard(
-                                            data: value.services[index]);
+                                    return isConnected
+                                        ? value.isLoading
+                                            ? const SuggestedCardShimmer()
+                                            : SuggestedCard(
+                                                data: value.services[index])
+                                        : const SuggestedCardShimmer();
                                   }),
                             ),
                           ],
@@ -102,13 +106,17 @@ class _HomeState extends State<Home> {
                               Consumer<ConcertProvider>(
                                   builder: (context, value, child) {
                                 return ListView.builder(
-                                  itemCount: value.concerts.length,
+                                  itemCount:
+                                      isConnected ? value.concerts.length : 3,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    return value.isLoading
-                                        ? const HomeTileShimmer()
-                                        : HomeTile(data: value.concerts[index]);
+                                    return isConnected
+                                        ? value.isLoading
+                                            ? const HomeTileShimmer()
+                                            : HomeTile(
+                                                data: value.concerts[index])
+                                        : const HomeTileShimmer();
                                   },
                                 );
                               }),

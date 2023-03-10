@@ -1,7 +1,6 @@
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
-
-import 'post.dart';
+import '../../forms/post.dart';
 
 class PostOptions extends StatefulWidget {
   const PostOptions({super.key});

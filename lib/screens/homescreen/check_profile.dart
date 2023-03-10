@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:link_preview_generator/link_preview_generator.dart';
 
-import '../utilities/personalization.dart';
+import '../../utilities/personalization.dart';
 
 class ProfileViewPage extends StatefulWidget {
   final Service data;
@@ -17,6 +17,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
   @override
   Widget build(BuildContext context) {
     String domain = Uri.parse(widget.data.webLink).host;
+    String domainName = domain.split('.')[domain.split('.').length - 2];
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -127,7 +128,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: domain == "www.instagram.com"
+                      child: domainName == "instagram"
                           ? IconButton(
                               padding: EdgeInsets.zero,
                               onPressed: () {},
@@ -137,7 +138,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                                 width: 64,
                               ),
                             )
-                          : domain == 'www.linkedin.com'
+                          : domainName == 'linkedin'
                               ? IconButton(
                                   padding: EdgeInsets.zero,
                                   onPressed: () {},
@@ -147,15 +148,20 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                                     width: 64,
                                   ),
                                 )
-                              : IconButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {},
-                                  icon: SvgPicture.asset(
-                                    'assets/icons/twitter.svg',
-                                    height: 64,
-                                    width: 64,
-                                  ),
-                                ),
+                              : domainName == 'twitter'
+                                  ? IconButton(
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {},
+                                      icon: SvgPicture.asset(
+                                        'assets/icons/twitter.svg',
+                                        height: 64,
+                                        width: 64,
+                                      ),
+                                    )
+                                  : Text(
+                                      domainName,
+                                      style: commonText,
+                                    ),
                     ),
                     const Spacer(),
                     MaterialButton(

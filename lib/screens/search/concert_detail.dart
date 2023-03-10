@@ -1,19 +1,18 @@
+import 'package:eventend/classes/concert_search_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:link_preview_generator/link_preview_generator.dart';
+import '../../utilities/personalization.dart';
 
-import '../classes/concert_class.dart';
-import '../utilities/personalization.dart';
-
-class CardPage extends StatefulWidget {
-  final Concert data;
-  const CardPage({required this.data, super.key});
+class ConcertCardPage extends StatefulWidget {
+  final ConcertSearch data;
+  const ConcertCardPage({required this.data, super.key});
 
   @override
-  State<CardPage> createState() => _CardPageState();
+  State<ConcertCardPage> createState() => _ConcertCardPageState();
 }
 
-class _CardPageState extends State<CardPage> {
+class _ConcertCardPageState extends State<ConcertCardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +63,7 @@ class _CardPageState extends State<CardPage> {
                 height: 200,
                 width: MediaQuery.of(context).size.width,
                 child: Image.network(
-                  'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
+                  widget.data.concertPicture,
                   fit: BoxFit.contain,
                 ),
               ),

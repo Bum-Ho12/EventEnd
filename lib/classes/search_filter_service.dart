@@ -1,39 +1,31 @@
-class Concert {
+class ServiceSearch {
   final int id;
   final String title;
   final String organizer;
   final int organizerId;
-  final String organizeProfilePicture;
-  final String concertPicture;
-  final String eventDate;
-  final String fromHour;
-  final String toHour;
-  final String location;
+  final String organizerProfilePicture;
   final String long;
   final String lat;
   final String description;
   final String price;
+  final String permit;
   final String webLink;
+  final String socialMediaLink;
   final int traffic;
-  final int tickets;
 
-  Concert({
+  ServiceSearch({
     required this.id,
     required this.title,
     required this.organizer,
     required this.organizerId,
-    required this.organizeProfilePicture,
-    required this.concertPicture,
-    required this.eventDate,
-    required this.fromHour,
-    required this.toHour,
-    required this.location,
+    required this.organizerProfilePicture,
     required this.long,
     required this.lat,
     required this.description,
     required this.price,
+    required this.permit,
     required this.webLink,
+    required this.socialMediaLink,
     required this.traffic,
-    required this.tickets,
   });
 }

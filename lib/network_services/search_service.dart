@@ -2,18 +2,25 @@ import 'dart:convert';
 
 import 'package:eventend/classes/service_class.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ServiceFetch {
-  Future<List<Service>> getAll() async {
-    const url = 'https://eventend.pythonanywhere.com/category/';
+class ServiceSearchFetch {
+  Future<List<Service>> getAllSearched(element) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString('token');
+    String url =
+        'https://eventend.pythonanywhere.com/search_service?search=$element';
     final uri = Uri.parse(url);
+    Map<String, String> headers = {"Authorization": "Token $token"};
     final req = http.MultipartRequest('GET', uri);
-    req.fields['category'] = 'services';
+    req.headers.addAll(headers);
     final res = await req.send();
     final response = await http.Response.fromStream(res);
+
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body) as List;
-      final services = json.map((e) {
+      final json = jsonDecode(response.body);
+      final data = json["results"] as List;
+      final services = data.map((e) {
         return Service(
           id: e['id'],
           title: e['title'],

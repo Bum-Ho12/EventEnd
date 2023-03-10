@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utilities/personalization.dart';
+import '../../utilities/personalization.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

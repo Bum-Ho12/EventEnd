@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../utilities/personalization.dart';
-import '../widgets/expansion_tile_widget.dart';
+import '../../utilities/personalization.dart';
+import '../../widgets/expansion_tile_widget.dart';
 
-class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({super.key});
+class PostsList extends StatefulWidget {
+  const PostsList({super.key});
 
   @override
-  State<NotificationsPage> createState() => _NotificationsPageState();
+  State<PostsList> createState() => _PostsListState();
 }
 
-class _NotificationsPageState extends State<NotificationsPage> {
+class _PostsListState extends State<PostsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications', style: pageTitle),
+        title: Text('My Posts', style: pageTitle),
         backgroundColor: ThemeApplication.lightTheme.backgroundColor,
         elevation: 0,
         centerTitle: true,

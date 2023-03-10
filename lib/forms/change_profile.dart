@@ -1,3 +1,4 @@
+import 'package:eventend/widgets/text_form_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../classes/user_class.dart';
@@ -12,6 +13,12 @@ class ChangeProfile extends StatefulWidget {
 }
 
 class _ChangeProfileState extends State<ChangeProfile> {
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool changeName = false;
+  bool changeProfileLink = false;
+  bool changeLocation = false;
+  bool openDays = false;
+  bool changeDescription = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,13 +115,39 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   ],
                 ),
               ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Text(
+                      widget.account.name,
+                      style: headline1,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        changeName = !changeName;
+                      });
+                    },
+                    icon: changeName == true
+                        ? Icon(
+                            Icons.close,
+                            color: ThemeApplication.lightTheme.backgroundColor2,
+                          )
+                        : Icon(
+                            Icons.edit_outlined,
+                            color: ThemeApplication.lightTheme.backgroundColor2,
+                          ),
+                  )
+                ],
+              ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Text(
-                  widget.account.name,
-                  style: headline1,
-                ),
+                padding: const EdgeInsets.all(8.0),
+                child: changeName == false
+                    ? const SizedBox()
+                    : const FormTextWidget(),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -129,9 +162,33 @@ class _ChangeProfileState extends State<ChangeProfile> {
                         maxLines: 3,
                       ),
                     ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          changeProfileLink = !changeProfileLink;
+                        });
+                      },
+                      icon: changeProfileLink == true
+                          ? Icon(
+                              Icons.close,
+                              color:
+                                  ThemeApplication.lightTheme.backgroundColor2,
+                            )
+                          : Icon(
+                              Icons.edit_outlined,
+                              color:
+                                  ThemeApplication.lightTheme.backgroundColor2,
+                            ),
+                    ),
                     const Spacer(),
                   ],
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: changeProfileLink == false
+                    ? const SizedBox()
+                    : const FormTextWidget(),
               ),
               ListTile(
                 leading: Icon(
@@ -139,9 +196,31 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   color: ThemeApplication.lightTheme.backgroundColor2
                       .withOpacity(0.7),
                 ),
-                title: Text(
-                  'Open Days',
-                  style: headline1detail,
+                title: Row(
+                  children: [
+                    Text(
+                      'Open Days',
+                      style: headline1detail,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          openDays = !openDays;
+                        });
+                      },
+                      icon: openDays == true
+                          ? Icon(
+                              Icons.close,
+                              color:
+                                  ThemeApplication.lightTheme.backgroundColor2,
+                            )
+                          : Icon(
+                              Icons.edit_outlined,
+                              color:
+                                  ThemeApplication.lightTheme.backgroundColor2,
+                            ),
+                    )
+                  ],
                 ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,10 +230,16 @@ class _ChangeProfileState extends State<ChangeProfile> {
                       '${widget.account.weekdayTo..toString()}',
                       style: headline2Detail,
                     ),
+                    openDays == false
+                        ? const SizedBox()
+                        : const FormTextWidget(),
                     Text(
                       '${widget.account.fromHour} - ${widget.account.toHour}',
                       style: headline2Detail,
-                    )
+                    ),
+                    openDays == false
+                        ? const SizedBox()
+                        : const FormTextWidget(),
                   ],
                 ),
               ),
@@ -164,23 +249,74 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   color: ThemeApplication.lightTheme.backgroundColor2
                       .withOpacity(0.7),
                 ),
-                title: Text(
-                  'Business Location',
-                  style: headline1detail,
+                title: Row(
+                  children: [
+                    Text(
+                      'Business Location',
+                      style: headline1detail,
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          changeLocation = !changeLocation;
+                        });
+                      },
+                      icon: changeLocation == true
+                          ? Icon(
+                              Icons.close,
+                              color:
+                                  ThemeApplication.lightTheme.backgroundColor2,
+                            )
+                          : Icon(
+                              Icons.edit_outlined,
+                              color:
+                                  ThemeApplication.lightTheme.backgroundColor2,
+                            ),
+                    )
+                  ],
                 ),
-                subtitle: Text(
-                  widget.account.location,
-                  style: headline2Detail,
+                subtitle: Column(
+                  children: [
+                    Text(
+                      widget.account.location,
+                      style: headline2Detail,
+                    ),
+                    changeLocation == false
+                        ? const SizedBox()
+                        : const FormTextWidget(),
+                  ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  child: Text(
-                    'Brief Description',
-                    style: headline1,
-                    maxLines: 6,
+                  child: Row(
+                    children: [
+                      Text(
+                        'Brief Description',
+                        style: headline1,
+                        maxLines: 6,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            changeDescription = !changeDescription;
+                          });
+                        },
+                        icon: changeDescription == true
+                            ? Icon(
+                                Icons.close,
+                                color: ThemeApplication
+                                    .lightTheme.backgroundColor2,
+                              )
+                            : Icon(
+                                Icons.edit_outlined,
+                                color: ThemeApplication
+                                    .lightTheme.backgroundColor2,
+                              ),
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -191,6 +327,12 @@ class _ChangeProfileState extends State<ChangeProfile> {
                   style: commonTextMain,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: changeDescription == false
+                    ? const SizedBox()
+                    : const FormTextWidget(),
+              )
             ],
           ),
           const SizedBox(

@@ -1,4 +1,4 @@
-class Concert {
+class ConcertSearch {
   final int id;
   final String title;
   final String organizer;
@@ -17,7 +17,7 @@ class Concert {
   final int traffic;
   final int tickets;
 
-  Concert({
+  ConcertSearch({
     required this.id,
     required this.title,
     required this.organizer,
