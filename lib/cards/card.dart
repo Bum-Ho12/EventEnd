@@ -1,8 +1,9 @@
 import 'package:eventend/classes/service_class.dart';
+import 'package:eventend/network_services/add_to_favorites.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/homescreen/check_profile.dart';
+import '../screens/homescreen/check_profile.dart';
 
 class SuggestedCard extends StatefulWidget {
   final Service data;
@@ -13,6 +14,8 @@ class SuggestedCard extends StatefulWidget {
 }
 
 class _SuggestedCardState extends State<SuggestedCard> {
+  AddFavorite addToFavorite = AddFavorite();
+  bool isSaved = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -80,16 +83,35 @@ class _SuggestedCardState extends State<SuggestedCard> {
               const SizedBox(
                 height: 7,
               ),
-              MaterialButton(
-                color: ThemeApplication.lightTheme.backgroundColor2
-                    .withOpacity(0.3),
-                elevation: 0.0,
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(24))),
-                onPressed: () {},
-                child: Text(
-                  'Subscribe',
-                  style: headline2Detail,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MaterialButton(
+                      color: ThemeApplication.lightTheme.backgroundColor2
+                          .withOpacity(0.3),
+                      elevation: 0.0,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(24))),
+                      onPressed: () {},
+                      child: Text(
+                        'Request',
+                        style: headline2Detail,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        isSaved =
+                            await addToFavorite.addService(widget.data.id);
+                      },
+                      child: Icon(
+                        isSaved ? Icons.favorite : Icons.favorite_outline,
+                        color: ThemeApplication.lightTheme.backgroundColor2,
+                        size: 30,
+                      ),
+                    ),
+                  ],
                 ),
               )
             ],

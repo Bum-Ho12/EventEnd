@@ -1,23 +1,26 @@
-import 'package:eventend/classes/concert_search_class.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
-import 'screens/search/concert_detail.dart';
 
-class ConcertSearchTile extends StatefulWidget {
-  final ConcertSearch data;
-  const ConcertSearchTile({required this.data, super.key});
+import '../classes/concert_class.dart';
+import '../network_services/add_to_favorites.dart';
+import '../screens/homescreen/detail.dart';
+
+class HomeTile extends StatefulWidget {
+  final Concert data;
+  const HomeTile({required this.data, super.key});
 
   @override
-  State<ConcertSearchTile> createState() => _ConcertSearchTileState();
+  State<HomeTile> createState() => _HomeTileState();
 }
 
-class _ConcertSearchTileState extends State<ConcertSearchTile> {
+class _HomeTileState extends State<HomeTile> {
+  AddFavorite addToFavorite = AddFavorite();
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, SlideRightRoute(page: ConcertCardPage(data: widget.data)));
+            context, SlideRightRoute(page: CardPage(data: widget.data)));
       },
       child: Container(
         color: ThemeApplication.lightTheme.backgroundColor,
@@ -31,7 +34,7 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
               child: Stack(
                 children: [
                   Image.network(
-                    widget.data.concertPicture,
+                    'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
                     fit: BoxFit.fill,
                     height: 120,
                     width: 200,
@@ -109,7 +112,9 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
                       ),
                       const SizedBox(width: 20),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          addToFavorite.addConcert(widget.data.id);
+                        },
                         child: Icon(
                           Icons.favorite_outline,
                           color: ThemeApplication.lightTheme.backgroundColor2,

@@ -1,7 +1,7 @@
 import 'package:eventend/providers/favorites_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../favorite_concert_card.dart';
+import '../../cards/favorite_concert_card.dart';
 import '../../providers/network_provider.dart';
 import '../../widgets/list_card_shimmer.dart';
 // import '../utilities/personalization.dart';

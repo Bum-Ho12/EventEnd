@@ -1,4 +1,4 @@
-import 'package:eventend/list_tile_card.dart';
+import 'package:eventend/cards/list_tile_card.dart';
 import 'package:eventend/providers/concert_provider.dart';
 import 'package:eventend/providers/service_provider.dart';
 import 'package:eventend/utilities/personalization.dart';
@@ -6,7 +6,7 @@ import 'package:eventend/widgets/list_card_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../card.dart';
+import '../cards/card.dart';
 import '../providers/network_provider.dart';
 import '../widgets/card_shimmer.dart';
 
