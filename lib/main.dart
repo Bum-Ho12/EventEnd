@@ -1,6 +1,7 @@
 import 'package:eventend/providers/concert_provider.dart';
 import 'package:eventend/providers/favorites_provider.dart';
 import 'package:eventend/providers/network_provider.dart';
+import 'package:eventend/providers/request_provider.dart';
 import 'package:eventend/providers/search_provider.dart';
 import 'package:eventend/providers/search_service_provider.dart';
 import 'package:eventend/providers/service_provider.dart';
@@ -22,6 +23,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => FavoriteConcertProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteServiceProvider()),
         ChangeNotifierProvider(create: (_) => ServiceSearchProvider()),
+        ChangeNotifierProvider(create: (_) => RequestProvider()),
       ],
       child: const MyApp(),
     ),

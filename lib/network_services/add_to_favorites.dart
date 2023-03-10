@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,13 +14,11 @@ class AddFavorite {
     req.fields['id'] = id.toString();
     final res = await req.send();
     final response = await http.Response.fromStream(res);
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body) as List;
-      if (json.isNotEmpty) {
-        return true;
-      }
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
-    throw 'error fetching data';
   }
 
   Future<bool> addService(id) async {
@@ -36,21 +33,10 @@ class AddFavorite {
     req.fields['id'] = id.toString();
     final res = await req.send();
     final response = await http.Response.fromStream(res);
-    try {
-      if (response.statusCode == 200) {
-        final json = jsonDecode(response.body) as List;
-        if (json.isNotEmpty) {
-          // print(json);
-          return true;
-        } else {
-          // print(json);
-          return false;
-        }
-      }
-    } catch (e) {
-      // print(e);
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
-    // throw 'error fetching data';
-    return false;
   }
 }

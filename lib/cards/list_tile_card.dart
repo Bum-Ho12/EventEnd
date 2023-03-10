@@ -15,6 +15,7 @@ class HomeTile extends StatefulWidget {
 
 class _HomeTileState extends State<HomeTile> {
   AddFavorite addToFavorite = AddFavorite();
+  bool isSaved = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -112,11 +113,15 @@ class _HomeTileState extends State<HomeTile> {
                       ),
                       const SizedBox(width: 20),
                       InkWell(
-                        onTap: () {
-                          addToFavorite.addConcert(widget.data.id);
+                        onTap: () async {
+                          bool isSent =
+                              await addToFavorite.addConcert(widget.data.id);
+                          setState(() {
+                            isSaved = isSent;
+                          });
                         },
                         child: Icon(
-                          Icons.favorite_outline,
+                          isSaved ? Icons.favorite : Icons.favorite_outline,
                           color: ThemeApplication.lightTheme.backgroundColor2,
                           size: 30,
                         ),

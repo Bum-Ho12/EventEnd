@@ -3,6 +3,7 @@ import 'package:eventend/network_services/add_to_favorites.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
+import '../forms/request_form.dart';
 import '../screens/homescreen/check_profile.dart';
 
 class SuggestedCard extends StatefulWidget {
@@ -94,7 +95,12 @@ class _SuggestedCardState extends State<SuggestedCard> {
                       elevation: 0.0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(24))),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            SlideRightRoute(
+                                page: RequestForm(data: widget.data)));
+                      },
                       child: Text(
                         'Request',
                         style: headline2Detail,
@@ -102,8 +108,11 @@ class _SuggestedCardState extends State<SuggestedCard> {
                     ),
                     InkWell(
                       onTap: () async {
-                        isSaved =
+                        bool isSent =
                             await addToFavorite.addService(widget.data.id);
+                        setState(() {
+                          isSaved = isSent;
+                        });
                       },
                       child: Icon(
                         isSaved ? Icons.favorite : Icons.favorite_outline,
