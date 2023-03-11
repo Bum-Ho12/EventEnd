@@ -37,3 +37,25 @@ class Concert {
     required this.tickets,
   });
 }
+
+class ConcertCreate {
+  final String title;
+  final String eventDate;
+  final String fromHour;
+  final String toHour;
+  final String location;
+  final String description;
+  final int price;
+  final String webLink;
+
+  ConcertCreate({
+    required this.title,
+    required this.eventDate,
+    required this.fromHour,
+    required this.toHour,
+    required this.location,
+    required this.description,
+    required this.price,
+    required this.webLink,
+  });
+}

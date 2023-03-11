@@ -17,7 +17,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
   @override
   Widget build(BuildContext context) {
     String domain = Uri.parse(widget.data.webLink).host;
-    String domainName = domain.split('.')[domain.split('.').length - 2];
+    // String domainName = domain.split('.')[domain.split('.').length - 2];
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -128,7 +128,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: domainName == "instagram"
+                      child: domain == "www.instagram.com"
                           ? IconButton(
                               padding: EdgeInsets.zero,
                               onPressed: () {},
@@ -138,7 +138,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                                 width: 64,
                               ),
                             )
-                          : domainName == 'linkedin'
+                          : domain == 'www.linkedin.com'
                               ? IconButton(
                                   padding: EdgeInsets.zero,
                                   onPressed: () {},
@@ -148,7 +148,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                                     width: 64,
                                   ),
                                 )
-                              : domainName == 'twitter'
+                              : domain == 'www.twitter.com'
                                   ? IconButton(
                                       padding: EdgeInsets.zero,
                                       onPressed: () {},
@@ -159,7 +159,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                                       ),
                                     )
                                   : Text(
-                                      domainName,
+                                      domain,
                                       style: commonText,
                                     ),
                     ),

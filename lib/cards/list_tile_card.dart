@@ -73,15 +73,23 @@ class _HomeTileState extends State<HomeTile> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Text(
+                    widget.data.title,
+                    style: headlineTile,
+                  ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Sat, March 4',
+                        widget.data.eventDate,
                         style: commonText,
                       ),
                       const VerticalDivider(
                         width: 2,
                         thickness: 0.5,
+                      ),
+                      const SizedBox(
+                        width: 5,
                       ),
                       Text(
                         widget.data.fromHour,
@@ -89,13 +97,17 @@ class _HomeTileState extends State<HomeTile> {
                       ),
                     ],
                   ),
-                  Text(
-                    widget.data.title,
-                    style: headlineTile,
-                  ),
-                  Text(
-                    widget.data.description,
-                    style: commonTextMain,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.data.description,
+                          style: commonTextMain,
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 10,

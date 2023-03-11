@@ -12,7 +12,6 @@ class NetworkCall {
       }
     } catch (e) {
       connection = false;
-      throw e.toString();
     }
     return connection;
   }

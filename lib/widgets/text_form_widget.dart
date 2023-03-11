@@ -1,7 +1,6 @@
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../utilities/day_selector.dart';
 
 class FormTextWidget extends StatefulWidget {

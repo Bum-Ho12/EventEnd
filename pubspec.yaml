@@ -36,6 +36,7 @@ dependencies:
   connectivity_plus: ^3.0.3
   flutter_svg: ^2.0.2
   image_picker: ^0.8.7
+  file_picker: ^5.2.5
   path_provider: ^2.0.13
   weekday_selector: ^1.1.0
   provider: ^6.0.5

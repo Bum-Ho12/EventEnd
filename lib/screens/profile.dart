@@ -68,18 +68,9 @@ class _ProfileState extends State<Profile> {
                     scrolledUnderElevation: 0,
                     leading: Container(),
                     leadingWidth: 0,
-                    title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Followers: 456',
-                            style: headline2Profile,
-                          ),
-                          Text(
-                            'Presence: 8/10',
-                            style: headline2Profile,
-                          )
-                        ]),
+                    title: const SizedBox(
+                      height: 10,
+                    ),
                     backgroundColor:
                         ThemeApplication.lightTheme.backgroundColor2,
                     shape: const RoundedRectangleBorder(
@@ -162,7 +153,15 @@ class _ProfileState extends State<Profile> {
                                             )),
                                           );
                                         }
-                                      : () {},
+                                      : () {
+                                          Navigator.push(
+                                            context,
+                                            SlideRightRoute(
+                                                page: ChangeProfile(
+                                              account: account,
+                                            )),
+                                          );
+                                        },
                                   color: ThemeApplication
                                       .lightTheme.backgroundColor
                                       .withOpacity(0.4),
@@ -329,7 +328,9 @@ class _ProfileState extends State<Profile> {
                                     Navigator.push(
                                       context,
                                       SlideRightRoute(
-                                          page: const PostOptions()),
+                                          page: PostOptions(
+                                        data: account.category,
+                                      )),
                                     );
                                   }
                                 : () {},
@@ -401,12 +402,6 @@ class _ProfileState extends State<Profile> {
                           MaterialButton(
                             onPressed: value.isDeviceConnected == true
                                 ? () async {
-                                    Navigator.popUntil(
-                                      context,
-                                      ModalRoute.withName(
-                                        Navigator.defaultRouteName,
-                                      ),
-                                    );
                                     SharedPreferences sharedPreferences =
                                         await SharedPreferences.getInstance();
                                     sharedPreferences.remove('email');
@@ -414,6 +409,13 @@ class _ProfileState extends State<Profile> {
                                     sharedPreferences.remove('username');
                                     sharedPreferences.remove('profile_picture');
                                     sharedPreferences.remove('token');
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.popUntil(
+                                      context,
+                                      ModalRoute.withName(
+                                        Navigator.defaultRouteName,
+                                      ),
+                                    );
                                   }
                                 : () {},
                             height: 25,

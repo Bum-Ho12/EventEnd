@@ -29,3 +29,17 @@ class Service {
     required this.traffic,
   });
 }
+
+class ServiceCreate {
+  final String title;
+  final String description;
+  final int price;
+  final String webLink;
+
+  ServiceCreate({
+    required this.title,
+    required this.description,
+    required this.price,
+    required this.webLink,
+  });
+}

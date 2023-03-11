@@ -40,9 +40,18 @@ class _ChangeProfileState extends State<ChangeProfile> {
   ImagePicker imgPicker = ImagePicker();
   Uint8List? resizedImage;
   File? fileImage;
+  String? tempDirString;
 
   File? imgFile;
   Future<void> getImageGallery() async {
+    if (tempDirString != null) {
+      Directory dir = Directory(tempDirString!);
+      dir.deleteSync(recursive: true);
+    }
+    setState(() {
+      fileImage = null;
+      imgFile = null;
+    });
     var pickedFile = await imgPicker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
@@ -58,6 +67,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
       isImageSet = true;
     } else {}
     final tempDir = await getTemporaryDirectory();
+    tempDirString = tempDir.path;
     final file = await File('${tempDir.path}/image.png').create();
     if (resizedImage != null) {
       file.writeAsBytesSync(resizedImage!);
@@ -243,10 +253,12 @@ class _ChangeProfileState extends State<ChangeProfile> {
                                               color: ThemeApplication
                                                   .lightTheme.backgroundColor
                                                   .withOpacity(0.3),
-                                              child: Image.asset(
-                                                'assets/account.png',
-                                                width: 100,
-                                                height: 100,
+                                              child: Icon(
+                                                Icons.person,
+                                                size: 100,
+                                                color: ThemeApplication
+                                                    .lightTheme
+                                                    .backgroundColor2,
                                               ),
                                             )),
                                           )

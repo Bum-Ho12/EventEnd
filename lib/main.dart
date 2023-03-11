@@ -1,3 +1,4 @@
+import 'package:eventend/providers/concert_create_provider.dart';
 import 'package:eventend/providers/concert_provider.dart';
 import 'package:eventend/providers/favorites_provider.dart';
 import 'package:eventend/providers/network_provider.dart';
@@ -10,7 +11,9 @@ import 'package:eventend/screens/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'providers/service_create_provider.dart';
 import 'providers/service_favorites_provider.dart';
+import 'screens/profile.dart';
 
 void main() {
   runApp(
@@ -24,6 +27,8 @@ void main() {
         ChangeNotifierProvider(create: (_) => FavoriteServiceProvider()),
         ChangeNotifierProvider(create: (_) => ServiceSearchProvider()),
         ChangeNotifierProvider(create: (_) => RequestProvider()),
+        ChangeNotifierProvider(create: (_) => ConcertCreateProvider()),
+        ChangeNotifierProvider(create: (_) => ServiceCreateProvider()),
       ],
       child: const MyApp(),
     ),
@@ -63,6 +68,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'EventEnd',
+      initialRoute: '/',
+      routes: {
+        // '/': (context) => const MyHomePage(),
+        '/profile': (context) => const Profile(),
+        // '/sell': (context) => Sell()
+      },
       theme: ThemeData(
         fontFamily: "Montserrat",
       ),
