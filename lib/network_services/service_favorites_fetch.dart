@@ -22,7 +22,7 @@ class FavoriteServiceFetch {
           title: e['service']['service_title'],
           organizer: e['owner']['organizer'],
           organizerId: e['owner']['organizer_id'],
-          organizerProfilePicture: e['owner']['organizer_profile_picture'],
+          organizerProfilePicture: e['service']['service_owner_profile'],
           serviceId: e['service']['service_id'],
           organizerMediaLink: e['owner']['organizer_media_link'],
         );
