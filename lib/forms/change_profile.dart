@@ -35,8 +35,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
   bool changeDescription = false;
   DayIdentifier dayIdentifier = DayIdentifier();
   Category? _category;
-  int categoryOption = 1;
-
+  int? categoryOption;
   bool isImageSet = false;
   ImagePicker imgPicker = ImagePicker();
   Uint8List? resizedImage;
@@ -137,10 +136,11 @@ class _ChangeProfileState extends State<ChangeProfile> {
 
   @override
   Widget build(BuildContext context) {
-    String weekDayFrom = dayIdentifier.getDay(widget.account.weekdayFrom);
+    String weekDayFrom = dayIdentifier.getDay((widget.account.weekdayFrom));
     String weekDayTo = dayIdentifier.getDay(widget.account.weekdayTo);
     String categoryChosen =
         widget.account.category == 1 ? 'Individual' : 'Organization';
+    categoryOption = widget.account.category;
     return Scaffold(
       appBar: AppBar(
         title: Text('Change Profile', style: pageTitle),
@@ -275,8 +275,6 @@ class _ChangeProfileState extends State<ChangeProfile> {
                                       onPressed: () {
                                         setState(() {
                                           getImageGallery();
-
-                                          // imgFile = imageSelector.imgFile;
                                         });
                                       },
                                       icon: Icon(
@@ -524,23 +522,45 @@ class _ChangeProfileState extends State<ChangeProfile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '$weekDayFrom-'
+                        '$weekDayFrom - '
                         '$weekDayTo',
                         style: headline2Detail,
                       ),
                       openDays == false
                           ? const SizedBox()
-                          : FormTextWidget(
-                              data: widget.account.weekdayFrom,
-                              fromType: 'weekday'),
+                          : Column(
+                              children: [
+                                FormTextWidget(
+                                    data: weekDayFrom, fromType: 'weekday'),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                FormTextWidget(
+                                    data: weekDayTo, fromType: 'weekdayTo'),
+                              ],
+                            ),
+                      const SizedBox(
+                        height: 2,
+                      ),
                       Text(
                         '${widget.account.fromHour} - ${widget.account.toHour}',
                         style: headline2Detail,
                       ),
                       openDays == false
                           ? const SizedBox()
-                          : FormTextWidget(
-                              data: widget.account.fromHour, fromType: 'hour'),
+                          : Column(
+                              children: [
+                                FormTextWidget(
+                                    data: widget.account.fromHour,
+                                    fromType: 'hour'),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                FormTextWidget(
+                                    data: widget.account.toHour,
+                                    fromType: 'hour_to'),
+                              ],
+                            ),
                     ],
                   ),
                 ),
