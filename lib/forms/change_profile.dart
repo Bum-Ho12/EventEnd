@@ -150,7 +150,6 @@ class _ChangeProfileState extends State<ChangeProfile> {
     String weekDayTo = dayIdentifier.getDay(widget.account.weekdayTo);
     String categoryChosen =
         widget.account.category == 1 ? 'Individual' : 'Organization';
-    categoryOption = widget.account.category;
     return Scaffold(
       appBar: AppBar(
         title: Text('Change Profile', style: pageTitle),
@@ -182,6 +181,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                 color: ThemeApplication.lightTheme.backgroundColor2
                     .withOpacity(0.7),
                 onPressed: () {
+                  categoryOption ??= widget.account.category;
                   updateProfile();
                 },
                 child: Text(
