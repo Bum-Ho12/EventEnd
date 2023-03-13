@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../classes/favorites.dart';
+import '../classes/concert_class.dart';
 
 class FavoriteConcertFetch {
-  Future<List<FavoriteConcert>> getAll() async {
+  Future<List<Concert>> getAll() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString('token');
     const url = 'https://eventend.pythonanywhere.com/concert_favorites/';
@@ -17,15 +17,25 @@ class FavoriteConcertFetch {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body) as List;
       final concerts = json.map((e) {
-        return FavoriteConcert(
+        return Concert(
           id: e['id'],
           title: e['concert']['concert_title'],
           organizer: e['owner']['organizer'],
           organizerId: e['owner']['organizer_id'],
-          organizerProfilePicture: e['owner']['organizer_profile_picture'],
+          organizeProfilePicture: e['owner']['organizer_profile_picture'],
           concertPicture: e['concert']['concert_picture'],
-          concertId: e['concert']['concert_id'],
-          organizerMediaLink: e['owner']['organizer_media_link'],
+          // concertId: e['concert']['concert_id'],
+          webLink: e['owner']['organizer_media_link'],
+          eventDate: e['concert']['event_date'],
+          fromHour: e['concert']['from_hour'],
+          toHour: e['concert']['to_hour'],
+          location: e['concert']['location'],
+          long: e['concert']['long'].toString(),
+          lat: e['concert']['lat'].toString(),
+          description: e['concert']['description'],
+          price: e['concert']['price'].toString(),
+          traffic: e['concert']['traffic'],
+          tickets: e['concert']['tickets'],
         );
       }).toList();
       return concerts;
@@ -33,5 +43,3 @@ class FavoriteConcertFetch {
     throw 'error fetching data';
   }
 }
-
-

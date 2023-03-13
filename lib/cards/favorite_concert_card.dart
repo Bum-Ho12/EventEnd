@@ -1,9 +1,11 @@
-import 'package:eventend/classes/favorites.dart';
+import 'package:eventend/classes/concert_class.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/homescreen/detail.dart';
+
 class FavoriteConcertTile extends StatefulWidget {
-  final FavoriteConcert data;
+  final Concert data;
   const FavoriteConcertTile({required this.data, super.key});
 
   @override
@@ -15,8 +17,8 @@ class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigator.push(
-        //     context, SlideRightRoute(page: CardPage(data: widget.data)));
+        Navigator.push(
+            context, SlideRightRoute(page: CardPage(data: widget.data)));
       },
       child: Container(
         color: ThemeApplication.lightTheme.backgroundColor,
@@ -91,7 +93,7 @@ class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
                         style: headlineTile,
                       ),
                       Text(
-                        widget.data.organizerMediaLink,
+                        widget.data.webLink,
                         style: commonText,
                       ),
                       MaterialButton(

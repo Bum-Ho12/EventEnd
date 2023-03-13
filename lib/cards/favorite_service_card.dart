@@ -1,9 +1,11 @@
-import 'package:eventend/classes/favorites.dart';
+import 'package:eventend/classes/service_class.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/homescreen/check_profile.dart';
+
 class FavoriteServiceTile extends StatefulWidget {
-  final FavoriteService data;
+  final Service data;
   const FavoriteServiceTile({required this.data, super.key});
 
   @override
@@ -15,8 +17,8 @@ class _FavoriteServiceTileState extends State<FavoriteServiceTile> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigator.push(
-        //     context, SlideRightRoute(page: CardPage(data: widget.data)));
+        Navigator.push(
+            context, SlideRightRoute(page: ProfileViewPage(data: widget.data)));
       },
       child: Container(
         color: ThemeApplication.lightTheme.backgroundColor,

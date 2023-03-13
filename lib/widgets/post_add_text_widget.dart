@@ -18,7 +18,6 @@ class TextFieldForProductWidget extends StatefulWidget {
 class _TextFieldForProductWidgetState extends State<TextFieldForProductWidget> {
   TextEditingController _description = TextEditingController();
   TextEditingController _title = TextEditingController();
-  TextEditingController _eventDate = TextEditingController();
   TextEditingController _fromHour = TextEditingController();
   TextEditingController _toHour = TextEditingController();
   TextEditingController _location = TextEditingController();
@@ -31,7 +30,6 @@ class _TextFieldForProductWidgetState extends State<TextFieldForProductWidget> {
     super.initState();
     _description = TextEditingController(text: concertProvider.description);
     _title = TextEditingController(text: concertProvider.title);
-    _eventDate = TextEditingController(text: concertProvider.eventDate);
     _fromHour = TextEditingController(text: concertProvider.fromHour);
     _toHour = TextEditingController(text: concertProvider.toHour);
     _location = TextEditingController(text: concertProvider.location);
@@ -58,25 +56,21 @@ class _TextFieldForProductWidgetState extends State<TextFieldForProductWidget> {
           child: TextFormField(
             controller: widget.content == 'Title'
                 ? _title
-                : widget.content == 'Date of Event'
-                    ? _eventDate
-                    : widget.content == 'Website/portfolio link'
-                        ? _webLink
-                        : widget.content == 'Location'
-                            ? _location
-                            : widget.content == 'Ticket Price'
-                                ? _price
-                                : widget.content == 'From:'
-                                    ? _fromHour
-                                    : widget.content == 'To:'
-                                        ? _toHour
-                                        : _description,
+                : widget.content == 'Website/portfolio link'
+                    ? _webLink
+                    : widget.content == 'Location'
+                        ? _location
+                        : widget.content == 'Ticket Price'
+                            ? _price
+                            : widget.content == 'From:'
+                                ? _fromHour
+                                : widget.content == 'To:'
+                                    ? _toHour
+                                    : _description,
             maxLines: widget.content == 'Description' ? 7 : 1,
             onChanged: (value) {
               if (widget.content == 'Title') {
                 concertAssignProvider.setTitle(value.trim());
-              } else if (widget.content == 'Date of Event') {
-                concertAssignProvider.setEventDate(value.trim());
               } else if (widget.content == 'Website/portfolio link') {
                 concertAssignProvider.setWebLink(value.trim());
               } else if (widget.content == 'Location') {

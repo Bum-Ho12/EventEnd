@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/concert_create_provider.dart';
 import '../utilities/personalization.dart';
 import '../widgets/post_add_text_widget.dart';
 import 'concert_post_form2.dart';
@@ -12,8 +15,21 @@ class ConcertPostForm extends StatefulWidget {
 }
 
 class _ConcertPostFormState extends State<ConcertPostForm> {
+  TextEditingController dateForEvent = TextEditingController();
+  @override
+  void initState() {
+    final ConcertCreateProvider concertProvider =
+        Provider.of<ConcertCreateProvider>(context, listen: false);
+    super.initState();
+    dateForEvent = TextEditingController(text: concertProvider.eventDate);
+  }
+
+  DateTime date = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
+    final ConcertCreateProvider concertAssignProvider =
+        Provider.of<ConcertCreateProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Post Concert', style: pageTitle),
@@ -47,9 +63,53 @@ class _ConcertPostFormState extends State<ConcertPostForm> {
                     content: 'Title',
                     iconForForm: '',
                   ),
-                  const TextFieldForProductWidget(
-                    content: 'Date of Event',
-                    iconForForm: '',
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            final DateTime? picked = await showDatePicker(
+                              context: context,
+                              initialDate: date,
+                              firstDate: DateTime(1994),
+                              lastDate: DateTime(2101),
+                              builder: (BuildContext context, Widget? child) {
+                                return child!;
+                              },
+                            );
+                            if (picked != null && picked != date) {
+                              setState(() {
+                                date = picked;
+                                concertAssignProvider.setEventDate(
+                                    DateFormat('dd-MM-yyyy').format(date));
+                                dateForEvent = TextEditingController(
+                                    text: concertAssignProvider.eventDate);
+                              });
+                            }
+                          },
+                          child: Container(
+                            color: ThemeApplication.lightTheme.backgroundColor2
+                                .withOpacity(0.1),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Set Date of Event',
+                                style: headline2detail,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          dateForEvent.text,
+                          style: headline2Detail,
+                        ),
+                      ],
+                    ),
                   ),
                   const TextFieldForProductWidget(
                     content: 'Website/portfolio link',
