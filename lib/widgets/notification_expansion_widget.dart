@@ -1,19 +1,16 @@
-import 'package:eventend/classes/concert_class.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/personalization.dart';
 
-class ExpansionWidget extends StatefulWidget {
-  // ignore: prefer_typing_uninitialized_variables
-  final Concert data;
-  const ExpansionWidget({required this.data, super.key});
+class NotificationExpansionWidget extends StatefulWidget {
+  const NotificationExpansionWidget({super.key});
 
   @override
-  State<ExpansionWidget> createState() => _ExpansionWidgetState();
+  State<NotificationExpansionWidget> createState() => _NotificationExpansionWidgetState();
 }
 
-class _ExpansionWidgetState extends State<ExpansionWidget> {
-  final List<Item> _data = generatedItems(1);
+class _NotificationExpansionWidgetState extends State<NotificationExpansionWidget> {
+  final List<Item> _data = generatedItems(4);
 
   Widget _buildPanel() {
     return ExpansionPanelList(
@@ -30,53 +27,28 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
             headerBuilder: (BuildContext context, bool isExpanded) {
               return ListTile(
                 title: Text(
-                  widget.data.title,
+                  item.headerValue!,
                   style: headlineTile,
                 ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Row(
-                        children: [
-                          Text(
-                            'Update',
-                            style: headlineTile,
-                          ),
-                          Icon(
-                            Icons.edit,
-                            size: 30,
-                            color: ThemeApplication.lightTheme.backgroundColor2,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                subtitle: Text('Location: 13th Street Avenue, Nairobi',
+                    style: commonTextMain),
               );
             },
             body: ListTile(
               title: SizedBox(
                 height: 200,
                 width: MediaQuery.of(context).size.width,
-                child: Image.network(
-                  'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
+                child: Image.asset(
+                  'assets/images/band.jpg',
                   fit: BoxFit.fill,
-                  height: 100,
-                  width: 150,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(child: Text('Loading...'));
-                  },
-                  errorBuilder: (context, error, stackTrace) =>
-                      const Text('Error Loading the image!'),
                 ),
               ),
               subtitle: Column(
                 children: [
                   Text(
-                    widget.data.description,
+                    'Lorem ipsum dolor sit amet, consenter advising elite, sed do elusion '
+                    'tempore incident ut laborer et dolores magna aliquant. Ut enid ad minim venial, '
+                    'quia nostrum exercitation ullages labors nisi ut aliquot ex ea commode consequent.',
                     style: commonTextMain,
                   ),
                   ListTile(
@@ -86,7 +58,7 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
                           .withOpacity(0.7),
                     ),
                     title: Text(
-                      'Ksh. ${widget.data.price}',
+                      'Ksh. 141.95',
                       style: headline1detail,
                     ),
                     subtitle: Text(
@@ -97,7 +69,7 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      widget.data.webLink,
+                      'Website or portfolio',
                       style: headline2detail,
                     ),
                   ),
@@ -117,7 +89,7 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
                         padding: const EdgeInsets.only(
                             right: 8.0, top: 8, bottom: 8),
                         child: Text(
-                          widget.data.traffic.toString(),
+                          '129',
                           style: headline2Detail,
                         ),
                       ),
@@ -133,7 +105,7 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
                         padding: const EdgeInsets.only(
                             right: 8.0, top: 8, bottom: 8),
                         child: Text(
-                          widget.data.tickets.toString(),
+                          '100',
                           style: headline2Detail,
                         ),
                       ),
@@ -169,6 +141,8 @@ class Item {
 
 List<Item> generatedItems(int numberOfItems) {
   return List.generate(numberOfItems, (index) {
-    return Item(headerValue: '', expandedValue: 'This is Item number $index');
+    return Item(
+        headerValue: 'Ticket for Develop Concert $index',
+        expandedValue: 'This is Item number $index');
   });
 }

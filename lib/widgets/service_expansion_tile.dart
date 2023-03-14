@@ -1,18 +1,17 @@
-import 'package:eventend/classes/concert_class.dart';
+import 'package:eventend/classes/service_class.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/personalization.dart';
 
-class ExpansionWidget extends StatefulWidget {
-  // ignore: prefer_typing_uninitialized_variables
-  final Concert data;
-  const ExpansionWidget({required this.data, super.key});
+class ServiceExpansionWidget extends StatefulWidget {
+  final Service data;
+  const ServiceExpansionWidget({required this.data, super.key});
 
   @override
-  State<ExpansionWidget> createState() => _ExpansionWidgetState();
+  State<ServiceExpansionWidget> createState() => _ServiceExpansionWidgetState();
 }
 
-class _ExpansionWidgetState extends State<ExpansionWidget> {
+class _ServiceExpansionWidgetState extends State<ServiceExpansionWidget> {
   final List<Item> _data = generatedItems(1);
 
   Widget _buildPanel() {
@@ -57,20 +56,28 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
               );
             },
             body: ListTile(
-              title: SizedBox(
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                child: Image.network(
-                  'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
-                  fit: BoxFit.fill,
-                  height: 100,
-                  width: 150,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(child: Text('Loading...'));
-                  },
-                  errorBuilder: (context, error, stackTrace) =>
-                      const Text('Error Loading the image!'),
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipOval(
+                      child: Image.network(
+                        'https://eventend.pythonanywhere.com${widget.data.organizerProfilePicture}',
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.fill,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                              child: SizedBox(
+                                  height: 100, child: Text('Loading...')));
+                        },
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Text('Error Loading the image!'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               subtitle: Column(
@@ -121,22 +128,6 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
                           style: headline2Detail,
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
-                        child: Text(
-                          'Tickets: ',
-                          style: headline1detail,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            right: 8.0, top: 8, bottom: 8),
-                        child: Text(
-                          widget.data.tickets.toString(),
-                          style: headline2Detail,
-                        ),
-                      ),
                     ],
                   )
                 ],
@@ -169,6 +160,8 @@ class Item {
 
 List<Item> generatedItems(int numberOfItems) {
   return List.generate(numberOfItems, (index) {
-    return Item(headerValue: '', expandedValue: 'This is Item number $index');
+    return Item(
+        headerValue: 'Ticket for Develop Concert $index',
+        expandedValue: 'This is Item number $index');
   });
 }

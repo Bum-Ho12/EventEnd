@@ -1,7 +1,6 @@
+import 'package:eventend/widgets/notification_expansion_widget.dart';
 import 'package:flutter/material.dart';
-
 import '../../utilities/personalization.dart';
-import '../../widgets/expansion_tile_widget.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -37,7 +36,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     MediaQuery.of(context).orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.height * 0.05
                         : 20),
-            const ExpansionWidget(),
+            const NotificationExpansionWidget(),
           ],
         ),
       ),

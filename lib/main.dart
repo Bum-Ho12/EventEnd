@@ -1,6 +1,8 @@
 import 'package:eventend/providers/concert_create_provider.dart';
 import 'package:eventend/providers/concert_provider.dart';
 import 'package:eventend/providers/favorites_provider.dart';
+import 'package:eventend/providers/get_concert_posts_provider.dart';
+import 'package:eventend/providers/get_service_posts_provider.dart';
 import 'package:eventend/providers/network_provider.dart';
 import 'package:eventend/providers/request_provider.dart';
 import 'package:eventend/providers/search_provider.dart';
@@ -29,6 +31,8 @@ void main() {
         ChangeNotifierProvider(create: (_) => RequestProvider()),
         ChangeNotifierProvider(create: (_) => ConcertCreateProvider()),
         ChangeNotifierProvider(create: (_) => ServiceCreateProvider()),
+        ChangeNotifierProvider(create: (_) => GetPostsProvider()),
+        ChangeNotifierProvider(create: (_) => GetServicePostsProvider())
       ],
       child: const MyApp(),
     ),

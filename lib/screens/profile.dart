@@ -292,7 +292,9 @@ class _ProfileState extends State<Profile> {
                                               Navigator.push(
                                                 context,
                                                 SlideRightRoute(
-                                                    page: const PostsList()),
+                                                  page: PostsList(
+                                                      account: account),
+                                                ),
                                               );
                                             }
                                           : () {},
