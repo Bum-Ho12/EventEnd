@@ -9,12 +9,16 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import '../providers/concert_create_provider.dart';
 import '../utilities/personalization.dart';
-import '../widgets/post_add_text_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widgets/put_form_text_widget.dart';
+
 class ConcertUpdateFormSecond extends StatefulWidget {
-  const ConcertUpdateFormSecond({super.key});
+  final String concertPicture;
+  final String id;
+  const ConcertUpdateFormSecond(
+      {required this.concertPicture, required this.id, super.key});
 
   @override
   State<ConcertUpdateFormSecond> createState() =>
@@ -22,6 +26,19 @@ class ConcertUpdateFormSecond extends StatefulWidget {
 }
 
 class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
+  TextEditingController _fromHour = TextEditingController();
+  TextEditingController _toHour = TextEditingController();
+  TextEditingController _description = TextEditingController();
+  @override
+  void initState() {
+    final ConcertCreateProvider concertProvider =
+        Provider.of<ConcertCreateProvider>(context, listen: false);
+    super.initState();
+    _description = TextEditingController(text: concertProvider.description);
+    _fromHour = TextEditingController(text: concertProvider.fromHour);
+    _toHour = TextEditingController(text: concertProvider.toHour);
+  }
+
   bool isImageSet = false;
   ImagePicker imgPicker = ImagePicker();
   Uint8List? resizedImage;
@@ -108,9 +125,10 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
-                      child: const TextFieldForProductWidget(
+                      child: PutTextFieldForProductWidget(
                         content: 'From:',
                         iconForForm: '',
+                        initialValue: _fromHour,
                       ),
                     ),
                     const SizedBox(
@@ -118,16 +136,18 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
-                      child: const TextFieldForProductWidget(
+                      child: PutTextFieldForProductWidget(
                         content: 'To:',
                         iconForForm: '',
+                        initialValue: _toHour,
                       ),
                     ),
                   ],
                 ),
-                const TextFieldForProductWidget(
+                PutTextFieldForProductWidget(
                   content: 'Description',
                   iconForForm: '',
+                  initialValue: _description,
                 ),
                 const SizedBox(
                   height: 20,
@@ -148,7 +168,7 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
                             child: Row(
                               children: [
                                 Text(
-                                  "Add Concert Image",
+                                  "Change Concert Image",
                                   style: headline2Profile,
                                 ),
                                 const SizedBox(
@@ -182,7 +202,25 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
                           ),
                         ],
                       )
-                    : const SizedBox(),
+                    : widget.concertPicture.isNotEmpty
+                        ? SizedBox(
+                            height: 200,
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.network(
+                              'https://eventend.pythonanywhere.com${widget.concertPicture}',
+                              fit: BoxFit.fill,
+                              height: 200,
+                              width: 200,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return const Center(child: Text('Loading...'));
+                              },
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Text('Error Loading the image!'),
+                            ),
+                          )
+                        : const SizedBox(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -249,13 +287,7 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
                     price: concertAssignProvider.price,
                     webLink: concertAssignProvider.webLink,
                   );
-                  sendPost(concert);
-                  if (isSent == true) {
-                    Navigator.popUntil(
-                      context,
-                      ModalRoute.withName(Navigator.defaultRouteName),
-                    );
-                  }
+                  sendPost(concert, context);
                 },
                 color: ThemeApplication.lightTheme.backgroundColor2,
                 child: Row(
@@ -272,7 +304,7 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
     );
   }
 
-  Future<void> sendPost(concert) async {
+  Future<void> sendPost(concert, context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.getString('token')!;
     const url = 'https://eventend.pythonanywhere.com/concert_update/';
@@ -280,6 +312,7 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
     final req = http.MultipartRequest('PUT', uri);
     Map<String, String> headers = {"Authorization": "Token $token"};
     req.headers.addAll(headers);
+    req.fields['id'] = widget.id;
     req.fields['title'] = concert.title;
     req.fields['event_date'] = concert.eventDate;
     req.fields['from_hour'] = concert.fromHour;
@@ -298,6 +331,12 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
     final response = await http.Response.fromStream(res);
     if (response.statusCode == 201) {
       isSent = true;
+      if (isSent == true) {
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName(Navigator.defaultRouteName),
+        );
+      }
     } else {
       isSent = false;
     }

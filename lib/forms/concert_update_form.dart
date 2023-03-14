@@ -3,11 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/concert_create_provider.dart';
 import '../utilities/personalization.dart';
-import '../widgets/post_add_text_widget.dart';
+import '../widgets/put_form_text_widget.dart';
 import 'concert_update_form2.dart';
 
 class ConcertUpdateForm extends StatefulWidget {
-  const ConcertUpdateForm({super.key});
+  final String concertPicture;
+  final String id;
+  const ConcertUpdateForm(
+      {required this.concertPicture, required this.id, super.key});
 
   @override
   State<ConcertUpdateForm> createState() => _ConcertUpdateFormState();
@@ -15,11 +18,19 @@ class ConcertUpdateForm extends StatefulWidget {
 
 class _ConcertUpdateFormState extends State<ConcertUpdateForm> {
   TextEditingController dateForEvent = TextEditingController();
+  TextEditingController _title = TextEditingController();
+  TextEditingController _location = TextEditingController();
+  TextEditingController _price = TextEditingController();
+  TextEditingController _webLink = TextEditingController();
   @override
   void initState() {
     final ConcertCreateProvider concertProvider =
         Provider.of<ConcertCreateProvider>(context, listen: false);
     super.initState();
+    _title = TextEditingController(text: concertProvider.title);
+    _price = TextEditingController(text: concertProvider.price.toString());
+    _location = TextEditingController(text: concertProvider.location);
+    _webLink = TextEditingController(text: concertProvider.webLink);
     dateForEvent = TextEditingController(text: concertProvider.eventDate);
   }
 
@@ -58,9 +69,10 @@ class _ConcertUpdateFormState extends State<ConcertUpdateForm> {
                               Orientation.portrait
                           ? MediaQuery.of(context).size.height * 0.01
                           : 10),
-                  const TextFieldForProductWidget(
+                  PutTextFieldForProductWidget(
                     content: 'Title',
                     iconForForm: '',
+                    initialValue: _title,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -94,7 +106,7 @@ class _ConcertUpdateFormState extends State<ConcertUpdateForm> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Set Date of Event',
+                                'Change Date of Event',
                                 style: headline2detail,
                               ),
                             ),
@@ -110,17 +122,20 @@ class _ConcertUpdateFormState extends State<ConcertUpdateForm> {
                       ],
                     ),
                   ),
-                  const TextFieldForProductWidget(
+                  PutTextFieldForProductWidget(
                     content: 'Website/portfolio link',
                     iconForForm: '',
+                    initialValue: _webLink,
                   ),
-                  const TextFieldForProductWidget(
+                  PutTextFieldForProductWidget(
                     content: 'Location',
                     iconForForm: '',
+                    initialValue: _location,
                   ),
-                  const TextFieldForProductWidget(
+                  PutTextFieldForProductWidget(
                     content: 'Ticket Price',
                     iconForForm: '',
+                    initialValue: _price,
                   ),
                 ]),
             const SizedBox(
@@ -141,7 +156,11 @@ class _ConcertUpdateFormState extends State<ConcertUpdateForm> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    SlideRightRoute(page: const ConcertUpdateFormSecond()),
+                    SlideRightRoute(
+                        page: ConcertUpdateFormSecond(
+                      concertPicture: widget.concertPicture,
+                      id: widget.id,
+                    )),
                   );
                 },
                 color: ThemeApplication.lightTheme.backgroundColor2,

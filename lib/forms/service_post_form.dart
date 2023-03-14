@@ -134,26 +134,21 @@ class _PostServiceState extends State<PostService> {
                       height: 20,
                     ),
                     isPicked == true
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    width: 0.2,
-                                    color: ThemeApplication
-                                        .lightTheme.backgroundColor2
-                                        .withOpacity(0.1),
-                                  ),
-                                ),
-                                child: Text(
-                                  '${permit!.name}.${permit!.extension}',
-                                  style: commonText,
-                                ),
+                        ? Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                width: 0.2,
+                                color: ThemeApplication
+                                    .lightTheme.backgroundColor2
+                                    .withOpacity(0.1),
                               ),
-                            ],
+                            ),
+                            child: Text(
+                              '${permit!.name}.${permit!.extension}',
+                              style: commonText,
+                            ),
                           )
                         : const SizedBox(),
                     const SizedBox(

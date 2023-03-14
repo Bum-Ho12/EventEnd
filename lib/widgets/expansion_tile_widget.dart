@@ -1,10 +1,12 @@
 import 'package:eventend/classes/concert_class.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../forms/concert_update_form.dart';
+import '../providers/concert_create_provider.dart';
 import '../utilities/personalization.dart';
 
 class ExpansionWidget extends StatefulWidget {
-  // ignore: prefer_typing_uninitialized_variables
   final Concert data;
   const ExpansionWidget({required this.data, super.key});
 
@@ -16,6 +18,8 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
   final List<Item> _data = generatedItems(1);
 
   Widget _buildPanel() {
+    final ConcertCreateProvider concertAssignProvider =
+        Provider.of<ConcertCreateProvider>(context);
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         setState(
@@ -37,7 +41,32 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          concertAssignProvider.setTitle(widget.data.title);
+                          concertAssignProvider
+                              .setLocation(widget.data.location);
+                          double newPrice = double.parse(widget.data.price);
+                          concertAssignProvider.setPrice(newPrice.round());
+                          concertAssignProvider
+                              .setEventDate(widget.data.eventDate);
+                          concertAssignProvider
+                              .setFromHour(widget.data.fromHour);
+                          concertAssignProvider.setToHour(widget.data.toHour);
+                          concertAssignProvider.setWebLink(widget.data.webLink);
+                          concertAssignProvider
+                              .setDescription(widget.data.description);
+                        });
+                        Navigator.push(
+                          context,
+                          SlideRightRoute(
+                            page: ConcertUpdateForm(
+                              concertPicture: widget.data.concertPicture,
+                              id: widget.data.id.toString(),
+                            ),
+                          ),
+                        );
+                      },
                       child: Row(
                         children: [
                           Text(

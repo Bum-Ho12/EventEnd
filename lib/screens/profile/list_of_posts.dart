@@ -1,13 +1,12 @@
 import 'package:eventend/widgets/service_expansion_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../classes/user_class.dart';
 import '../../providers/get_concert_posts_provider.dart';
 import '../../providers/get_service_posts_provider.dart';
 import '../../utilities/personalization.dart';
-import '../../widgets/card_shimmer.dart';
 import '../../widgets/expansion_tile_widget.dart';
+import '../../widgets/update_expansion_shimmer.dart';
 
 class PostsList extends StatefulWidget {
   final Account account;
@@ -70,7 +69,7 @@ class _PostsListState extends State<PostsList> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return value.isLoading == true
-                                      ? const SuggestedCardShimmer()
+                                      ? const UpdateShimmer()
                                       : ExpansionWidget(
                                           data: value.concerts[index]);
                                 }),
@@ -99,7 +98,7 @@ class _PostsListState extends State<PostsList> {
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return value.isLoading
-                                      ? const SuggestedCardShimmer()
+                                      ? const UpdateShimmer()
                                       : ServiceExpansionWidget(
                                           data: value.services[index]);
                                 },

@@ -1,6 +1,9 @@
 import 'package:eventend/classes/service_class.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../forms/service_put_form.dart';
+import '../providers/service_create_provider.dart';
 import '../utilities/personalization.dart';
 
 class ServiceExpansionWidget extends StatefulWidget {
@@ -15,6 +18,8 @@ class _ServiceExpansionWidgetState extends State<ServiceExpansionWidget> {
   final List<Item> _data = generatedItems(1);
 
   Widget _buildPanel() {
+    final ServiceCreateProvider serviceAssignProvider =
+        Provider.of<ServiceCreateProvider>(context);
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         setState(
@@ -36,7 +41,25 @@ class _ServiceExpansionWidgetState extends State<ServiceExpansionWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          serviceAssignProvider.setTitle(widget.data.title);
+                          double newPrice = double.parse(widget.data.price);
+                          serviceAssignProvider.setPrice(newPrice.round());
+                          serviceAssignProvider.setWebLink(widget.data.webLink);
+                          serviceAssignProvider
+                              .setDescription(widget.data.description);
+                        });
+                        Navigator.push(
+                          context,
+                          SlideRightRoute(
+                            page: UpdateService(
+                              id: widget.data.id.toString(),
+                              permit: widget.data.permit,
+                            ),
+                          ),
+                        );
+                      },
                       child: Row(
                         children: [
                           Text(

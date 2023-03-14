@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../classes/service_class.dart';
 import '../utilities/personalization.dart';
-import '../widgets/service_post_text_widget.dart';
+import '../widgets/service_put_form_text_widget.dart';
 
 class UpdateService extends StatefulWidget {
-  const UpdateService({super.key});
+  final String id;
+  final String permit;
+  const UpdateService({required this.id, required this.permit, super.key});
 
   @override
   State<UpdateService> createState() => _UpdateServiceState();
@@ -19,6 +21,21 @@ class _UpdateServiceState extends State<UpdateService> {
   PlatformFile? permit;
   bool? isPicked;
   bool? isSent;
+  TextEditingController _description = TextEditingController();
+  TextEditingController _title = TextEditingController();
+  TextEditingController _price = TextEditingController();
+  TextEditingController _webLink = TextEditingController();
+  @override
+  void initState() {
+    final ServiceCreateProvider serviceProvider =
+        Provider.of<ServiceCreateProvider>(context, listen: false);
+    super.initState();
+    _description = TextEditingController(text: serviceProvider.description);
+    _title = TextEditingController(text: serviceProvider.title);
+    _price = TextEditingController(text: serviceProvider.price.toString());
+    _webLink = TextEditingController(text: serviceProvider.webLink);
+  }
+
   Future<void> getPermit() async {
     FilePickerResult? file = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -73,21 +90,22 @@ class _UpdateServiceState extends State<UpdateService> {
                                 Orientation.portrait
                             ? MediaQuery.of(context).size.height * 0.01
                             : 20),
-                    const ServiceTextFieldForProductWidget(
+                    PutServiceTextFieldForProductWidget(
                       content: 'Title',
                       iconForForm: '',
+                      controller: _title,
                     ),
-                    const ServiceTextFieldForProductWidget(
+                    PutServiceTextFieldForProductWidget(
                       content: 'Website/Portfolio',
                       iconForForm: '',
+                      controller: _webLink,
                     ),
-                    const ServiceTextFieldForProductWidget(
-                      content: 'Price',
-                      iconForForm: '',
-                    ),
-                    const ServiceTextFieldForProductWidget(
+                    PutServiceTextFieldForProductWidget(
+                        content: 'Price', iconForForm: '', controller: _price),
+                    PutServiceTextFieldForProductWidget(
                       content: 'Description',
                       iconForForm: '',
+                      controller: _description,
                     ),
                     const SizedBox(
                       height: 20,
@@ -109,7 +127,7 @@ class _UpdateServiceState extends State<UpdateService> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      "Add Permit or supporting file",
+                                      "Change Permit or file",
                                       style: headline2Profile,
                                     ),
                                     const SizedBox(
@@ -129,10 +147,24 @@ class _UpdateServiceState extends State<UpdateService> {
                       height: 20,
                     ),
                     isPicked == true
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
+                        ? Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                width: 0.2,
+                                color: ThemeApplication
+                                    .lightTheme.backgroundColor2
+                                    .withOpacity(0.1),
+                              ),
+                            ),
+                            child: Text(
+                              '${permit!.name}.${permit!.extension}',
+                              style: commonText,
+                            ),
+                          )
+                        : widget.permit.isNotEmpty
+                            ? Container(
                                 height: 40,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
@@ -144,13 +176,11 @@ class _UpdateServiceState extends State<UpdateService> {
                                   ),
                                 ),
                                 child: Text(
-                                  '${permit!.name}.${permit!.extension}',
+                                  widget.permit,
                                   style: commonText,
                                 ),
-                              ),
-                            ],
-                          )
-                        : const SizedBox(),
+                              )
+                            : const SizedBox(),
                     const SizedBox(
                       height: 20,
                     ),
@@ -216,13 +246,7 @@ class _UpdateServiceState extends State<UpdateService> {
                     price: serviceAssignProvider.price,
                     webLink: serviceAssignProvider.webLink,
                   );
-                  sendPost(concert);
-                  if (isSent == true) {
-                    Navigator.popUntil(
-                      context,
-                      ModalRoute.withName(Navigator.defaultRouteName),
-                    );
-                  }
+                  sendPost(concert, context);
                 },
                 color: ThemeApplication.lightTheme.backgroundColor2,
                 child: Text('Post', style: headline2Profile),
@@ -234,7 +258,7 @@ class _UpdateServiceState extends State<UpdateService> {
     );
   }
 
-  Future<void> sendPost(service) async {
+  Future<void> sendPost(service, context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.getString('token')!;
     const url = 'https://eventend.pythonanywhere.com/service_update/';
@@ -242,6 +266,7 @@ class _UpdateServiceState extends State<UpdateService> {
     final req = http.MultipartRequest('PUT', uri);
     Map<String, String> headers = {"Authorization": "Token $token"};
     req.headers.addAll(headers);
+    req.fields['id'] = widget.id;
     req.fields['title'] = service.title;
     req.fields['long'] = '24.00000';
     req.fields['lat'] = '13.00000';
@@ -255,6 +280,12 @@ class _UpdateServiceState extends State<UpdateService> {
     final response = await http.Response.fromStream(res);
     if (response.statusCode == 201) {
       isSent = true;
+      if (isSent == true) {
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName(Navigator.defaultRouteName),
+        );
+      }
     } else {
       isSent = false;
     }

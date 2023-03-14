@@ -25,7 +25,6 @@ List profilePage = [
 
 class _ProfileState extends State<Profile> {
   Account account = Account();
-
   Future<void> getAccount() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.containsKey('email')) {
