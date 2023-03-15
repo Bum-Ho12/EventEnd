@@ -123,7 +123,7 @@ class _RequestFormState extends State<RequestForm> {
                       onSaved: (value) {
                         requestAssignProvider.setToSend(
                             widget.data.id.toString(),
-                            widget.data.title,
+                            widget.data.organizerId.toString(),
                             value);
                       },
                       maxLines: 7,
