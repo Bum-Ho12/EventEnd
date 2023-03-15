@@ -35,12 +35,8 @@ class _HomeState extends State<Home> {
 
   Future<void> initializeNothing() async {}
 
-  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
-      isLoading = false;
-    });
     return SafeArea(
       child: Scaffold(
         body: Consumer<NetworkProvider>(builder: (context, value, child) {

@@ -51,7 +51,6 @@ class _MyAppState extends State<MyApp> {
   Future<void> getAuth() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<AuthProvider>(context, listen: false).checkNetwork();
-      Provider.of<NetworkProvider>(context, listen: false).checkNetwork();
     });
   }
 

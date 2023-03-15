@@ -89,10 +89,14 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
                   ),
                   Text(
                     widget.data.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: headlineTile,
                   ),
                   Text(
                     widget.data.description,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                     style: commonTextMain,
                   ),
                   const SizedBox(

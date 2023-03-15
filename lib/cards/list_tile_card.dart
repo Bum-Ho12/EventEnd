@@ -75,6 +75,8 @@ class _HomeTileState extends State<HomeTile> {
                 children: [
                   Text(
                     widget.data.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: headlineTile,
                   ),
                   Row(
@@ -104,6 +106,8 @@ class _HomeTileState extends State<HomeTile> {
                       children: [
                         Text(
                           widget.data.description,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
                           style: commonTextMain,
                         ),
                       ],

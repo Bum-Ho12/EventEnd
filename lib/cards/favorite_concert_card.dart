@@ -1,4 +1,5 @@
 import 'package:eventend/classes/concert_class.dart';
+import 'package:eventend/network_services/delete.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class FavoriteConcertTile extends StatefulWidget {
 }
 
 class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
+  Delete delete = Delete();
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -45,25 +47,6 @@ class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
                         errorBuilder: (context, error, stackTrace) =>
                             const Text('Error Loading the image!'),
                       ),
-                      // Positioned(
-                      //   right: 1,
-                      //   top: 2,
-                      //   child: Container(
-                      //     decoration: BoxDecoration(
-                      //       color: ThemeApplication.lightTheme.backgroundColor,
-                      //       borderRadius:
-                      //           const BorderRadius.all(Radius.circular(2)),
-                      //       border: Border.all(
-                      //           width: 0.5,
-                      //           color: ThemeApplication.lightTheme.backgroundColor2
-                      //               .withOpacity(0.3)),
-                      //     ),
-                      //     padding: const EdgeInsets.all(2),
-                      //     child: widget.data.price.isEmpty
-                      //         ? const Text('Free')
-                      //         : const Text('Priced'),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -72,56 +55,51 @@ class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      // Row(
-                      //   children: [
-                      //     Text(
-                      //       'Sat, March 4',
-                      //       style: commonText,
-                      //     ),
-                      //     const VerticalDivider(
-                      //       width: 2,
-                      //       thickness: 0.5,
-                      //     ),
-                      //     Text(
-                      //       widget.data.fromHour,
-                      //       style: commonText,
-                      //     ),
-                      //   ],
-                      // ),
                       Text(
                         widget.data.title,
                         style: headlineTile,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        widget.data.webLink,
+                        widget.data.description,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                         style: commonText,
                       ),
-                      MaterialButton(
-                        color: ThemeApplication.lightTheme.backgroundColor2
-                            .withOpacity(0.5),
-                        onPressed: () {},
-                        child: Text(
-                          'Delete',
-                          style: headline2Profile,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          MaterialButton(
+                            onPressed: () {
+                              setState(() {
+                                delete.deleteItem(widget.data.id,
+                                    'favorite_service', context);
+                              });
+                            },
+                            color: ThemeApplication.lightTheme.backgroundColor2
+                                .withOpacity(0.01),
+                            child: Text(
+                              'Remove',
+                              style: headline2Profile,
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          InkWell(
+                            onTap: () {},
+                            child: Icon(
+                              Icons.share,
+                              color:
+                                  ThemeApplication.lightTheme.backgroundColor2,
+                              size: 30,
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                        ],
                       )
                     ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.share,
-                        color: ThemeApplication.lightTheme.backgroundColor2,
-                        size: 30,
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                  ],
-                )
               ],
             ),
           ],

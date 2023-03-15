@@ -1,4 +1,5 @@
 import 'package:eventend/classes/service_class.dart';
+import 'package:eventend/network_services/delete.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class FavoriteServiceTile extends StatefulWidget {
 }
 
 class _FavoriteServiceTileState extends State<FavoriteServiceTile> {
+  Delete delete = Delete();
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -58,10 +60,14 @@ class _FavoriteServiceTileState extends State<FavoriteServiceTile> {
                     children: [
                       Text(
                         widget.data.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: headlineTile,
                       ),
                       Text(
                         widget.data.organizer,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: commonText,
                       ),
                     ],
@@ -79,6 +85,20 @@ class _FavoriteServiceTileState extends State<FavoriteServiceTile> {
                       ),
                     ),
                     const SizedBox(width: 20),
+                    MaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          delete.deleteItem(
+                              widget.data.id, 'favorite_service', context);
+                        });
+                      },
+                      color: ThemeApplication.lightTheme.backgroundColor2
+                          .withOpacity(0.01),
+                      child: Text(
+                        'Remove',
+                        style: headline2Profile,
+                      ),
+                    ),
                   ],
                 )
               ],

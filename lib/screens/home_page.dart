@@ -26,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   RiveAsset selectedNav = bottomBarNavs.first;
   int _currentIndex = 0;
+  bool? _isLoading = true;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -38,17 +39,59 @@ class _MyHomePageState extends State<MyHomePage> {
                 Center(
                   child: value.isConnected == true
                       ? const Home()
-                      : const NetworkErrorScreen(),
+                      : FutureBuilder(
+                          future:
+                              Future.delayed(const Duration(seconds: 2), () {
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          }),
+                          builder: (context, _) {
+                            return _isLoading == true
+                                ? CircularProgressIndicator(
+                                    color: ThemeApplication
+                                        .lightTheme.backgroundColor2,
+                                  )
+                                : const NetworkErrorScreen();
+                          }),
                 ),
                 Center(
                   child: value.isConnected == true
                       ? const SearchScreen()
-                      : const NetworkErrorScreen(),
+                      : FutureBuilder(
+                          future:
+                              Future.delayed(const Duration(seconds: 2), () {
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          }),
+                          builder: (context, _) {
+                            return _isLoading == true
+                                ? CircularProgressIndicator(
+                                    color: ThemeApplication
+                                        .lightTheme.backgroundColor2,
+                                  )
+                                : const NetworkErrorScreen();
+                          }),
                 ),
                 Center(
                   child: value.isConnected == true
                       ? const Favorite()
-                      : const NetworkErrorScreen(),
+                      : FutureBuilder(
+                          future:
+                              Future.delayed(const Duration(seconds: 2), () {
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          }),
+                          builder: (context, _) {
+                            return _isLoading == true
+                                ? CircularProgressIndicator(
+                                    color: ThemeApplication
+                                        .lightTheme.backgroundColor2,
+                                  )
+                                : const NetworkErrorScreen();
+                          }),
                 ),
                 const Center(
                   child: Profile(),

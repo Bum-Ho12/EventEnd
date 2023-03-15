@@ -67,6 +67,8 @@ class _SuggestedCardState extends State<SuggestedCard> {
               ),
               Text(
                 widget.data.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: headlineTile,
               ),
               const SizedBox(
@@ -74,6 +76,8 @@ class _SuggestedCardState extends State<SuggestedCard> {
               ),
               Text(
                 widget.data.organizer,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: headlineTile,
               ),
               const SizedBox(
