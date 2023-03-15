@@ -27,13 +27,13 @@ class _EventsState extends State<Events> {
   @override
   Widget build(BuildContext context) {
     return Consumer<NetworkProvider>(builder: (context, value, child) {
-      isConnected = value.isDeviceConnected;
+      isConnected = value.isConnected;
       return ListView(
         children: [
           Column(
             children: [
               FutureBuilder(
-                  future: value.isDeviceConnected
+                  future: value.isConnected == true
                       ? initializeProviders()
                       : initializeNothing(),
                   builder: (context, _) {

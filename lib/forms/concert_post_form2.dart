@@ -248,13 +248,7 @@ class _ConcertPostFormSecondState extends State<ConcertPostFormSecond> {
                     price: concertAssignProvider.price,
                     webLink: concertAssignProvider.webLink,
                   );
-                  sendPost(concert);
-                  if (isSent == true) {
-                    Navigator.popUntil(
-                      context,
-                      ModalRoute.withName(Navigator.defaultRouteName),
-                    );
-                  }
+                  sendPost(concert, context);
                 },
                 color: ThemeApplication.lightTheme.backgroundColor2,
                 child: Row(
@@ -271,7 +265,7 @@ class _ConcertPostFormSecondState extends State<ConcertPostFormSecond> {
     );
   }
 
-  Future<void> sendPost(concert) async {
+  Future<void> sendPost(concert, context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.getString('token')!;
     const url = 'https://eventend.pythonanywhere.com/concert_create/';
@@ -297,6 +291,12 @@ class _ConcertPostFormSecondState extends State<ConcertPostFormSecond> {
     final response = await http.Response.fromStream(res);
     if (response.statusCode == 201) {
       isSent = true;
+      if (isSent == true) {
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName(Navigator.defaultRouteName),
+        );
+      }
     } else {
       isSent = false;
     }

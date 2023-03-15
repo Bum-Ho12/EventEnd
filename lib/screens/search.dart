@@ -86,9 +86,9 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ],
         body: Consumer<NetworkProvider>(builder: (context, value, child) {
-          isConnected = value.isDeviceConnected;
+          isConnected = value.isConnected;
           return FutureBuilder(
-              future: value.isDeviceConnected
+              future: value.isConnected == true
                   ? initializeProviders()
                   : initializeNothing(),
               builder: (context, _) {

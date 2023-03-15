@@ -1,8 +1,8 @@
 import 'package:eventend/classes/concert_class.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../forms/concert_update_form.dart';
+import '../network_services/delete.dart';
 import '../providers/concert_create_provider.dart';
 import '../utilities/personalization.dart';
 
@@ -16,6 +16,7 @@ class ExpansionWidget extends StatefulWidget {
 
 class _ExpansionWidgetState extends State<ExpansionWidget> {
   final List<Item> _data = generatedItems(1);
+  Delete delete = Delete();
 
   Widget _buildPanel() {
     final ConcertCreateProvider concertAssignProvider =
@@ -79,6 +80,18 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
                             color: ThemeApplication.lightTheme.backgroundColor2,
                           )
                         ],
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          delete.deleteItem(widget.data.id, 'concert', context);
+                        });
+                      },
+                      color: ThemeApplication.lightTheme.warningColor,
+                      child: Text(
+                        'Delete',
+                        style: headline2Profile,
                       ),
                     ),
                   ],

@@ -1,4 +1,5 @@
 import 'package:eventend/classes/service_class.dart';
+import 'package:eventend/network_services/delete.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class ServiceExpansionWidget extends StatefulWidget {
 
 class _ServiceExpansionWidgetState extends State<ServiceExpansionWidget> {
   final List<Item> _data = generatedItems(1);
+  Delete delete = Delete();
 
   Widget _buildPanel() {
     final ServiceCreateProvider serviceAssignProvider =
@@ -72,6 +74,18 @@ class _ServiceExpansionWidgetState extends State<ServiceExpansionWidget> {
                             color: ThemeApplication.lightTheme.backgroundColor2,
                           )
                         ],
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          delete.deleteItem(widget.data.id, 'service', context);
+                        });
+                      },
+                      color: ThemeApplication.lightTheme.warningColor,
+                      child: Text(
+                        'Delete',
+                        style: headline2Profile,
                       ),
                     ),
                   ],

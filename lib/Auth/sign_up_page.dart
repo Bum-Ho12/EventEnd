@@ -224,9 +224,9 @@ class _SignUpPageState extends State<SignUpPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var url = Uri.parse("https://eventend.pythonanywhere.com/");
     final req = http.MultipartRequest('POST', url);
-    req.fields['email'] = emailController.text;
-    req.fields['password'] = passwordController.text;
-    req.fields['username'] = nameController.text;
+    req.fields['email'] = emailController.text.trim();
+    req.fields['password'] = passwordController.text.trim();
+    req.fields['username'] = nameController.text.trim();
     req.fields['category'] = categoryOption.toString();
 
     // ignore: prefer_typing_uninitialized_variables
@@ -242,21 +242,64 @@ class _SignUpPageState extends State<SignUpPage> {
         sharedPreferences.setString("email", jsonResponse['email']);
         sharedPreferences.setString("username", jsonResponse['username']);
         sharedPreferences.setInt("category", jsonResponse['category']);
-        sharedPreferences.setInt("weekday_from", jsonResponse['weekday_from']);
-        sharedPreferences.setInt("weekday_to", jsonResponse['weekday_to']);
-        sharedPreferences.setString("location", jsonResponse['location']);
-        sharedPreferences.setString("from_hour", jsonResponse['from_hour']);
-        sharedPreferences.setString("to_hour", jsonResponse['to_hour']);
-        sharedPreferences.setString(
-            "social_media_link", jsonResponse['social_media_link']);
-        sharedPreferences.setString("description", jsonResponse['description']);
-        sharedPreferences.setString(
-            "phone_number", jsonResponse['phone_number']);
-        sharedPreferences.setDouble("long", jsonResponse['long']);
-        sharedPreferences.setDouble("lat", jsonResponse['lat']);
-
-        sharedPreferences.setString(
-            'profile_picture', jsonResponse['profile_picture']);
+        if (jsonResponse['weekday_from'] != null) {
+          sharedPreferences.setInt(
+              "weekday_from", jsonResponse['weekday_from']);
+        } else {
+          sharedPreferences.setInt("weekday_from", 1);
+        }
+        if (jsonResponse['weekday_to'] != null) {
+          sharedPreferences.setInt("weekday_to", jsonResponse['weekday_to']);
+        } else {
+          sharedPreferences.setInt("weekday_to", 5);
+        }
+        if (jsonResponse['location'] != null) {
+          sharedPreferences.setString("location", jsonResponse['location']);
+        } else {
+          sharedPreferences.setString("location", '');
+        }
+        if (jsonResponse['from_hour'] != null) {
+          sharedPreferences.setString("from_hour", jsonResponse['from_hour']);
+        } else {
+          sharedPreferences.setString("from_hour", '8:00:00');
+        }
+        if (jsonResponse['to_hour'] != null) {
+          sharedPreferences.setString("to_hour", jsonResponse['to_hour']);
+        } else {
+          sharedPreferences.setString("to_hour", '17:00:00');
+        }
+        if (jsonResponse['social_media_link'] != null) {
+          sharedPreferences.setString(
+              "social_media_link", jsonResponse['social_media_link']);
+        } else {
+          sharedPreferences.setString("social_media_link", '');
+        }
+        if (jsonResponse['description'] != null) {
+          sharedPreferences.setString(
+              "description", jsonResponse['description']);
+        }
+        if (jsonResponse['phone_number'] != null) {
+          sharedPreferences.setString(
+              "phone_number", jsonResponse['phone_number']);
+        } else {
+          sharedPreferences.setString("phone_number", '');
+        }
+        if (jsonResponse['long'] != null) {
+          sharedPreferences.setDouble("long", jsonResponse['long']);
+        } else {
+          sharedPreferences.setDouble("long", 1);
+        }
+        if (jsonResponse['lat'] != null) {
+          sharedPreferences.setDouble("lat", jsonResponse['lat']);
+        } else {
+          sharedPreferences.setDouble("lat", 1);
+        }
+        if (jsonResponse['profile_picture'] != null) {
+          sharedPreferences.setString(
+              'profile_picture', jsonResponse['profile_picture']);
+        } else {
+          sharedPreferences.setString('profile_picture', '');
+        }
         sharedPreferences.setString("password", passwordController.text);
 
         Navigator.push(context, SlideRightRoute(page: const Verification()));

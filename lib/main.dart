@@ -1,3 +1,4 @@
+import 'package:eventend/providers/auth_check_provider.dart';
 import 'package:eventend/providers/concert_create_provider.dart';
 import 'package:eventend/providers/concert_provider.dart';
 import 'package:eventend/providers/favorites_provider.dart';
@@ -12,7 +13,6 @@ import 'package:eventend/screens/home_page.dart';
 import 'package:eventend/screens/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/service_create_provider.dart';
 import 'providers/service_favorites_provider.dart';
 import 'screens/profile.dart';
@@ -32,7 +32,8 @@ void main() {
         ChangeNotifierProvider(create: (_) => ConcertCreateProvider()),
         ChangeNotifierProvider(create: (_) => ServiceCreateProvider()),
         ChangeNotifierProvider(create: (_) => GetPostsProvider()),
-        ChangeNotifierProvider(create: (_) => GetServicePostsProvider())
+        ChangeNotifierProvider(create: (_) => GetServicePostsProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: const MyApp(),
     ),
@@ -47,23 +48,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var isDeviceConnected = false;
-  @override
-  void initState() {
-    super.initState();
-    getInfo();
-  }
-
-  late bool isLoggedIn = false;
-
-  Future<void> getInfo() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-      if (preferences.containsKey('email')) {
-        setState(() {
-          isLoggedIn = true;
-        });
-      }
+  Future<void> getAuth() async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<AuthProvider>(context, listen: false).checkNetwork();
+      Provider.of<NetworkProvider>(context, listen: false).checkNetwork();
     });
   }
 
@@ -74,14 +62,20 @@ class _MyAppState extends State<MyApp> {
       title: 'EventEnd',
       initialRoute: '/',
       routes: {
-        // '/': (context) => const MyHomePage(),
         '/profile': (context) => const Profile(),
-        // '/sell': (context) => Sell()
       },
       theme: ThemeData(
         fontFamily: "Montserrat",
       ),
-      home: isLoggedIn ? const MyHomePage() : const Onboarding(),
+      home: FutureBuilder(
+          future: getAuth(),
+          builder: (context, _) {
+            return Consumer<AuthProvider>(builder: (context, value, child) {
+              return value.isDeviceConnected == true
+                  ? const MyHomePage()
+                  : const Onboarding();
+            });
+          }),
     );
   }
 }

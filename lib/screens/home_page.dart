@@ -18,11 +18,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   Future<void> getConnection() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<NetworkProvider>(context, listen: false).checkNetwork();
@@ -41,17 +36,17 @@ class _MyHomePageState extends State<MyHomePage> {
             body: Consumer<NetworkProvider>(builder: (context, value, child) {
               List tabs = [
                 Center(
-                  child: value.isDeviceConnected == true
+                  child: value.isConnected == true
                       ? const Home()
                       : const NetworkErrorScreen(),
                 ),
                 Center(
-                  child: value.isDeviceConnected == true
+                  child: value.isConnected == true
                       ? const SearchScreen()
                       : const NetworkErrorScreen(),
                 ),
                 Center(
-                  child: value.isDeviceConnected == true
+                  child: value.isConnected == true
                       ? const Favorite()
                       : const NetworkErrorScreen(),
                 ),

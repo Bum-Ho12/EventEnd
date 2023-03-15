@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../network_services/network_call.dart';
+import '../network_services/account_auth.dart';
 
-class NetworkProvider extends ChangeNotifier {
-  final _networkCheck = NetworkCall();
+class AuthProvider extends ChangeNotifier {
+  final _authValidation = AuthValidation();
   bool isLoading = false;
   bool? _isConnected;
-  bool? get isConnected => _isConnected;
+  bool? get isDeviceConnected => _isConnected;
 
   Future<void> checkNetwork() async {
     isLoading = true;
     notifyListeners();
-    final bool? response = await _networkCheck.internetConnection();
+    final bool? response = await _authValidation.getAuthCheck();
     if (response == true) {
       _isConnected = true;
     } else {

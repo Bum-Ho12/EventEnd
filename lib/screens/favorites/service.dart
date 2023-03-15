@@ -36,7 +36,7 @@ class _ServiceFavoritesState extends State<ServiceFavorites> {
   Widget build(BuildContext context) {
     return Consumer<NetworkProvider>(
       builder: (context, value, child) {
-        isConnected = value.isDeviceConnected;
+        isConnected = value.isConnected;
         return ListView(
           children: [
             Column(
@@ -54,7 +54,7 @@ class _ServiceFavoritesState extends State<ServiceFavorites> {
                   ],
                 ),
                 FutureBuilder(
-                  future: value.isDeviceConnected
+                  future: value.isConnected == true
                       ? initializeProviders()
                       : initializeNothing(),
                   builder: (context, _) {

@@ -207,23 +207,64 @@ class _LoginPageState extends State<LoginPage> {
           sharedPreferences.setString("email", jsonResponse['email']);
           sharedPreferences.setString("username", jsonResponse['username']);
           sharedPreferences.setInt("category", jsonResponse['category']);
-          sharedPreferences.setInt(
-              "weekday_from", jsonResponse['weekday_from']);
-          sharedPreferences.setInt("weekday_to", jsonResponse['weekday_to']);
-          sharedPreferences.setString("location", jsonResponse['location']);
-          sharedPreferences.setString("from_hour", jsonResponse['from_hour']);
-          sharedPreferences.setString("to_hour", jsonResponse['to_hour']);
-          sharedPreferences.setString(
-              "social_media_link", jsonResponse['social_media_link']);
-          sharedPreferences.setString(
-              "description", jsonResponse['description']);
-          sharedPreferences.setString(
-              "phone_number", jsonResponse['phone_number']);
-          sharedPreferences.setDouble("long", jsonResponse['long']);
-          sharedPreferences.setDouble("lat", jsonResponse['lat']);
-
-          sharedPreferences.setString(
-              'profile_picture', jsonResponse['profile_picture']);
+          if (jsonResponse['weekday_from'].toString().isNotEmpty) {
+            sharedPreferences.setInt(
+                "weekday_from", jsonResponse['weekday_from']);
+          } else {
+            sharedPreferences.setInt("weekday_from", 1);
+          }
+          if (jsonResponse['weekday_to'].toString().isNotEmpty) {
+            sharedPreferences.setInt("weekday_to", jsonResponse['weekday_to']);
+          } else {
+            sharedPreferences.setInt("weekday_to", 5);
+          }
+          if (jsonResponse['location'].toString().isNotEmpty) {
+            sharedPreferences.setString("location", jsonResponse['location']);
+          } else {
+            sharedPreferences.setString("location", '');
+          }
+          if (jsonResponse['from_hour'].toString().isNotEmpty) {
+            sharedPreferences.setString("from_hour", jsonResponse['from_hour']);
+          } else {
+            sharedPreferences.setString("from_hour", '8:00:00');
+          }
+          if (jsonResponse['to_hour'].toString().isNotEmpty) {
+            sharedPreferences.setString("to_hour", jsonResponse['to_hour']);
+          } else {
+            sharedPreferences.setString("to_hour", '17:00:00');
+          }
+          if (jsonResponse['social_media_link'].toString().isNotEmpty) {
+            sharedPreferences.setString(
+                "social_media_link", jsonResponse['social_media_link']);
+          } else {
+            sharedPreferences.setString("social_media_link", '');
+          }
+          if (jsonResponse['description'].toString().isNotEmpty) {
+            sharedPreferences.setString(
+                "description", jsonResponse['description']);
+          }
+          if (jsonResponse['phone_number'].toString().isNotEmpty) {
+            sharedPreferences.setString(
+                "phone_number", jsonResponse['phone_number']);
+          } else {
+            sharedPreferences.setString("phone_number", '');
+          }
+          if (jsonResponse['long'].toString().isNotEmpty) {
+            sharedPreferences.setDouble("long", jsonResponse['long']);
+          } else {
+            sharedPreferences.setDouble("long", 1);
+          }
+          if (jsonResponse['lat'].toString().isNotEmpty) {
+            sharedPreferences.setDouble("lat", jsonResponse['lat']);
+          } else {
+            sharedPreferences.setDouble("lat", 1);
+          }
+          if (jsonResponse['profile_picture'].toString().isNotEmpty) {
+            sharedPreferences.setString(
+                'profile_picture', jsonResponse['profile_picture']);
+          } else {
+            sharedPreferences.setString('profile_picture', '');
+          }
           sharedPreferences.setString("password", passwordController.text);
           Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
         }

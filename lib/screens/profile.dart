@@ -52,6 +52,21 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  logout(context) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove('email');
+    sharedPreferences.remove('password');
+    sharedPreferences.remove('username');
+    sharedPreferences.remove('profile_picture');
+    sharedPreferences.remove('token');
+    Navigator.popUntil(
+      context,
+      ModalRoute.withName(
+        Navigator.defaultRouteName,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +105,7 @@ class _ProfileState extends State<Profile> {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(100)),
                               child: account.profilePicture.toString() != ''
-                                  ? value.isDeviceConnected == true
+                                  ? value.isConnected == true
                                       ? Image.network(
                                           'https://eventend.pythonanywhere.com${account.profilePicture}',
                                           fit: BoxFit.fill,
@@ -142,7 +157,7 @@ class _ProfileState extends State<Profile> {
                                   height: 25,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(24)),
-                                  onPressed: value.isDeviceConnected == true
+                                  onPressed: value.isConnected == true
                                       ? () async {
                                           Navigator.push(
                                             context,
@@ -286,7 +301,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     MaterialButton(
-                                      onPressed: value.isDeviceConnected == true
+                                      onPressed: value.isConnected == true
                                           ? () {
                                               Navigator.push(
                                                 context,
@@ -324,7 +339,7 @@ class _ProfileState extends State<Profile> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           MaterialButton(
-                            onPressed: value.isDeviceConnected == true
+                            onPressed: value.isConnected == true
                                 ? () {
                                     Navigator.push(
                                       context,
@@ -401,22 +416,9 @@ class _ProfileState extends State<Profile> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           MaterialButton(
-                            onPressed: value.isDeviceConnected == true
+                            onPressed: value.isConnected == true
                                 ? () async {
-                                    SharedPreferences sharedPreferences =
-                                        await SharedPreferences.getInstance();
-                                    sharedPreferences.remove('email');
-                                    sharedPreferences.remove('password');
-                                    sharedPreferences.remove('username');
-                                    sharedPreferences.remove('profile_picture');
-                                    sharedPreferences.remove('token');
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.popUntil(
-                                      context,
-                                      ModalRoute.withName(
-                                        Navigator.defaultRouteName,
-                                      ),
-                                    );
+                                    logout(context);
                                   }
                                 : () {},
                             height: 25,
