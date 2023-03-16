@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import '../widgets/snack_bar.dart';
 
 class Delete {
-  Future<void> deleteItem(id, category, context) async {
+  bool? isDeleted;
+  Future<bool?> deleteItem(id, category, context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString('token');
     String url = 'https://eventend.pythonanywhere.com/delete/';
@@ -17,16 +18,19 @@ class Delete {
     req.fields['id'] = id.toString();
     final res = await req.send();
     final response = await http.Response.fromStream(res);
-    if (response.body == 'deleted successfully') {
+    if (response.statusCode == 200) {
       Navigator.popUntil(
         context,
         ModalRoute.withName(Navigator.defaultRouteName),
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackNotification.snackCaller(context, 'Deleted Successfully'));
+      isDeleted = true;
+      // print(isDeleted);
+
+      SnackNotification.snackCaller(context, 'Deleted Successfully');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackNotification.snackCaller(context, 'Error Deleting'));
+      isDeleted = false;
+      SnackNotification.snackCaller(context, response.body);
     }
+    return isDeleted;
   }
 }

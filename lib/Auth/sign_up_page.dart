@@ -304,13 +304,12 @@ class _SignUpPageState extends State<SignUpPage> {
           sharedPreferences.setString("password", passwordController.text);
 
           Navigator.push(context, SlideRightRoute(page: const Verification()));
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackNotification.snackCaller(context, 'Wait For verification'));
+
+          SnackNotification.snackCaller(context, 'Wait For verification');
         });
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackNotification.snackCaller(
-          context, 'Issues with your Registration!'));
+      SnackNotification.snackCaller(context, 'Issues with your Registration!');
     }
   }
 }

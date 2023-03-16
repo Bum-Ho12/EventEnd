@@ -149,8 +149,7 @@ class _VerificationState extends State<Verification> {
     if (response.statusCode == 200) {
       setState(() {
         Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackNotification.snackCaller(context, 'Successfully Verified!'));
+        SnackNotification.snackCaller(context, 'Successfully verified!');
       });
     } else {
       ScaffoldMessenger.of(context)

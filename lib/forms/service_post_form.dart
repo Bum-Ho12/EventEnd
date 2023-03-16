@@ -256,8 +256,8 @@ class _PostServiceState extends State<PostService> {
             context,
             ModalRoute.withName(Navigator.defaultRouteName),
           );
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackNotification.snackCaller(context, 'Posted Service'));
+
+          SnackNotification.snackCaller(context, 'Posted Service');
         });
       }
     } else {

@@ -287,9 +287,8 @@ class _UpdateServiceState extends State<UpdateService> {
             context,
             ModalRoute.withName(Navigator.defaultRouteName),
           );
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackNotification.snackCaller(
-                  context, 'Successfully updated Post'));
+
+          SnackNotification.snackCaller(context, 'Successfully updated Post');
         });
       }
     } else {

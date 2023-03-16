@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../classes/service_class.dart';
 import '../providers/request_provider.dart';
 import '../utilities/personalization.dart';
+import '../widgets/snack_bar.dart';
 
 class RequestForm extends StatefulWidget {
   final Service data;
@@ -166,14 +167,13 @@ class _RequestFormState extends State<RequestForm> {
                           }
                           _formKey.currentState!.save();
                           requestAssignProvider.sendRequest();
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (BuildContext context) => alert);
                           if (requestAssignProvider.isSent == true) {
                             Navigator.popUntil(
                               context,
                               ModalRoute.withName(Navigator.defaultRouteName),
                             );
+                            SnackNotification.snackCaller(
+                                context, 'Request sent');
                           }
                         },
                         child: Text(

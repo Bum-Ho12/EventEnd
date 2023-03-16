@@ -272,9 +272,8 @@ class _LoginPageState extends State<LoginPage> {
             }
             sharedPreferences.setString("password", passwordController.text);
             Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackNotification.snackCaller(
-                    context, 'Wait For verification'));
+
+            SnackNotification.snackCaller(context, 'You have been Signed In');
           });
         }
       } else {}

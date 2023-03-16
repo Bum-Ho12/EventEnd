@@ -338,9 +338,8 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
             context,
             ModalRoute.withName(Navigator.defaultRouteName),
           );
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackNotification.snackCaller(
-                  context, 'Successfully updated Post'));
+
+          SnackNotification.snackCaller(context, 'Successfully updated Post');
         });
       }
     } else {

@@ -2,7 +2,9 @@ import 'package:eventend/classes/concert_class.dart';
 import 'package:eventend/network_services/delete.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/favorites_provider.dart';
 import '../screens/homescreen/detail.dart';
 
 class FavoriteConcertTile extends StatefulWidget {
@@ -17,6 +19,8 @@ class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
   Delete delete = Delete();
   @override
   Widget build(BuildContext context) {
+    final FavoriteConcertProvider concertAssignProvider =
+        Provider.of<FavoriteConcertProvider>(context);
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -72,10 +76,17 @@ class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
                         children: [
                           MaterialButton(
                             onPressed: () {
+                              bool? isDeleted;
                               setState(() {
                                 delete.deleteItem(widget.data.id,
-                                    'favorite_service', context);
+                                    'favorite_concert', context);
+                                isDeleted = delete.isDeleted;
                               });
+                              print(isDeleted);
+                              if (isDeleted == true) {
+                                concertAssignProvider
+                                    .updateList(widget.data.id);
+                              }
                             },
                             color: ThemeApplication.lightTheme.backgroundColor2
                                 .withOpacity(0.01),
