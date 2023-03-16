@@ -121,6 +121,8 @@ class _ServiceExpansionWidgetState extends State<ServiceExpansionWidget> {
                 children: [
                   Text(
                     widget.data.description,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
                     style: commonTextMain,
                   ),
                   ListTile(

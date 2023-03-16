@@ -83,6 +83,10 @@ TextStyle commonText = const TextStyle(
   color: Colors.black54,
   fontSize: 14,
 );
+TextStyle commonTextNotification = TextStyle(
+  color: ThemeApplication.lightTheme.backgroundColor,
+  fontSize: 14,
+);
 
 class RiveUtils {
   static StateMachineController getRController(Artboard artboard,

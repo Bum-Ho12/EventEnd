@@ -52,7 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                     color: ThemeApplication
                                         .lightTheme.backgroundColor2,
                                   )
-                                : const NetworkErrorScreen();
+                                : value.isConnected == true
+                                    ? const SizedBox()
+                                    : const NetworkErrorScreen();
                           }),
                 ),
                 Center(

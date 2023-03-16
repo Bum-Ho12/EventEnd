@@ -5,6 +5,7 @@ import 'package:eventend/providers/favorites_provider.dart';
 import 'package:eventend/providers/get_concert_posts_provider.dart';
 import 'package:eventend/providers/get_service_posts_provider.dart';
 import 'package:eventend/providers/network_provider.dart';
+import 'package:eventend/providers/notification_provider.dart';
 import 'package:eventend/providers/request_provider.dart';
 import 'package:eventend/providers/search_provider.dart';
 import 'package:eventend/providers/search_service_provider.dart';
@@ -34,6 +35,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => GetPostsProvider()),
         ChangeNotifierProvider(create: (_) => GetServicePostsProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => RequestsProvider()),
       ],
       child: const MyApp(),
     ),

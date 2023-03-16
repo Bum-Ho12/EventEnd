@@ -1,16 +1,21 @@
+import 'package:eventend/classes/notification_class.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/personalization.dart';
 
 class NotificationExpansionWidget extends StatefulWidget {
-  const NotificationExpansionWidget({super.key});
+  final RequestClass data;
+  const NotificationExpansionWidget({required this.data, super.key});
 
   @override
-  State<NotificationExpansionWidget> createState() => _NotificationExpansionWidgetState();
+  State<NotificationExpansionWidget> createState() =>
+      _NotificationExpansionWidgetState();
 }
 
-class _NotificationExpansionWidgetState extends State<NotificationExpansionWidget> {
-  final List<Item> _data = generatedItems(4);
+class _NotificationExpansionWidgetState
+    extends State<NotificationExpansionWidget> {
+  final List<Item> _data = generatedItems(1);
+  bool? isViewed;
 
   Widget _buildPanel() {
     return ExpansionPanelList(
@@ -20,37 +25,83 @@ class _NotificationExpansionWidgetState extends State<NotificationExpansionWidge
             _data[index].isExpanded = !isExpanded;
           },
         );
+        if (isExpanded == true && widget.data.viewed == false) {
+          setState(() {
+            isViewed = true;
+          });
+          
+        } else {
+          setState(() {
+            isViewed = false;
+          });
+        }
       },
       children: _data.map<ExpansionPanel>(
         (Item item) {
           return ExpansionPanel(
             headerBuilder: (BuildContext context, bool isExpanded) {
-              return ListTile(
-                title: Text(
-                  item.headerValue!,
-                  style: headlineTile,
-                ),
-                subtitle: Text('Location: 13th Street Avenue, Nairobi',
-                    style: commonTextMain),
+              return Stack(
+                children: [
+                  widget.data.viewed
+                      ? const SizedBox()
+                      : Positioned(
+                          top: 1,
+                          right: 2,
+                          child: Container(
+                            // height: 10,
+                            // width: 10,
+                            decoration: BoxDecoration(
+                                color: ThemeApplication.lightTheme.warningColor,
+                                borderRadius: BorderRadius.circular(24)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                'New',
+                                style: commonTextNotification,
+                              ),
+                            ),
+                          ),
+                        ),
+                  ListTile(
+                    title: Text(
+                      ' ${widget.data.client} requesting for a ${widget.data.serviceTitle}',
+                      style: headlineTile,
+                    ),
+                    subtitle: Text(
+                      widget.data.clientNumber,
+                      style: headline2Detail,
+                    ),
+                  ),
+                ],
               );
             },
             body: ListTile(
-              title: SizedBox(
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                child: Image.asset(
-                  'assets/images/band.jpg',
-                  fit: BoxFit.fill,
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipOval(
+                      child: Image.network(
+                        'https://eventend.pythonanywhere.com${widget.data.clientProfilePicture}',
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.fill,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                              child: SizedBox(
+                                  height: 100, child: Text('Loading...')));
+                        },
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Text('Error Loading the image!'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               subtitle: Column(
                 children: [
-                  Text(
-                    'Lorem ipsum dolor sit amet, consenter advising elite, sed do elusion '
-                    'tempore incident ut laborer et dolores magna aliquant. Ut enid ad minim venial, '
-                    'quia nostrum exercitation ullages labors nisi ut aliquot ex ea commode consequent.',
-                    style: commonTextMain,
-                  ),
                   ListTile(
                     leading: Icon(
                       Icons.receipt,
@@ -58,59 +109,23 @@ class _NotificationExpansionWidgetState extends State<NotificationExpansionWidge
                           .withOpacity(0.7),
                     ),
                     title: Text(
-                      'Ksh. 141.95',
+                      'Ksh. ${widget.data.price}',
                       style: headline1detail,
                     ),
                     subtitle: Text(
-                      'on Eventend',
+                      widget.data.clientNumber,
                       style: headline2Detail,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Website or portfolio',
-                      style: headline2detail,
+                      widget.data.description,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: commonTextMain,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
-                        child: Text(
-                          'Views: ',
-                          style: headline1detail,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            right: 8.0, top: 8, bottom: 8),
-                        child: Text(
-                          '129',
-                          style: headline2Detail,
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
-                        child: Text(
-                          'Tickets: ',
-                          style: headline1detail,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            right: 8.0, top: 8, bottom: 8),
-                        child: Text(
-                          '100',
-                          style: headline2Detail,
-                        ),
-                      ),
-                    ],
-                  )
                 ],
               ),
             ),
@@ -125,6 +140,8 @@ class _NotificationExpansionWidgetState extends State<NotificationExpansionWidge
   Widget build(BuildContext context) {
     return _buildPanel();
   }
+
+  confirmView() async {}
 }
 
 class Item {
