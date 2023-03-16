@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,18 +18,17 @@ class Delete {
     final res = await req.send();
     final response = await http.Response.fromStream(res);
     if (response.statusCode == 200) {
-      Navigator.popUntil(
-        context,
-        ModalRoute.withName(Navigator.defaultRouteName),
-      );
-      isDeleted = true;
-      // print(isDeleted);
-
+      // Navigator.popUntil(
+      //   context,
+      //   ModalRoute.withName(Navigator.defaultRouteName),
+      // );
       SnackNotification.snackCaller(context, 'Deleted Successfully');
+      return true;
+      // print(isDeleted);
     } else {
-      isDeleted = false;
       SnackNotification.snackCaller(context, response.body);
+      isDeleted = false;
+      return false;
     }
-    return isDeleted;
   }
 }

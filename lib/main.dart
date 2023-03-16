@@ -14,6 +14,7 @@ import 'package:eventend/screens/home_page.dart';
 import 'package:eventend/screens/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'network_services/update_list_provider.dart';
 import 'providers/service_create_provider.dart';
 import 'providers/service_favorites_provider.dart';
 import 'screens/profile.dart';
@@ -36,6 +37,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => GetServicePostsProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => RequestsProvider()),
+        ChangeNotifierProvider(create: (_) => UpdateListProvider()),
       ],
       child: const MyApp(),
     ),

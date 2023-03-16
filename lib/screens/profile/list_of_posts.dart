@@ -71,7 +71,8 @@ class _PostsListState extends State<PostsList> {
                                   return value.isLoading == true
                                       ? const UpdateShimmer()
                                       : ExpansionWidget(
-                                          data: value.concerts[index]);
+                                          data: value.concerts[index],
+                                          index: index);
                                 }),
                           ],
                         )
@@ -100,7 +101,7 @@ class _PostsListState extends State<PostsList> {
                                   return value.isLoading
                                       ? const UpdateShimmer()
                                       : ServiceExpansionWidget(
-                                          data: value.services[index]);
+                                          data: value.services[index],index: index);
                                 },
                               ),
                             ],

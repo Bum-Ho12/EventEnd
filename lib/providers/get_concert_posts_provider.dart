@@ -17,4 +17,9 @@ class GetPostsProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+  void updateList(int index) {
+    _concerts.removeAt(index);
+    notifyListeners();
+  }
 }

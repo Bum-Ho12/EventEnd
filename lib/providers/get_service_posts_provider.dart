@@ -17,4 +17,9 @@ class GetServicePostsProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+  void updateList(int index) {
+    _services.removeAt(index);
+    notifyListeners();
+  }
 }
