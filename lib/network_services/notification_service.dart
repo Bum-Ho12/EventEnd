@@ -18,6 +18,7 @@ class RequestNotificationFetch {
       final json = jsonDecode(response.body) as List;
       final concerts = json.map((e) {
         return RequestClass(
+          id: e['id'],
           clientId: e['client']['client_id'].toString(),
           client: e['client']['client'],
           clientProfilePicture: e['client']['client_profile_picture'],

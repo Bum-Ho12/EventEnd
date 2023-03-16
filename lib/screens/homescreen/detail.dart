@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:link_preview_generator/link_preview_generator.dart';
 
 import '../../classes/concert_class.dart';
@@ -41,16 +40,6 @@ class _CardPageState extends State<CardPage> {
             icon: Icon(
               Icons.favorite_outline,
               color: ThemeApplication.lightTheme.backgroundColor2,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              'assets/icons/menu.svg',
-              height: 24,
-              width: 24,
-              theme: SvgTheme(
-                  currentColor: ThemeApplication.lightTheme.backgroundColor2),
             ),
           ),
         ],

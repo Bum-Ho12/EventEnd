@@ -4,6 +4,7 @@ import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 
 import '../forms/request_form.dart';
+import '../network_services/feedback.dart';
 import '../screens/homescreen/check_profile.dart';
 
 class SuggestedCard extends StatefulWidget {
@@ -16,6 +17,7 @@ class SuggestedCard extends StatefulWidget {
 
 class _SuggestedCardState extends State<SuggestedCard> {
   AddFavorite addToFavorite = AddFavorite();
+  FeedBack feedBack = FeedBack();
   bool isSaved = false;
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,9 @@ class _SuggestedCardState extends State<SuggestedCard> {
       onTap: () {
         Navigator.push(
             context, SlideRightRoute(page: ProfileViewPage(data: widget.data)));
+        setState(() {
+          feedBack.sendFeedBack('service', widget.data.id);
+        });
       },
       child: Container(
           height: 220,

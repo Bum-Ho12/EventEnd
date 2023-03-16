@@ -1,4 +1,5 @@
 class RequestClass {
+  final int id;
   final String clientId;
   final String client;
   final String clientProfilePicture;
@@ -16,6 +17,7 @@ class RequestClass {
   final String permit;
 
   RequestClass({
+    required this.id,
     required this.clientId,
     required this.client,
     required this.clientProfilePicture,

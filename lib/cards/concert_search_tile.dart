@@ -2,6 +2,7 @@ import 'package:eventend/classes/concert_search_class.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 import '../network_services/add_to_favorites.dart';
+import '../network_services/feedback.dart';
 import '../screens/search/concert_detail.dart';
 
 class ConcertSearchTile extends StatefulWidget {
@@ -14,12 +15,16 @@ class ConcertSearchTile extends StatefulWidget {
 
 class _ConcertSearchTileState extends State<ConcertSearchTile> {
   AddFavorite addToFavorite = AddFavorite();
+  FeedBack feedBack = FeedBack();
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.push(
             context, SlideRightRoute(page: ConcertCardPage(data: widget.data)));
+        setState(() {
+          feedBack.sendFeedBack('concert', widget.data.id);
+        });
       },
       child: Container(
         color: ThemeApplication.lightTheme.backgroundColor,

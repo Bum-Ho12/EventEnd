@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../classes/concert_class.dart';
 import '../network_services/add_to_favorites.dart';
+import '../network_services/feedback.dart';
 import '../screens/homescreen/detail.dart';
 
 class HomeTile extends StatefulWidget {
@@ -15,6 +16,7 @@ class HomeTile extends StatefulWidget {
 
 class _HomeTileState extends State<HomeTile> {
   AddFavorite addToFavorite = AddFavorite();
+  FeedBack feedBack = FeedBack();
   bool isSaved = false;
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,9 @@ class _HomeTileState extends State<HomeTile> {
       onTap: () {
         Navigator.push(
             context, SlideRightRoute(page: CardPage(data: widget.data)));
+        setState(() {
+          feedBack.sendFeedBack('concert', widget.data.id);
+        });
       },
       child: Container(
         color: ThemeApplication.lightTheme.backgroundColor,

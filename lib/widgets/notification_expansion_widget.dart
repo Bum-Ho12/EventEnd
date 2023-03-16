@@ -1,4 +1,5 @@
 import 'package:eventend/classes/notification_class.dart';
+import 'package:eventend/network_services/feedback.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/personalization.dart';
@@ -16,6 +17,7 @@ class _NotificationExpansionWidgetState
     extends State<NotificationExpansionWidget> {
   final List<Item> _data = generatedItems(1);
   bool? isViewed;
+  FeedBack feedBack = FeedBack();
 
   Widget _buildPanel() {
     return ExpansionPanelList(
@@ -28,8 +30,8 @@ class _NotificationExpansionWidgetState
         if (isExpanded == true && widget.data.viewed == false) {
           setState(() {
             isViewed = true;
+            feedBack.sendFeedBack('notification', widget.data.id);
           });
-          
         } else {
           setState(() {
             isViewed = false;
