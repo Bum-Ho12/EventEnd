@@ -2,9 +2,8 @@ import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
-
 import '../screens/home_page.dart';
+import '../widgets/snack_bar.dart';
 
 class Verification extends StatefulWidget {
   const Verification({Key? key}) : super(key: key);
@@ -144,15 +143,18 @@ class _VerificationState extends State<Verification> {
       'email': email,
     };
 
-    // ignore: prefer_typing_uninitialized_variables
-    var jsonResponse;
     var response = await http.post(
         Uri.parse("https://eventend.pythonanywhere.com/verify/"),
         body: data);
     if (response.statusCode == 200) {
-      jsonResponse = convert.jsonDecode(response.body);
-      Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
-      if (jsonResponse != null) {}
-    } else {}
+      setState(() {
+        Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackNotification.snackCaller(context, 'Successfully Verified!'));
+      });
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackNotification.snackCaller(context, response.body));
+    }
   }
 }

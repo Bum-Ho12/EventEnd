@@ -54,17 +54,20 @@ class _ProfileState extends State<Profile> {
 
   logout(context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.remove('email');
-    sharedPreferences.remove('password');
-    sharedPreferences.remove('username');
-    sharedPreferences.remove('profile_picture');
-    sharedPreferences.remove('token');
-    Navigator.popUntil(
-      context,
-      ModalRoute.withName(
-        Navigator.defaultRouteName,
-      ),
-    );
+
+    setState(() {
+      sharedPreferences.remove('email');
+      sharedPreferences.remove('password');
+      sharedPreferences.remove('username');
+      sharedPreferences.remove('profile_picture');
+      sharedPreferences.remove('token');
+      Navigator.popUntil(
+        context,
+        ModalRoute.withName(
+          Navigator.defaultRouteName,
+        ),
+      );
+    });
   }
 
   @override
@@ -249,28 +252,6 @@ class _ProfileState extends State<Profile> {
                                               ],
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Text(
-                                                  'Views',
-                                                  style: headline2Profile,
-                                                ),
-                                                Divider(
-                                                  color: ThemeApplication
-                                                      .lightTheme
-                                                      .backgroundColor,
-                                                ),
-                                                Text(
-                                                  '200',
-                                                  style: headline2Profile,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
                                           account.category == 2
                                               ? Padding(
                                                   padding:
@@ -417,8 +398,10 @@ class _ProfileState extends State<Profile> {
                         children: [
                           MaterialButton(
                             onPressed: value.isConnected == true
-                                ? () async {
-                                    logout(context);
+                                ? () {
+                                    setState(() {
+                                      logout(context);
+                                    });
                                   }
                                 : () {},
                             height: 25,

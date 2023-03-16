@@ -166,8 +166,14 @@ class _RequestFormState extends State<RequestForm> {
                           }
                           _formKey.currentState!.save();
                           requestAssignProvider.sendRequest();
+                          // showDialog(
+                          //     context: context,
+                          //     builder: (BuildContext context) => alert);
                           if (requestAssignProvider.isSent == true) {
-                            Navigator.pop(context);
+                            Navigator.popUntil(
+                              context,
+                              ModalRoute.withName(Navigator.defaultRouteName),
+                            );
                           }
                         },
                         child: Text(

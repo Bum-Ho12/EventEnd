@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../classes/service_class.dart';
 import '../utilities/personalization.dart';
 import '../widgets/service_put_form_text_widget.dart';
+import '../widgets/snack_bar.dart';
 
 class UpdateService extends StatefulWidget {
   final String id;
@@ -281,10 +282,15 @@ class _UpdateServiceState extends State<UpdateService> {
     if (response.statusCode == 201) {
       isSent = true;
       if (isSent == true) {
-        Navigator.popUntil(
-          context,
-          ModalRoute.withName(Navigator.defaultRouteName),
-        );
+        setState(() {
+          Navigator.popUntil(
+            context,
+            ModalRoute.withName(Navigator.defaultRouteName),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackNotification.snackCaller(
+                  context, 'Successfully updated Post'));
+        });
       }
     } else {
       isSent = false;

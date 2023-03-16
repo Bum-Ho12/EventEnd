@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../classes/user_class.dart';
 import '../utilities/personalization.dart';
+import '../widgets/snack_bar.dart';
 import '../widgets/text_description_form.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -108,12 +109,12 @@ class _ChangeProfileState extends State<ChangeProfile> {
           'profile_picture', fileImage!.path));
     }
 
-    try {
-      final res = await req.send();
-      var response = await http.Response.fromStream(res);
-      if (response.statusCode == 200) {
-        jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse != null) {
+    final res = await req.send();
+    var response = await http.Response.fromStream(res);
+    if (response.statusCode == 200) {
+      jsonResponse = convert.jsonDecode(response.body);
+      if (jsonResponse != null) {
+        setState(() {
           sharedPreferences.setString("token", jsonResponse['token']);
           sharedPreferences.setString("email", jsonResponse['email']);
           sharedPreferences.setString("username", jsonResponse['username']);
@@ -137,10 +138,16 @@ class _ChangeProfileState extends State<ChangeProfile> {
               'profile_picture', jsonResponse['profile_picture']);
           // ignore: use_build_context_synchronously
           Navigator.pop(context);
-        }
-      } else {}
-    } catch (e) {
-      throw e.toString();
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackNotification.snackCaller(
+                  context, 'Your Profile has been Updated'));
+        });
+      }
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+          // ignore: use_build_context_synchronously
+          SnackNotification.snackCaller(context, 'an error Occurred'));
     }
   }
 

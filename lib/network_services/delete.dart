@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../widgets/snack_bar.dart';
+
 class Delete {
   Future<void> deleteItem(id, category, context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -20,6 +22,11 @@ class Delete {
         context,
         ModalRoute.withName(Navigator.defaultRouteName),
       );
-    } else {}
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackNotification.snackCaller(context, 'Deleted Successfully'));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackNotification.snackCaller(context, 'Error Deleting'));
+    }
   }
 }

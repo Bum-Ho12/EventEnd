@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/put_form_text_widget.dart';
+import '../widgets/snack_bar.dart';
 
 class ConcertUpdateFormSecond extends StatefulWidget {
   final String concertPicture;
@@ -332,10 +333,15 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
     if (response.statusCode == 201) {
       isSent = true;
       if (isSent == true) {
-        Navigator.popUntil(
-          context,
-          ModalRoute.withName(Navigator.defaultRouteName),
-        );
+        setState(() {
+          Navigator.popUntil(
+            context,
+            ModalRoute.withName(Navigator.defaultRouteName),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackNotification.snackCaller(
+                  context, 'Successfully updated Post'));
+        });
       }
     } else {
       isSent = false;

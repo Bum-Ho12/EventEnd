@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../classes/service_class.dart';
 import '../utilities/personalization.dart';
 import '../widgets/service_post_text_widget.dart';
+import '../widgets/snack_bar.dart';
 
 class PostService extends StatefulWidget {
   const PostService({super.key});
@@ -250,10 +251,14 @@ class _PostServiceState extends State<PostService> {
     if (response.statusCode == 201) {
       isSent = true;
       if (isSent == true) {
-        Navigator.popUntil(
-          context,
-          ModalRoute.withName(Navigator.defaultRouteName),
-        );
+        setState(() {
+          Navigator.popUntil(
+            context,
+            ModalRoute.withName(Navigator.defaultRouteName),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackNotification.snackCaller(context, 'Posted Service'));
+        });
       }
     } else {
       isSent = false;

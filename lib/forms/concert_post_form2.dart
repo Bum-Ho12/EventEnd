@@ -13,6 +13,8 @@ import '../widgets/post_add_text_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widgets/snack_bar.dart';
+
 class ConcertPostFormSecond extends StatefulWidget {
   const ConcertPostFormSecond({super.key});
 
@@ -292,10 +294,14 @@ class _ConcertPostFormSecondState extends State<ConcertPostFormSecond> {
     if (response.statusCode == 201) {
       isSent = true;
       if (isSent == true) {
-        Navigator.popUntil(
-          context,
-          ModalRoute.withName(Navigator.defaultRouteName),
-        );
+        setState(() {
+          Navigator.popUntil(
+            context,
+            ModalRoute.withName(Navigator.defaultRouteName),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackNotification.snackCaller(context, 'Posted Concert'));
+        });
       }
     } else {
       isSent = false;
