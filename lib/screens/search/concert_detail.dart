@@ -2,6 +2,7 @@ import 'package:eventend/classes/concert_search_class.dart';
 import 'package:flutter/material.dart';
 import 'package:link_preview_generator/link_preview_generator.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../network_services/add_to_favorites.dart';
 import '../../utilities/personalization.dart';
 
@@ -16,8 +17,17 @@ class ConcertCardPage extends StatefulWidget {
 class _ConcertCardPageState extends State<ConcertCardPage> {
   AddFavorite addToFavorite = AddFavorite();
   bool isSaved = false;
+  Future<void> _launchUrl(url, pathUri) async {
+    final Uri uri = Uri(scheme: 'https', host: url, path: pathUri);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String domain = Uri.parse(widget.data.webLink).host;
+    String pathUri = Uri.parse(widget.data.webLink).path;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -203,7 +213,9 @@ class _ConcertCardPageState extends State<ConcertCardPage> {
                               child: LinkPreviewGenerator(
                                 link: widget.data.webLink,
                                 linkPreviewStyle: LinkPreviewStyle.small,
-                                onTap: () {},
+                                onTap: () {
+                                  _launchUrl(domain, pathUri);
+                                },
                                 boxShadow: const [
                                   BoxShadow(
                                     blurRadius: 0.0,
@@ -213,19 +225,6 @@ class _ConcertCardPageState extends State<ConcertCardPage> {
                               ),
                             ),
                           ),
-                          // const Spacer(),
-                          // MaterialButton(
-                          //   color: ThemeApplication.lightTheme.backgroundColor2
-                          //       .withOpacity(0.7),
-                          //   elevation: 0.0,
-                          //   shape: const RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.all(Radius.circular(24))),
-                          //   onPressed: () {},
-                          //   child: Text(
-                          //     'Visit Website',
-                          //     style: headline2Profile,
-                          //   ),
-                          // )
                         ],
                       ),
                     )

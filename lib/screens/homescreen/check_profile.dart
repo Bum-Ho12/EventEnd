@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../forms/request_form.dart';
 import '../../utilities/personalization.dart';
 
 class ProfileViewPage extends StatefulWidget {
@@ -14,10 +15,19 @@ class ProfileViewPage extends StatefulWidget {
 }
 
 class _ProfileViewPageState extends State<ProfileViewPage> {
+  bool? isShowBottomSheet = false;
+
+  Future<void> _launchUrl(url, pathUri) async {
+    final Uri uri = Uri(scheme: 'https', host: url, path: pathUri);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String domain = Uri.parse(widget.data.webLink).host;
-    // String domainName = domain.split('.')[domain.split('.').length - 2];
+    String pathUri = Uri.parse(widget.data.webLink).path;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -163,10 +173,7 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(24))),
                       onPressed: () async {
-                        if (await canLaunchUrl(
-                            Uri.parse(widget.data.webLink))) {
-                          await launchUrl(Uri.parse(widget.data.webLink));
-                        }
+                        _launchUrl(domain, pathUri);
                       },
                       child: Text(
                         'Check Out',
@@ -209,34 +216,6 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: [
-              //       Text(
-              //         'website: ',
-              //         style: headline1detail,
-              //       ),
-              //       SizedBox(
-              //         height: 70,
-              //         width: MediaQuery.of(context).size.width * 0.65,
-              //         child: LinkPreviewGenerator(
-              //           link: widget.data.webLink,
-              //           linkPreviewStyle: LinkPreviewStyle.small,
-              //           boxShadow: const [
-              //             BoxShadow(
-              //               blurRadius: 0.0,
-              //               spreadRadius: 0.0,
-              //             ),
-              //           ],
-              //           onTap: () {},
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
@@ -264,16 +243,171 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
           )
         ],
       ),
-      bottomSheet: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          MaterialButton(
-            onPressed: () {},
-            color: ThemeApplication.lightTheme.backgroundColor2,
-            child: Text('Connect', style: headline1Profile),
-          ),
-        ],
-      ),
+      bottomSheet: isShowBottomSheet == false
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      isShowBottomSheet = true;
+                    });
+                  },
+                  color: ThemeApplication.lightTheme.backgroundColor2,
+                  child: Text('Connect', style: headline1Profile),
+                ),
+              ],
+            )
+          : SizedBox(
+              height: 200,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isShowBottomSheet = false;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.close,
+                          size: 30,
+                          color: ThemeApplication.lightTheme.backgroundColor2,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          MaterialButton(
+                            onPressed: () async {
+                              String email =
+                                  Uri.encodeComponent(widget.data.email);
+                              String subject = Uri.encodeComponent(
+                                  '${widget.data.title} Request');
+                              String body = Uri.encodeComponent("");
+                              // print(subject); //output: Hello%20Flutter
+                              Uri mail = Uri.parse(
+                                  "mailto:$email?subject=$subject&body=$body");
+                              if (await launchUrl(mail)) {
+                                //email app opened
+                              } else {
+                                // SnackNotification.snackCaller(context, 'An error Occurred,try again!');
+                              }
+                            },
+                            color: ThemeApplication.lightTheme.backgroundColor2
+                                .withOpacity(0.1),
+                            elevation: 0.0,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(24),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 2),
+                              child: SvgPicture.asset(
+                                'assets/icons/email.svg',
+                                height: 50,
+                                width: 60,
+                              ),
+                            ),
+                          ),
+                          MaterialButton(
+                            onPressed: () async {
+                              Uri sms = Uri.parse(
+                                  'sms:+254 ${widget.data.organizerPhoneNumber} ?body=');
+                              if (await launchUrl(sms)) {
+                                //app opened
+                              } else {
+                                //app is not opened
+                              }
+                            },
+                            color: ThemeApplication.lightTheme.backgroundColor2
+                                .withOpacity(0.1),
+                            elevation: 0.0,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(24),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0, vertical: 2),
+                              child: Image.asset(
+                                'assets/icons/sms.png',
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
+                          ),
+                          // const Spacer(),
+                          MaterialButton(
+                            onPressed: () async {
+                              Uri phoneNo = Uri.parse(
+                                  'tel:${widget.data.organizerPhoneNumber}');
+                              if (await launchUrl(phoneNo)) {
+                                //dialer opened
+                              } else {
+                                //dialer is not opened
+                              }
+                            },
+                            color: ThemeApplication.lightTheme.backgroundColor2
+                                .withOpacity(0.1),
+                            elevation: 0.0,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(24),
+                              ),
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Icon(
+                                Icons.phone,
+                                size: 50,
+                                color: ThemeApplication
+                                    .lightTheme.backgroundColor2
+                                    .withOpacity(0.8),
+                              ),
+                            ),
+                          ),
+                        ]),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MaterialButton(
+                        color: ThemeApplication.lightTheme.backgroundColor2
+                            .withOpacity(0.3),
+                        elevation: 0.0,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(24))),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              SlideRightRoute(
+                                  page: RequestForm(data: widget.data)));
+                        },
+                        child: Text(
+                          'Send Request',
+                          style: headline2Detail,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
     );
   }
 }

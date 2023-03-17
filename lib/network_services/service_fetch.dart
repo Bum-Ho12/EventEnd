@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:eventend/classes/service_class.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +18,9 @@ class ServiceFetch {
           title: e['title'],
           organizer: e['service']['organizer'],
           organizerId: e['service']['organizer_id'],
+          email: e['service']['email'],
           organizerProfilePicture: e['service']['organizer_profile_picture'],
+          organizerPhoneNumber: e['service']['phone_number'],
           long: e['long'],
           lat: e['lat'],
           description: e['description'],

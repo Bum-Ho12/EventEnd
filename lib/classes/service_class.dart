@@ -3,7 +3,9 @@ class Service {
   final String title;
   final String organizer;
   final int organizerId;
+  final String email;
   final String organizerProfilePicture;
+  final String organizerPhoneNumber;
   final String long;
   final String lat;
   final String description;
@@ -18,7 +20,9 @@ class Service {
     required this.title,
     required this.organizer,
     required this.organizerId,
+    required this.email,
     required this.organizerProfilePicture,
+    required this.organizerPhoneNumber,
     required this.long,
     required this.lat,
     required this.description,
