@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:link_preview_generator/link_preview_generator.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../classes/concert_class.dart';
+import '../../network_services/add_to_favorites.dart';
 import '../../utilities/personalization.dart';
 
 class CardPage extends StatefulWidget {
@@ -13,6 +15,8 @@ class CardPage extends StatefulWidget {
 }
 
 class _CardPageState extends State<CardPage> {
+  AddFavorite addToFavorite = AddFavorite();
+  bool isSaved = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +32,25 @@ class _CardPageState extends State<CardPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.share,
+          InkWell(
+            onTap: () async {
+              bool isSent = await addToFavorite.addConcert(widget.data.id);
+              setState(() {
+                isSaved = isSent;
+              });
+            },
+            child: Icon(
+              isSaved ? Icons.favorite : Icons.favorite_outline,
               color: ThemeApplication.lightTheme.backgroundColor2,
+              size: 30,
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Share.share(widget.data.webLink, subject: widget.data.webLink);
+            },
             icon: Icon(
-              Icons.favorite_outline,
+              Icons.share,
               color: ThemeApplication.lightTheme.backgroundColor2,
             ),
           ),
@@ -170,56 +182,55 @@ class _CardPageState extends State<CardPage> {
                   style: commonText,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      'website: ',
-                      style: headline1detail,
-                    ),
-                    Padding(
+              widget.data.webLink.isNotEmpty
+                  ? Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 100,
-                        width: MediaQuery.of(context).size.width * 0.65,
-                        child: LinkPreviewGenerator(
-                          link: widget.data.webLink,
-                          linkPreviewStyle: LinkPreviewStyle.small,
-                          onTap: () {},
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 0.0,
-                              spreadRadius: 0.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 70,
+                            child: Text(
+                              'Link Advert: ',
+                              maxLines: 2,
+                              style: headline1detail,
                             ),
-                          ],
-                        ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.65,
+                              child: LinkPreviewGenerator(
+                                link: widget.data.webLink,
+                                linkPreviewStyle: LinkPreviewStyle.small,
+                                onTap: () {},
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // const Spacer(),
+                          // MaterialButton(
+                          //   color: ThemeApplication.lightTheme.backgroundColor2
+                          //       .withOpacity(0.7),
+                          //   elevation: 0.0,
+                          //   shape: const RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.all(Radius.circular(24))),
+                          //   onPressed: () {},
+                          //   child: Text(
+                          //     'Visit Website',
+                          //     style: headline2Profile,
+                          //   ),
+                          // )
+                        ],
                       ),
-                    ),
-                    // const Spacer(),
-                    // MaterialButton(
-                    //   color: ThemeApplication.lightTheme.backgroundColor2
-                    //       .withOpacity(0.7),
-                    //   elevation: 0.0,
-                    //   shape: const RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.all(Radius.circular(24))),
-                    //   onPressed: () {},
-                    //   child: Text(
-                    //     'Visit Website',
-                    //     style: headline2Profile,
-                    //   ),
-                    // )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Location',
-                  style: headline1,
-                ),
-              ),
+                    )
+                  : const SizedBox(),
               const SizedBox(
                 height: 100,
               ),

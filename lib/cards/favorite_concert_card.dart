@@ -3,6 +3,7 @@ import 'package:eventend/network_services/delete.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../network_services/update_list_provider.dart';
 import '../providers/favorites_provider.dart';
@@ -100,7 +101,10 @@ class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
                               ),
                               const SizedBox(width: 20),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Share.share(widget.data.webLink,
+                                      subject: widget.data.webLink);
+                                },
                                 child: Icon(
                                   Icons.share,
                                   color: ThemeApplication

@@ -1,6 +1,7 @@
 import 'package:eventend/classes/concert_search_class.dart';
 import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import '../network_services/add_to_favorites.dart';
 import '../network_services/feedback.dart';
 import '../screens/search/concert_detail.dart';
@@ -111,7 +112,10 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Share.share(widget.data.webLink,
+                              subject: widget.data.webLink);
+                        },
                         child: Icon(
                           Icons.share,
                           color: ThemeApplication.lightTheme.backgroundColor2,

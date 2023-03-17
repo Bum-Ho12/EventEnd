@@ -1,8 +1,8 @@
 import 'package:eventend/classes/service_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:link_preview_generator/link_preview_generator.dart';
-
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../utilities/personalization.dart';
 
 class ProfileViewPage extends StatefulWidget {
@@ -32,20 +32,12 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Share.share(widget.data.webLink, subject: widget.data.webLink);
+            },
             icon: Icon(
               Icons.share,
               color: ThemeApplication.lightTheme.backgroundColor2,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              'assets/icons/menu.svg',
-              height: 24,
-              width: 24,
-              theme: SvgTheme(
-                  currentColor: ThemeApplication.lightTheme.backgroundColor2),
             ),
           ),
         ],
@@ -170,7 +162,12 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                       elevation: 0.0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(24))),
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (await canLaunchUrl(
+                            Uri.parse(widget.data.webLink))) {
+                          await launchUrl(Uri.parse(widget.data.webLink));
+                        }
+                      },
                       child: Text(
                         'Check Out',
                         style: headline2Profile,
@@ -212,34 +209,34 @@ class _ProfileViewPageState extends State<ProfileViewPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'website: ',
-                      style: headline1detail,
-                    ),
-                    SizedBox(
-                      height: 70,
-                      width: MediaQuery.of(context).size.width * 0.65,
-                      child: LinkPreviewGenerator(
-                        link: widget.data.webLink,
-                        linkPreviewStyle: LinkPreviewStyle.small,
-                        boxShadow: const [
-                          BoxShadow(
-                            blurRadius: 0.0,
-                            spreadRadius: 0.0,
-                          ),
-                        ],
-                        onTap: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //       Text(
+              //         'website: ',
+              //         style: headline1detail,
+              //       ),
+              //       SizedBox(
+              //         height: 70,
+              //         width: MediaQuery.of(context).size.width * 0.65,
+              //         child: LinkPreviewGenerator(
+              //           link: widget.data.webLink,
+              //           linkPreviewStyle: LinkPreviewStyle.small,
+              //           boxShadow: const [
+              //             BoxShadow(
+              //               blurRadius: 0.0,
+              //               spreadRadius: 0.0,
+              //             ),
+              //           ],
+              //           onTap: () {},
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
