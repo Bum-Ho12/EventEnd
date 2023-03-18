@@ -12,5 +12,5 @@
         "viro",
         "vsync"
     ],
-    "cmake.sourceDirectory": "${workspaceFolder}/linux"
+    "cmake.sourceDirectory": "${workspaceFolder}/windows"
 }

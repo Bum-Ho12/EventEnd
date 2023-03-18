@@ -44,6 +44,7 @@ class _ProfileState extends State<Profile> {
         phoneNumber: sharedPreferences.getString("phone_number")!,
         long: sharedPreferences.getDouble("long")!,
         lat: sharedPreferences.getDouble("lat")!,
+        isCustomer: sharedPreferences.getBool("isCustomer")!,
         profilePicture: sharedPreferences.getString('profile_picture')!,
       );
     }

@@ -19,6 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(top: 8, bottom: 16),
                       child: TextFormField(
                         controller: passwordController,
-                        obscureText: true,
-                        // onChanged: (value) {
-                        //   passwordController.text = value;
-                        // },
+                        obscureText: showPassword == false ? true : false,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24)),
@@ -103,6 +101,36 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2,
+                          ),
+                          child: Text(
+                            'View Password?',
+                            style: headlineForTile,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Checkbox(
+                            checkColor:
+                                ThemeApplication.lightTheme.backgroundColor,
+                            activeColor: ThemeApplication
+                                .lightTheme.backgroundColor2
+                                .withOpacity(0.7),
+                            value: showPassword,
+                            onChanged: (value) {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     ElevatedButton.icon(
                         onPressed: () {
@@ -210,6 +238,7 @@ class _LoginPageState extends State<LoginPage> {
             sharedPreferences.setString("email", jsonResponse['email']);
             sharedPreferences.setString("username", jsonResponse['username']);
             sharedPreferences.setInt("category", jsonResponse['category']);
+            sharedPreferences.setBool("isCustomer", jsonResponse['isCustomer']);
             if (jsonResponse['weekday_from'].toString().isNotEmpty) {
               sharedPreferences.setInt(
                   "weekday_from", jsonResponse['weekday_from']);
@@ -278,6 +307,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       } else {}
     } catch (e) {
+      SnackNotification.snackCaller(context, e.toString());
       throw e.toString();
     }
   }

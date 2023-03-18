@@ -14,6 +14,7 @@ class Account {
   final String phoneNumber;
   final double long;
   final double lat;
+  final bool isCustomer;
   final int category;
 
   Account({
@@ -33,5 +34,6 @@ class Account {
     this.phoneNumber = '',
     this.long = 0.0000,
     this.lat = 0.0000,
+    this.isCustomer = true,
   });
 }

@@ -16,12 +16,17 @@ class SignUpPage extends StatefulWidget {
 
 enum Category { individual, organization }
 
+enum Customer { yes, no }
+
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   Category? _category;
+  Customer? customer;
   int categoryOption = 1;
+  bool isCustomer = true;
+  bool showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ? 20
                   : MediaQuery.of(context).size.width * 0.2,
               top: MediaQuery.of(context).orientation == Orientation.portrait
-                  ? MediaQuery.of(context).size.height * 0.15
+                  ? MediaQuery.of(context).size.height * 0.12
                   : MediaQuery.of(context).size.height * 0.1),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       padding: const EdgeInsets.only(top: 8, bottom: 16),
                       child: TextFormField(
                         controller: passwordController,
-                        obscureText: true,
+                        obscureText: showPassword == false ? true : false,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24)),
@@ -127,55 +132,91 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2,
+                          ),
+                          child: Text(
+                            'View Password?',
+                            style: headlineForTile,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Checkbox(
+                            checkColor:
+                                ThemeApplication.lightTheme.backgroundColor,
+                            activeColor: ThemeApplication
+                                .lightTheme.backgroundColor2
+                                .withOpacity(0.7),
+                            value: showPassword,
+                            onChanged: (value) {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                      ),
+                      child: Text(
+                        'Are you joining as a:',
+                        style: headlineForTile,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: Row(
                         children: [
                           Expanded(
-                            child: RadioListTile<Category>(
+                            child: RadioListTile<Customer>(
                               contentPadding: EdgeInsets.zero,
-                              value: Category.individual,
+                              value: Customer.yes,
                               dense: true,
                               tileColor: ThemeApplication
                                   .lightTheme.backgroundColor2
                                   .withOpacity(0.5),
-                              groupValue: _category,
+                              groupValue: customer,
                               activeColor:
                                   ThemeApplication.lightTheme.backgroundColor2,
                               onChanged: (value) {
                                 setState(() {
-                                  _category = value;
-                                  categoryOption = 1;
+                                  customer = value;
+                                  isCustomer = true;
                                 });
                               },
                               title: Text(
-                                'Individual',
+                                'Customer',
                                 style: headlineForTile,
                               ),
                             ),
                           ),
                           Expanded(
-                            child: RadioListTile<Category>(
+                            child: RadioListTile<Customer>(
                               contentPadding: EdgeInsets.zero,
-                              value: Category.organization,
-                              groupValue: _category,
+                              value: Customer.no,
+                              groupValue: customer,
                               activeColor:
                                   ThemeApplication.lightTheme.backgroundColor2,
                               dense: true,
                               onChanged: (value) {
                                 setState(() {
-                                  _category = value;
-                                  categoryOption = 2;
+                                  customer = value;
+                                  isCustomer = false;
                                 });
                               },
                               tileColor: ThemeApplication
                                   .lightTheme.backgroundColor2
                                   .withOpacity(0.5),
                               title: Text(
-                                'Organization',
+                                'Marketer',
                                 style: headlineForTile,
                               ),
                             ),
@@ -183,6 +224,75 @@ class _SignUpPageState extends State<SignUpPage> {
                         ],
                       ),
                     ),
+                    isCustomer
+                        ? const SizedBox()
+                        : Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 2,
+                                ),
+                                child: Text(
+                                  'Are you joining as a:',
+                                  style: headlineForTile,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: RadioListTile<Category>(
+                                        contentPadding: EdgeInsets.zero,
+                                        value: Category.individual,
+                                        dense: true,
+                                        tileColor: ThemeApplication
+                                            .lightTheme.backgroundColor2
+                                            .withOpacity(0.5),
+                                        groupValue: _category,
+                                        activeColor: ThemeApplication
+                                            .lightTheme.backgroundColor2,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _category = value;
+                                            categoryOption = 1;
+                                          });
+                                        },
+                                        title: Text(
+                                          'Individual',
+                                          style: headlineForTile,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: RadioListTile<Category>(
+                                        contentPadding: EdgeInsets.zero,
+                                        value: Category.organization,
+                                        groupValue: _category,
+                                        activeColor: ThemeApplication
+                                            .lightTheme.backgroundColor2,
+                                        dense: true,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _category = value;
+                                            categoryOption = 2;
+                                          });
+                                        },
+                                        tileColor: ThemeApplication
+                                            .lightTheme.backgroundColor2
+                                            .withOpacity(0.5),
+                                        title: Text(
+                                          'Organization',
+                                          style: headlineForTile,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -228,6 +338,7 @@ class _SignUpPageState extends State<SignUpPage> {
     req.fields['password'] = passwordController.text.trim();
     req.fields['username'] = nameController.text.trim();
     req.fields['category'] = categoryOption.toString();
+    req.fields['isCustomer'] = isCustomer.toString();
 
     // ignore: prefer_typing_uninitialized_variables
     var jsonResponse;
@@ -243,6 +354,7 @@ class _SignUpPageState extends State<SignUpPage> {
           sharedPreferences.setString("email", jsonResponse['email']);
           sharedPreferences.setString("username", jsonResponse['username']);
           sharedPreferences.setInt("category", jsonResponse['category']);
+          sharedPreferences.setBool("isCustomer", jsonResponse['isCostumer']);
           if (jsonResponse['weekday_from'] != null) {
             sharedPreferences.setInt(
                 "weekday_from", jsonResponse['weekday_from']);

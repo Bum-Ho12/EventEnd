@@ -119,6 +119,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
           sharedPreferences.setString("email", jsonResponse['email']);
           sharedPreferences.setString("username", jsonResponse['username']);
           sharedPreferences.setInt("category", jsonResponse['category']);
+          sharedPreferences.setBool("isCustomer", jsonResponse['isCustomer']);
           sharedPreferences.setInt(
               "weekday_from", jsonResponse['weekday_from']);
           sharedPreferences.setInt("weekday_to", jsonResponse['weekday_to']);
