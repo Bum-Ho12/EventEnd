@@ -167,8 +167,9 @@ class _ProfileState extends State<Profile> {
                                             context,
                                             SlideRightRoute(
                                                 page: ChangeProfile(
-                                              account: account,
-                                            )),
+                                                    account: account,
+                                                    isCustomer:
+                                                        account.isCustomer)),
                                           );
                                         }
                                       : () {
@@ -176,8 +177,9 @@ class _ProfileState extends State<Profile> {
                                             context,
                                             SlideRightRoute(
                                                 page: ChangeProfile(
-                                              account: account,
-                                            )),
+                                                    account: account,
+                                                    isCustomer:
+                                                        account.isCustomer)),
                                           );
                                         },
                                   color: ThemeApplication
@@ -208,53 +210,32 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ListView(
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 20),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: ThemeApplication
-                                    .lightTheme.backgroundColor2,
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Padding(
+                      account.isCustomer == true
+                          ? const SizedBox()
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0, horizontal: 20),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: ThemeApplication
+                                          .lightTheme.backgroundColor2,
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                      child: Column(
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Column(
+                                            child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
+                                                  MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                  'Traffic',
-                                                  style: headline2Profile,
-                                                ),
-                                                Divider(
-                                                  color: ThemeApplication
-                                                      .lightTheme
-                                                      .backgroundColor,
-                                                ),
-                                                Text(
-                                                  '200',
-                                                  style: headline2Profile,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          account.category == 2
-                                              ? Padding(
+                                                Padding(
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Column(
@@ -263,7 +244,7 @@ class _ProfileState extends State<Profile> {
                                                             .spaceEvenly,
                                                     children: [
                                                       Text(
-                                                        'Posts',
+                                                        'Traffic',
                                                         style: headline2Profile,
                                                       ),
                                                       Divider(
@@ -272,78 +253,111 @@ class _ProfileState extends State<Profile> {
                                                             .backgroundColor,
                                                       ),
                                                       Text(
-                                                        '12',
+                                                        '200',
                                                         style: headline2Profile,
                                                       ),
                                                     ],
                                                   ),
-                                                )
-                                              : const SizedBox(),
+                                                ),
+                                                account.category == 2
+                                                    ? Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          children: [
+                                                            Text(
+                                                              'Posts',
+                                                              style:
+                                                                  headline2Profile,
+                                                            ),
+                                                            Divider(
+                                                              color: ThemeApplication
+                                                                  .lightTheme
+                                                                  .backgroundColor,
+                                                            ),
+                                                            Text(
+                                                              '12',
+                                                              style:
+                                                                  headline2Profile,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : const SizedBox(),
+                                              ],
+                                            ),
+                                          ),
+                                          MaterialButton(
+                                            onPressed: value.isConnected == true
+                                                ? () {
+                                                    Navigator.push(
+                                                      context,
+                                                      SlideRightRoute(
+                                                        page: PostsList(
+                                                            account: account),
+                                                      ),
+                                                    );
+                                                  }
+                                                : () {},
+                                            height: 25,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(24)),
+                                            color: ThemeApplication
+                                                .lightTheme.backgroundColor
+                                                .withOpacity(0.4),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                'View Posts',
+                                                style: headline2Profile,
+                                              ),
+                                            ),
+                                          )
                                         ],
                                       ),
                                     ),
-                                    MaterialButton(
-                                      onPressed: value.isConnected == true
-                                          ? () {
-                                              Navigator.push(
-                                                context,
-                                                SlideRightRoute(
-                                                  page: PostsList(
-                                                      account: account),
-                                                ),
-                                              );
-                                            }
-                                          : () {},
-                                      height: 25,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(24)),
-                                      color: ThemeApplication
-                                          .lightTheme.backgroundColor
-                                          .withOpacity(0.4),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          'View Posts',
-                                          style: headline2Profile,
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          MaterialButton(
-                            onPressed: value.isConnected == true
-                                ? () {
-                                    Navigator.push(
-                                      context,
-                                      SlideRightRoute(
-                                          page: PostOptions(
-                                        data: account.category,
-                                      )),
-                                    );
-                                  }
-                                : () {},
-                            height: 25,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24)),
-                            color: ThemeApplication.lightTheme.backgroundColor2
-                                .withOpacity(0.8),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text('POST', style: headline2Profile),
+                      account.isCustomer == true
+                          ? const SizedBox()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                MaterialButton(
+                                  onPressed: value.isConnected == true
+                                      ? () {
+                                          Navigator.push(
+                                            context,
+                                            SlideRightRoute(
+                                                page: PostOptions(
+                                              data: account.category,
+                                            )),
+                                          );
+                                        }
+                                      : () {},
+                                  height: 25,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24)),
+                                  color: ThemeApplication
+                                      .lightTheme.backgroundColor2
+                                      .withOpacity(0.8),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child:
+                                        Text('POST', style: headline2Profile),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),

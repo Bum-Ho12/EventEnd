@@ -22,17 +22,17 @@ class FavoriteServiceFetch {
           title: e['service']['service_title'],
           organizer: e['owner']['organizer'],
           organizerId: e['owner']['organizer_id'],
-          email:e['service']['email'],
+          email: e['service']['email'],
           organizerProfilePicture: e['service']['service_owner_profile'],
-          organizerPhoneNumber:e['service']['phone_number'],
-          webLink: e['owner']['organizer_media_link'],
+          organizerPhoneNumber: e['service']['phone_number'],
+          webLink: e['service']['organizer_media_link'],
           long: e['service']['long'].toString(),
           lat: e['service']['lat'].toString(),
           description: e['service']['description'],
           price: e['service']['price'].toString(),
           permit: e['service']['permit'],
           traffic: e['service']['traffic'],
-          socialMediaLink: e['owner']['organizer_media_link'],
+          socialMediaLink: e['service']['organizer_media_link'],
         );
       }).toList();
       return services;

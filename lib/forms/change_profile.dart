@@ -17,7 +17,9 @@ import 'package:http/http.dart' as http;
 
 class ChangeProfile extends StatefulWidget {
   final Account account;
-  const ChangeProfile({required this.account, super.key});
+  final bool isCustomer;
+  const ChangeProfile(
+      {required this.account, required this.isCustomer, super.key});
 
   @override
   State<ChangeProfile> createState() => _ChangeProfileState();
@@ -440,72 +442,78 @@ class _ChangeProfileState extends State<ChangeProfile> {
                     ],
                   ),
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.access_time,
-                    color: ThemeApplication.lightTheme.backgroundColor2
-                        .withOpacity(0.7),
-                  ),
-                  title: Text(
-                    'Category',
-                    style: headline1detail,
-                  ),
-                  subtitle: Text(
-                    categoryChosen,
-                    style: headline2Detail,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: RadioListTile<Category>(
-                          contentPadding: EdgeInsets.zero,
-                          value: Category.individual,
-                          dense: true,
-                          tileColor: ThemeApplication.lightTheme.backgroundColor
-                              .withOpacity(0.5),
-                          groupValue: _category,
-                          activeColor:
-                              ThemeApplication.lightTheme.backgroundColor2,
-                          onChanged: (value) {
-                            setState(() {
-                              _category = value;
-                              categoryOption = 1;
-                            });
-                          },
-                          title: Text(
-                            'Individual',
-                            style: headlineForTile,
-                          ),
+                widget.isCustomer
+                    ? const SizedBox()
+                    : ListTile(
+                        leading: Icon(
+                          Icons.access_time,
+                          color: ThemeApplication.lightTheme.backgroundColor2
+                              .withOpacity(0.7),
+                        ),
+                        title: Text(
+                          'Category',
+                          style: headline1detail,
+                        ),
+                        subtitle: Text(
+                          categoryChosen,
+                          style: headline2Detail,
                         ),
                       ),
-                      Expanded(
-                        child: RadioListTile<Category>(
-                          contentPadding: EdgeInsets.zero,
-                          value: Category.organization,
-                          groupValue: _category,
-                          activeColor:
-                              ThemeApplication.lightTheme.backgroundColor2,
-                          dense: true,
-                          onChanged: (value) {
-                            setState(() {
-                              _category = value;
-                              categoryOption = 2;
-                            });
-                          },
-                          tileColor: ThemeApplication.lightTheme.backgroundColor
-                              .withOpacity(0.5),
-                          title: Text(
-                            'Organization',
-                            style: headlineForTile,
-                          ),
+                widget.isCustomer
+                    ? const SizedBox()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile<Category>(
+                                contentPadding: EdgeInsets.zero,
+                                value: Category.individual,
+                                dense: true,
+                                tileColor: ThemeApplication
+                                    .lightTheme.backgroundColor
+                                    .withOpacity(0.5),
+                                groupValue: _category,
+                                activeColor: ThemeApplication
+                                    .lightTheme.backgroundColor2,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _category = value;
+                                    categoryOption = 1;
+                                  });
+                                },
+                                title: Text(
+                                  'Individual',
+                                  style: headlineForTile,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: RadioListTile<Category>(
+                                contentPadding: EdgeInsets.zero,
+                                value: Category.organization,
+                                groupValue: _category,
+                                activeColor: ThemeApplication
+                                    .lightTheme.backgroundColor2,
+                                dense: true,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _category = value;
+                                    categoryOption = 2;
+                                  });
+                                },
+                                tileColor: ThemeApplication
+                                    .lightTheme.backgroundColor
+                                    .withOpacity(0.5),
+                                title: Text(
+                                  'Organization',
+                                  style: headlineForTile,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
                 ListTile(
                   leading: Icon(
                     Icons.access_time,
@@ -678,52 +686,52 @@ class _ChangeProfileState extends State<ChangeProfile> {
                     ],
                   ),
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.web,
-                    color: ThemeApplication.lightTheme.backgroundColor2
-                        .withOpacity(0.7),
-                  ),
-                  title: Row(
-                    children: [
-                      Text(
-                        'Website Link',
-                        style: headline1detail,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            changeWebsite = !changeWebsite;
-                          });
-                        },
-                        icon: changeWebsite == true
-                            ? Icon(
-                                Icons.close,
-                                color: ThemeApplication
-                                    .lightTheme.backgroundColor2,
-                              )
-                            : Icon(
-                                Icons.edit_outlined,
-                                color: ThemeApplication
-                                    .lightTheme.backgroundColor2,
-                              ),
-                      )
-                    ],
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.account.long.toString(),
-                        style: headline2Detail,
-                      ),
-                      changeWebsite == false
-                          ? const SizedBox()
-                          : FormTextWidget(
-                              data: widget.account.long, fromType: 'long'),
-                    ],
-                  ),
-                ),
+                // ListTile(
+                //   leading: Icon(
+                //     Icons.web,
+                //     color: ThemeApplication.lightTheme.backgroundColor2
+                //         .withOpacity(0.7),
+                //   ),
+                //   title: Row(
+                //     children: [
+                //       Text(
+                //         'Website Link',
+                //         style: headline1detail,
+                //       ),
+                //       IconButton(
+                //         onPressed: () {
+                //           setState(() {
+                //             changeWebsite = !changeWebsite;
+                //           });
+                //         },
+                //         icon: changeWebsite == true
+                //             ? Icon(
+                //                 Icons.close,
+                //                 color: ThemeApplication
+                //                     .lightTheme.backgroundColor2,
+                //               )
+                //             : Icon(
+                //                 Icons.edit_outlined,
+                //                 color: ThemeApplication
+                //                     .lightTheme.backgroundColor2,
+                //               ),
+                //       )
+                //     ],
+                //   ),
+                //   subtitle: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text(
+                //         widget.account.long.toString(),
+                //         style: headline2Detail,
+                //       ),
+                //       changeWebsite == false
+                //           ? const SizedBox()
+                //           : FormTextWidget(
+                //               data: widget.account.long, fromType: 'long'),
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
