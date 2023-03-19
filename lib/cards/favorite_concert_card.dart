@@ -48,14 +48,21 @@ class _FavoriteConcertTileState extends State<FavoriteConcertTile> {
                           Image.network(
                             'https://eventend.pythonanywhere.com${widget.data.concertPicture}',
                             fit: BoxFit.fill,
-                            height: 120,
-                            width: 200,
+                            height: 100,
+                            width: 120,
                             loadingBuilder: (context, child, loadingProgress) {
                               if (loadingProgress == null) return child;
-                              return const Center(child: Text('Loading...'));
+                              return const Center(
+                                  child: SizedBox(
+                                      height: 100,
+                                      width: 120,
+                                      child: Text('Loading...')));
                             },
                             errorBuilder: (context, error, stackTrace) =>
-                                const Text('Error Loading the image!'),
+                                const SizedBox(
+                                    height: 100,
+                                    width: 120,
+                                    child: Text('Error Loading the image!')),
                           ),
                         ],
                       ),

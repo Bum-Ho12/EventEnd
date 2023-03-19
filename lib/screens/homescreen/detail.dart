@@ -283,6 +283,20 @@ class _CardPageState extends State<CardPage> {
             ),
           ),
           actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 12.0),
+              child: TextButton(
+                child: Text(
+                  'Cancel',
+                  style: headline1detail,
+                ),
+                onPressed: () {
+                  setState(() {
+                    Navigator.of(context).pop();
+                  });
+                },
+              ),
+            ),
             TextButton(
               child: Text(
                 'Approve',

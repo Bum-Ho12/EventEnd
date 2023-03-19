@@ -52,10 +52,17 @@ class _FavoriteServiceTileState extends State<FavoriteServiceTile> {
                         width: 70,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
-                          return const Center(child: Text('Loading...'));
+                          return const SizedBox(
+                              height: 70,
+                              width: 70,
+                              child: Center(child: Text('Loading...')));
                         },
                         errorBuilder: (context, error, stackTrace) =>
-                            const Text('Error Loading the image!'),
+                            const SizedBox(
+                                height: 70,
+                                width: 70,
+                                child: Center(
+                                    child: Text('Error Loading the image!'))),
                       ),
                     ),
                   ),

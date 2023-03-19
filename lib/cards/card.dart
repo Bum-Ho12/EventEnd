@@ -59,8 +59,9 @@ class _SuggestedCardState extends State<SuggestedCard> {
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
                       return const Center(
-                          child:
-                              SizedBox(height: 100, child: Text('Loading...')));
+                          child: SizedBox(
+                              height: 100,
+                              child: Center(child: Text('Loading...'))));
                     },
                     errorBuilder: (context, error, stackTrace) =>
                         const Text('Error Loading the image!'),

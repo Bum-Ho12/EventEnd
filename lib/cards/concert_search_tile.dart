@@ -19,6 +19,7 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
   FeedBack feedBack = FeedBack();
   @override
   Widget build(BuildContext context) {
+    double price = double.parse(widget.data.price);
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -41,14 +42,21 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
                   Image.network(
                     widget.data.concertPicture,
                     fit: BoxFit.fill,
-                    height: 120,
-                    width: 200,
+                    height: 100,
+                    width: 120,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return const Center(child: Text('Loading...'));
+                      return const Center(
+                          child: SizedBox(
+                              height: 100,
+                              width: 120,
+                              child: Text('Loading...')));
                     },
                     errorBuilder: (context, error, stackTrace) =>
-                        const Text('Error Loading the image!'),
+                        const SizedBox(
+                            height: 100,
+                            width: 120,
+                            child: Text('Error Loading the image!')),
                   ),
                   Positioned(
                     right: 1,
@@ -64,7 +72,7 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
                                 .withOpacity(0.3)),
                       ),
                       padding: const EdgeInsets.all(2),
-                      child: widget.data.price.isEmpty
+                      child: price == 0
                           ? const Text('Free')
                           : const Text('Priced'),
                     ),
