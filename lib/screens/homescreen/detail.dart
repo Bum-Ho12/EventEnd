@@ -250,7 +250,7 @@ class _CardPageState extends State<CardPage> {
           MaterialButton(
             onPressed: () {
               setState(() {
-                buyTicket(widget.data.id, context);
+                _showMyDialog();
               });
             },
             color: ThemeApplication.lightTheme.backgroundColor2,
@@ -258,6 +258,46 @@ class _CardPageState extends State<CardPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Ticket Payment'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Mpesa Payment: Kshs. ${widget.data.price}',
+                    maxLines: 2,
+                    style: headline2Detail,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Approve',
+                style: headline1detail,
+              ),
+              onPressed: () {
+                setState(() {
+                  buyTicket(widget.data.id, context);
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -277,7 +317,7 @@ class _CardPageState extends State<CardPage> {
       if (isSent == true) {
         setState(() {
           SnackNotification.snackCaller(
-              context, 'Wait fo Ticket in Your email Address');
+              context, 'Wait for Your Ticket in Your email Address');
         });
       }
     } else {
