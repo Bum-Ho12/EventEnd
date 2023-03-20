@@ -117,40 +117,82 @@ class _ChangeProfileState extends State<ChangeProfile> {
       jsonResponse = convert.jsonDecode(response.body);
       if (jsonResponse != null) {
         setState(() {
-          sharedPreferences.setString("token", jsonResponse['token']);
+          if (jsonResponse['token'] != null) {
+            sharedPreferences.setString("token", jsonResponse['token']);
+          }
           sharedPreferences.setString("email", jsonResponse['email']);
           sharedPreferences.setString("username", jsonResponse['username']);
           sharedPreferences.setInt("category", jsonResponse['category']);
           sharedPreferences.setBool("isCustomer", jsonResponse['isCustomer']);
-          sharedPreferences.setInt(
-              "weekday_from", jsonResponse['weekday_from']);
-          sharedPreferences.setInt("weekday_to", jsonResponse['weekday_to']);
-          sharedPreferences.setString("location", jsonResponse['location']);
-          sharedPreferences.setString("from_hour", jsonResponse['from_hour']);
-          sharedPreferences.setString("to_hour", jsonResponse['to_hour']);
-          sharedPreferences.setString(
-              "social_media_link", jsonResponse['social_media_link']);
-          sharedPreferences.setString(
-              "description", jsonResponse['description']);
-          sharedPreferences.setString(
-              "phone_number", jsonResponse['phone_number']);
-          sharedPreferences.setDouble("long", jsonResponse['long']);
-          sharedPreferences.setDouble("lat", jsonResponse['lat']);
-
-          sharedPreferences.setString(
-              'profile_picture', jsonResponse['profile_picture']);
-          // ignore: use_build_context_synchronously
-          Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackNotification.snackCaller(
-                  context, 'Your Profile has been Updated'));
+          if (jsonResponse['weekday_from'] != null) {
+            sharedPreferences.setInt(
+                "weekday_from", jsonResponse['weekday_from']);
+          } else {
+            sharedPreferences.setInt("weekday_from", 1);
+          }
+          if (jsonResponse['weekday_to'] != null) {
+            sharedPreferences.setInt("weekday_to", jsonResponse['weekday_to']);
+          } else {
+            sharedPreferences.setInt("weekday_to", 5);
+          }
+          if (jsonResponse['location'] != null) {
+            sharedPreferences.setString("location", jsonResponse['location']);
+          } else {
+            sharedPreferences.setString("location", '');
+          }
+          if (jsonResponse['from_hour'] != null) {
+            sharedPreferences.setString("from_hour", jsonResponse['from_hour']);
+          } else {
+            sharedPreferences.setString("from_hour", '8:00:00');
+          }
+          if (jsonResponse['to_hour'] != null) {
+            sharedPreferences.setString("to_hour", jsonResponse['to_hour']);
+          } else {
+            sharedPreferences.setString("to_hour", '17:00:00');
+          }
+          if (jsonResponse['social_media_link'] != null) {
+            sharedPreferences.setString(
+                "social_media_link", jsonResponse['social_media_link']);
+          } else {
+            sharedPreferences.setString("social_media_link", '');
+          }
+          if (jsonResponse['description'] != null) {
+            sharedPreferences.setString(
+                "description", jsonResponse['description']);
+          } else {
+            sharedPreferences.setString("description", '');
+          }
+          if (jsonResponse['phone_number'] != null) {
+            sharedPreferences.setString(
+                "phone_number", jsonResponse['phone_number']);
+          } else {
+            sharedPreferences.setString("phone_number", '');
+          }
+          if (jsonResponse['long'] != null) {
+            sharedPreferences.setDouble("long", jsonResponse['long']);
+          } else {
+            sharedPreferences.setDouble("long", 1);
+          }
+          if (jsonResponse['lat'] != null) {
+            sharedPreferences.setDouble("lat", jsonResponse['lat']);
+          } else {
+            sharedPreferences.setDouble("lat", 1);
+          }
+          if (jsonResponse['profile_picture'] != null) {
+            sharedPreferences.setString(
+                'profile_picture', jsonResponse['profile_picture']);
+          } else {
+            sharedPreferences.setString('profile_picture', '');
+          }
         });
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        SnackNotification.snackCaller(context, 'Your Profile has been Updated');
       }
     } else {
       // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-          // ignore: use_build_context_synchronously
-          SnackNotification.snackCaller(context, 'an error Occurred'));
+      SnackNotification.snackCaller(context, 'an error Occurred');
     }
   }
 
@@ -320,7 +362,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
                       child: Text(
-                        widget.account.name,
+                        'Name: ${widget.account.name}',
                         style: headline1,
                       ),
                     ),
@@ -361,7 +403,7 @@ class _ChangeProfileState extends State<ChangeProfile> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: Text(
-                          widget.account.socialMediaLink,
+                          'Portfolio: ${widget.account.socialMediaLink}',
                           style: headline2detail,
                           maxLines: 3,
                         ),
