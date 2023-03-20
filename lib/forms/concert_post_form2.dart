@@ -303,8 +303,9 @@ class _ConcertPostFormSecondState extends State<ConcertPostFormSecond> {
           SnackNotification.snackCaller(context, 'Posted Concert');
         });
       }
-    } else {
-      isSent = false;
+    } else if (response.statusCode == 406) {
+      isSent == false;
+      SnackNotification.snackCaller(context, response.body);
     }
   }
 }

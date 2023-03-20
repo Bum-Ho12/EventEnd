@@ -60,15 +60,16 @@ class ServicePostsFetch {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final data = json['services'] as List;
+      // print(data);
       final services = data.map((e) {
         return Service(
           id: e['id'],
           title: e['title'],
           organizer: e['service']['organizer'],
           organizerId: e['service']['organizer_id'],
-          email:e['service']['email'],
+          email: e['service']['email'],
           organizerProfilePicture: e['service']['organizer_profile_picture'],
-          organizerPhoneNumber:e['service']['phoneNumber'],
+          organizerPhoneNumber: e['service']['phone_number'],
           long: e['long'],
           lat: e['lat'],
           description: e['description'],
