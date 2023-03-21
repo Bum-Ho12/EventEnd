@@ -346,7 +346,8 @@ class _SignUpPageState extends State<SignUpPage> {
     var response = await http.Response.fromStream(res);
     if (response.statusCode == 200) {
       jsonResponse = convert.jsonDecode(response.body);
-      if (jsonResponse != null) {
+      if (jsonResponse != null &&
+          jsonResponse['response'] == 'successfully registered a new user') {
         setState(() {
           if (jsonResponse['token'] != null) {
             sharedPreferences.setString("token", jsonResponse['token']);
@@ -414,14 +415,16 @@ class _SignUpPageState extends State<SignUpPage> {
             sharedPreferences.setString('profile_picture', '');
           }
           sharedPreferences.setString("password", passwordController.text);
-
           Navigator.push(context, SlideRightRoute(page: const Verification()));
-
           SnackNotification.snackCaller(context, 'Wait For verification');
         });
+      } else {
+        jsonResponse = convert.jsonDecode(response.body);
+        SnackNotification.snackCaller(context, jsonResponse.toString());
       }
     } else {
-      SnackNotification.snackCaller(context, 'Issues with your Registration!');
+      jsonResponse = convert.jsonDecode(response.body);
+      SnackNotification.snackCaller(context, jsonResponse.toString());
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 import '../screens/home_page.dart';
 import '../widgets/snack_bar.dart';
 
@@ -14,6 +15,7 @@ class Verification extends StatefulWidget {
 
 class _VerificationState extends State<Verification> {
   final TextEditingController codeController = TextEditingController();
+  bool showPassword = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +70,7 @@ class _VerificationState extends State<Verification> {
                                     .lightTheme.backgroundColor)),
                         child: TextField(
                           controller: codeController,
-                          obscureText: true,
+                          obscureText: showPassword == false ? true : false,
                           maxLines: 1,
                           cursorColor:
                               ThemeApplication.lightTheme.backgroundColor2,
@@ -106,6 +108,36 @@ class _VerificationState extends State<Verification> {
                         style: headline2Profile,
                       ),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2,
+                          ),
+                          child: Text(
+                            'View Code?',
+                            style: headlineForTile,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Checkbox(
+                            checkColor:
+                                ThemeApplication.lightTheme.backgroundColor,
+                            activeColor: ThemeApplication
+                                .lightTheme.backgroundColor2
+                                .withOpacity(0.7),
+                            value: showPassword,
+                            onChanged: (value) {
+                              setState(() {
+                                showPassword = !showPassword;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
@@ -116,12 +148,35 @@ class _VerificationState extends State<Verification> {
                     const SizedBox(
                       height: 5,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: Center(
+                              child: Text(
+                                'check your spam emails.',
+                                style: TextStyle(
+                                    color: ThemeApplication
+                                        .lightTheme.backgroundColor2,
+                                    fontSize: 15),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     InkWell(
                       onTap: () {},
                       child: Text(
-                        'Request email verification again.',
+                        'Verify Again',
                         style: TextStyle(
-                            color: ThemeApplication.lightTheme.backgroundColor2,
+                            color: ThemeApplication.lightTheme.navBar,
                             fontSize: 15),
                       ),
                     )
@@ -142,18 +197,21 @@ class _VerificationState extends State<Verification> {
       'verification_code': code,
       'email': email,
     };
-
+    // ignore: prefer_typing_uninitialized_variables
+    var jsonResponse;
     var response = await http.post(
         Uri.parse("https://eventend.pythonanywhere.com/verify/"),
         body: data);
+    jsonResponse = convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
-      setState(() {
-        Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
-        SnackNotification.snackCaller(context, 'Successfully verified!');
-      });
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackNotification.snackCaller(context, response.body));
-    }
+      if (jsonResponse['response'] == 'successfully Activated your Account') {
+        setState(() {
+          Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
+          SnackNotification.snackCaller(context, jsonResponse['response']);
+        });
+      } else {
+        SnackNotification.snackCaller(context, jsonResponse['response']);
+      }
+    } else {}
   }
 }
