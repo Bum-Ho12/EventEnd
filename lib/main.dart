@@ -19,7 +19,11 @@ import 'providers/service_create_provider.dart';
 import 'providers/service_favorites_provider.dart';
 import 'screens/profile.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  // MyApp myApp = MyApp(
+  //     primaryRoute: sharedPreferences.containsKey('email') ? '/home' : '/');
   runApp(
     MultiProvider(
       providers: [
@@ -45,6 +49,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  // final String? primaryRoute;
   const MyApp({super.key});
 
   @override
@@ -60,25 +65,30 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'EventEnd',
-      initialRoute: '/',
-      routes: {
-        '/profile': (context) => const Profile(),
-      },
-      theme: ThemeData(
-        fontFamily: "Montserrat",
-      ),
-      home: FutureBuilder(
-          future: getAuth(),
-          builder: (context, _) {
-            return Consumer<AuthProvider>(builder: (context, value, child) {
-              return value.isDeviceConnected == true
-                  ? const MyHomePage()
-                  : const Onboarding();
-            });
-          }),
-    );
+    return Consumer<AuthProvider>(builder: (context, value, child) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'EventEnd',
+        initialRoute: value.isDeviceConnected == true
+            ? '/home'
+            : '/', //widget.primaryRoute,
+        routes: {
+          '/profile': (context) => const Profile(),
+          '/home': (context) => const MyHomePage(),
+        },
+        theme: ThemeData(
+          fontFamily: "Montserrat",
+        ),
+        home: FutureBuilder(
+            future: getAuth(),
+            builder: (context, _) {
+              return Consumer<AuthProvider>(builder: (context, value, child) {
+                return value.isDeviceConnected == true
+                    ? const MyHomePage()
+                    : const Onboarding();
+              });
+            }),
+      );
+    });
   }
 }

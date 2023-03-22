@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import '../network_services/add_to_favorites.dart';
 import '../network_services/feedback.dart';
 import '../screens/search/concert_detail.dart';
+import '../widgets/snack_bar.dart';
 
 class ConcertSearchTile extends StatefulWidget {
   final ConcertSearch data;
@@ -17,6 +18,7 @@ class ConcertSearchTile extends StatefulWidget {
 class _ConcertSearchTileState extends State<ConcertSearchTile> {
   AddFavorite addToFavorite = AddFavorite();
   FeedBack feedBack = FeedBack();
+  bool isSaved = false;
   @override
   Widget build(BuildContext context) {
     double price = double.parse(widget.data.price);
@@ -132,11 +134,22 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
                       ),
                       const SizedBox(width: 20),
                       InkWell(
-                        onTap: () {
-                          addToFavorite.addConcert(widget.data.id);
+                        onTap: () async {
+                          bool isSent =
+                              await addToFavorite.addConcert(widget.data.id);
+                          isSent
+                              // ignore: use_build_context_synchronously
+                              ? SnackNotification.snackCaller(
+                                  context, "Added to Favorites")
+                              // ignore: use_build_context_synchronously
+                              : SnackNotification.snackCaller(context,
+                                  "Network error or You are not Allowed");
+                          setState(() {
+                            isSaved = isSent;
+                          });
                         },
                         child: Icon(
-                          Icons.favorite_outline,
+                          isSaved ? Icons.favorite : Icons.favorite_outline,
                           color: ThemeApplication.lightTheme.backgroundColor2,
                           size: 30,
                         ),

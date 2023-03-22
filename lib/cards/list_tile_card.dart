@@ -6,6 +6,7 @@ import '../classes/concert_class.dart';
 import '../network_services/add_to_favorites.dart';
 import '../network_services/feedback.dart';
 import '../screens/homescreen/detail.dart';
+import '../widgets/snack_bar.dart';
 
 class HomeTile extends StatefulWidget {
   final Concert data;
@@ -149,6 +150,13 @@ class _HomeTileState extends State<HomeTile> {
                         onTap: () async {
                           bool isSent =
                               await addToFavorite.addConcert(widget.data.id);
+                          isSent
+                              // ignore: use_build_context_synchronously
+                              ? SnackNotification.snackCaller(
+                                  context, "Added to Favorites")
+                              // ignore: use_build_context_synchronously
+                              : SnackNotification.snackCaller(context,
+                                  "Network error or You are not Allowed");
                           setState(() {
                             isSaved = isSent;
                           });

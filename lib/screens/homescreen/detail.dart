@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:link_preview_generator/link_preview_generator.dart';
 import 'package:share_plus/share_plus.dart';
@@ -336,6 +338,8 @@ class _CardPageState extends State<CardPage> {
       }
     } else {
       isSent = false;
+      var jsonResponse = jsonDecode(response.body);
+      SnackNotification.snackCaller(context, jsonResponse.toString());
     }
   }
 }

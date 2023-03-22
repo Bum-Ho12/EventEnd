@@ -17,6 +17,8 @@ class RequestSend {
     final response = await http.Response.fromStream(res);
     if (response.statusCode == 201) {
       return true;
+    } else if (response.statusCode == 406) {
+      return false;
     } else {
       return false;
     }

@@ -23,8 +23,10 @@ List profilePage = [
   ['Notifications', const NotificationsPage()],
 ];
 
+
 class _ProfileState extends State<Profile> {
   Account account = Account();
+  NetworkProvider? _networkProvider;
   Future<void> getAccount() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences.containsKey('email')) {
@@ -49,7 +51,8 @@ class _ProfileState extends State<Profile> {
       );
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<NetworkProvider>(context, listen: false).checkNetwork();
+      _networkProvider = Provider.of<NetworkProvider>(context, listen: false);
+      _networkProvider?.checkNetwork();
     });
   }
 
@@ -69,6 +72,12 @@ class _ProfileState extends State<Profile> {
         ),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    _networkProvider!;
+    super.dispose();
   }
 
   @override

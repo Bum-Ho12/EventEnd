@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../forms/request_form.dart';
 import '../network_services/feedback.dart';
 import '../screens/homescreen/check_profile.dart';
+import '../widgets/snack_bar.dart';
 
 class SuggestedCard extends StatefulWidget {
   final Service data;
@@ -122,6 +123,13 @@ class _SuggestedCardState extends State<SuggestedCard> {
                       onTap: () async {
                         bool isSent =
                             await addToFavorite.addService(widget.data.id);
+                        isSent
+                            // ignore: use_build_context_synchronously
+                            ? SnackNotification.snackCaller(
+                                context, "Added to Favorites")
+                            // ignore: use_build_context_synchronously
+                            : SnackNotification.snackCaller(context,
+                                "Network error or You are not Allowed");
                         setState(() {
                           isSaved = isSent;
                         });

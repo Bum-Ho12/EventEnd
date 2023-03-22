@@ -174,6 +174,9 @@ class _RequestFormState extends State<RequestForm> {
                             );
                             SnackNotification.snackCaller(
                                 context, 'Request sent');
+                          } else {
+                            SnackNotification.snackCaller(context,
+                                "Network error or You are not Allowed to send a Request");
                           }
                         },
                         child: Text(
