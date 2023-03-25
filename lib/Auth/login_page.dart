@@ -250,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
           } else {
             sharedPreferences.setInt("weekday_to", 5);
           }
-          if (jsonResponse['location'].toString().isNotEmpty) {
+          if (jsonResponse['location'] != null) {
             sharedPreferences.setString("location", jsonResponse['location']);
           } else {
             sharedPreferences.setString("location", '');
@@ -265,13 +265,13 @@ class _LoginPageState extends State<LoginPage> {
           } else {
             sharedPreferences.setString("to_hour", '17:00:00');
           }
-          if (jsonResponse['social_media_link'].toString().isNotEmpty) {
+          if (jsonResponse['social_media_link'] != null) {
             sharedPreferences.setString(
                 "social_media_link", jsonResponse['social_media_link']);
           } else {
             sharedPreferences.setString("social_media_link", '');
           }
-          if (jsonResponse['description'].toString().isNotEmpty) {
+          if (jsonResponse['description'] != null) {
             sharedPreferences.setString(
                 "description", jsonResponse['description']);
           }
@@ -284,14 +284,14 @@ class _LoginPageState extends State<LoginPage> {
           if (jsonResponse['long'].toString().isNotEmpty) {
             sharedPreferences.setDouble("long", jsonResponse['long']);
           } else {
-            sharedPreferences.setDouble("long", 1);
+            sharedPreferences.setDouble("long", 1.00);
           }
           if (jsonResponse['lat'].toString().isNotEmpty) {
             sharedPreferences.setDouble("lat", jsonResponse['lat']);
           } else {
-            sharedPreferences.setDouble("lat", 1);
+            sharedPreferences.setDouble("lat", 1.00);
           }
-          if (jsonResponse['profile_picture'].toString().isNotEmpty) {
+          if (jsonResponse['profile_picture'] != null) {
             sharedPreferences.setString(
                 'profile_picture', jsonResponse['profile_picture']);
           } else {
@@ -304,7 +304,7 @@ class _LoginPageState extends State<LoginPage> {
         });
       }
     } else {
-      SnackNotification.snackCaller(context, 'Wrong email or password');
+      SnackNotification.snackCaller(context, jsonResponse.toString());
     }
   }
 }

@@ -23,3 +23,25 @@ class GetPostsProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+class GetPastPostsProvider extends ChangeNotifier {
+  final _postFetch = PastPostsFetch();
+  bool isLoading = false;
+  // for concerts
+  List<Concert> _concerts = [];
+  List<Concert> get concerts => _concerts;
+
+  Future<void> getAllConcerts() async {
+    isLoading = true;
+    notifyListeners();
+    final response = await _postFetch.getAllConcerts();
+    _concerts = response;
+    isLoading = false;
+    notifyListeners();
+  }
+
+  void updateList(int index) {
+    _concerts.removeAt(index);
+    notifyListeners();
+  }
+}

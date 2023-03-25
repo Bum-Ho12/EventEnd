@@ -33,26 +33,26 @@ class _FavoriteState extends State<Favorite> {
                     ),
                     floating: true,
                     bottom: TabBar(
-                        indicatorColor:
-                            ThemeApplication.lightTheme.backgroundColor2,
-                        indicatorWeight: 1.5,
-                        indicator: BoxDecoration(
-                          color: ThemeApplication.lightTheme.backgroundColor,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
+                      indicatorColor:
+                          ThemeApplication.lightTheme.backgroundColor2,
+                      indicatorWeight: 1.5,
+                      indicator: BoxDecoration(
+                        color: ThemeApplication.lightTheme.backgroundColor,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
                         ),
-                        indicatorPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                        labelStyle: headline2Profile,
-                        labelColor:
-                            ThemeApplication.lightTheme.backgroundColor2,
-                        tabs: const [
-                          Tab(text: 'Service'),
-                          // Tab(text: 'Subscription'),
-                          Tab(text: 'Events')
-                        ]),
+                      ),
+                      indicatorPadding:
+                          const EdgeInsets.symmetric(horizontal: 10),
+                      labelStyle: headline2Profile,
+                      labelColor: ThemeApplication.lightTheme.backgroundColor2,
+                      tabs: const [
+                        Tab(text: 'Service'),
+                        // Tab(text: 'Subscription'),
+                        Tab(text: 'Events')
+                      ],
+                    ),
                   ),
                 ],
             body: const TabBarView(

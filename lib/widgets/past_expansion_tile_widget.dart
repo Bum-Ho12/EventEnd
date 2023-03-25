@@ -1,31 +1,22 @@
 import 'package:eventend/classes/concert_class.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../forms/concert_update_form.dart';
-import '../network_services/delete.dart';
 import '../network_services/update_list_provider.dart';
-import '../providers/concert_create_provider.dart';
-import '../providers/get_concert_posts_provider.dart';
 import '../utilities/personalization.dart';
 
-class ExpansionWidget extends StatefulWidget {
+class PastExpansionWidget extends StatefulWidget {
   final Concert data;
   final int index;
-  const ExpansionWidget({required this.data, required this.index, super.key});
+  const PastExpansionWidget({required this.data, required this.index, super.key});
 
   @override
-  State<ExpansionWidget> createState() => _ExpansionWidgetState();
+  State<PastExpansionWidget> createState() => _PastExpansionWidgetState();
 }
 
-class _ExpansionWidgetState extends State<ExpansionWidget> {
+class _PastExpansionWidgetState extends State<PastExpansionWidget> {
   final List<Item> _data = generatedItems(1);
-  Delete delete = Delete();
 
   Widget _buildPanel() {
-    final ConcertCreateProvider concertAssignProvider =
-        Provider.of<ConcertCreateProvider>(context);
-    final GetPostsProvider concertProvider =
-        Provider.of<GetPostsProvider>(context);
     return Consumer<UpdateListProvider>(builder: (context, value, child) {
       return ExpansionPanelList(
         expansionCallback: (int index, bool isExpanded) {
@@ -43,70 +34,6 @@ class _ExpansionWidgetState extends State<ExpansionWidget> {
                   title: Text(
                     widget.data.title,
                     style: headlineTile,
-                  ),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            concertAssignProvider.setTitle(widget.data.title);
-                            concertAssignProvider
-                                .setLocation(widget.data.location);
-                            double newPrice = double.parse(widget.data.price);
-                            concertAssignProvider.setPrice(newPrice.round());
-                            concertAssignProvider
-                                .setEventDate(widget.data.eventDate);
-                            concertAssignProvider
-                                .setFromHour(widget.data.fromHour);
-                            concertAssignProvider.setToHour(widget.data.toHour);
-                            concertAssignProvider
-                                .setWebLink(widget.data.webLink);
-                            concertAssignProvider
-                                .setDescription(widget.data.description);
-                          });
-                          Navigator.push(
-                            context,
-                            SlideRightRoute(
-                              page: ConcertUpdateForm(
-                                concertPicture: widget.data.concertPicture,
-                                id: widget.data.id.toString(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Row(
-                          children: [
-                            Text(
-                              'Update',
-                              style: headlineTile,
-                            ),
-                            Icon(
-                              Icons.edit,
-                              size: 30,
-                              color:
-                                  ThemeApplication.lightTheme.backgroundColor2,
-                            )
-                          ],
-                        ),
-                      ),
-                      MaterialButton(
-                        onPressed: () async {
-                          await value.deleteItem(
-                              widget.data.id, 'concert', context);
-                          if (value.isDeleted == true) {
-                            setState(() {
-                              concertProvider.updateList(widget.index);
-                            });
-                          }
-                        },
-                        color: ThemeApplication.lightTheme.warningColor,
-                        child: Text(
-                          'Decommission',
-                          style: headline2Profile,
-                        ),
-                      ),
-                    ],
                   ),
                 );
               },

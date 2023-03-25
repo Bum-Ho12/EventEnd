@@ -5,7 +5,6 @@ import '../../classes/user_class.dart';
 import '../../providers/get_concert_posts_provider.dart';
 import '../../providers/get_service_posts_provider.dart';
 import '../../utilities/personalization.dart';
-import '../../widgets/expansion_tile_widget.dart';
 import '../../widgets/update_expansion_shimmer.dart';
 
 class PostsList extends StatefulWidget {
@@ -48,36 +47,6 @@ class _PostsListState extends State<PostsList> {
           builder: (context, _) {
             return ListView(
               children: [
-                Consumer<GetPostsProvider>(builder: (context, value, child) {
-                  // print(value.concerts.length);
-                  return value.concerts.isNotEmpty
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Concerts',
-                                style: headline1detail,
-                              ),
-                            ),
-                            ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: value.isLoading == false
-                                    ? value.concerts.length
-                                    : 2,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return value.isLoading == true
-                                      ? const UpdateShimmer()
-                                      : ExpansionWidget(
-                                          data: value.concerts[index],
-                                          index: index);
-                                }),
-                          ],
-                        )
-                      : const SizedBox();
-                }),
                 Consumer<GetServicePostsProvider>(
                   builder: (context, value, child) {
                     return value.services.isNotEmpty
@@ -101,7 +70,8 @@ class _PostsListState extends State<PostsList> {
                                   return value.isLoading
                                       ? const UpdateShimmer()
                                       : ServiceExpansionWidget(
-                                          data: value.services[index],index: index);
+                                          data: value.services[index],
+                                          index: index);
                                 },
                               ),
                             ],

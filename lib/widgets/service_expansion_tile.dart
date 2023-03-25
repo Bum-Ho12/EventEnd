@@ -96,7 +96,7 @@ class _ServiceExpansionWidgetState extends State<ServiceExpansionWidget> {
                         },
                         color: ThemeApplication.lightTheme.warningColor,
                         child: Text(
-                          'Delete',
+                          'Decommission',
                           style: headline2Profile,
                         ),
                       ),

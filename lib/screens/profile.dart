@@ -1,4 +1,5 @@
 import 'package:eventend/classes/user_class.dart';
+import 'package:eventend/screens/profile/list_of_posts_organization.dart';
 import 'package:eventend/screens/profile/notification_page.dart';
 import 'package:eventend/screens/profile/settings.dart';
 import 'package:eventend/widgets/rive_icons.dart';
@@ -22,7 +23,6 @@ List profilePage = [
   ['General Settings', const SettingsPage()],
   ['Notifications', const NotificationsPage()],
 ];
-
 
 class _ProfileState extends State<Profile> {
   Account account = Account();
@@ -306,8 +306,15 @@ class _ProfileState extends State<Profile> {
                                                     Navigator.push(
                                                       context,
                                                       SlideRightRoute(
-                                                        page: PostsList(
-                                                            account: account),
+                                                        page: account
+                                                                    .category ==
+                                                                1
+                                                            ? PostsList(
+                                                                account:
+                                                                    account)
+                                                            : PostsListOrganization(
+                                                                account:
+                                                                    account),
                                                       ),
                                                     );
                                                   }

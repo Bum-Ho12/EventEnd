@@ -42,6 +42,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => RequestsProvider()),
         ChangeNotifierProvider(create: (_) => UpdateListProvider()),
+        ChangeNotifierProvider(create: (_) => GetPastPostsProvider()),
       ],
       child: const MyApp(),
     ),
