@@ -27,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   int categoryOption = 1;
   bool isCustomer = true;
   bool showPassword = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       padding: const EdgeInsets.only(top: 8, bottom: 16),
                       child: TextFormField(
                         controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24)),
@@ -298,8 +300,22 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     ElevatedButton.icon(
                       onPressed: () {
+                        isLoading = true;
+                        ShowLoading.showMyDialog(context);
                         register(nameController.text, emailController.text,
                             passwordController.text, context);
+                        Future.delayed(const Duration(seconds: 2), () async {
+                          SharedPreferences sharedPreferences =
+                              await SharedPreferences.getInstance();
+                          if (sharedPreferences.containsKey('email') &&
+                              sharedPreferences.containsKey('password')) {
+                            return;
+                          } else {
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                            }
+                          }
+                        });
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ThemeApplication
@@ -319,7 +335,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         "Sign Up",
                         style: headline2Profile,
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -415,6 +431,7 @@ class _SignUpPageState extends State<SignUpPage> {
             sharedPreferences.setString('profile_picture', '');
           }
           sharedPreferences.setString("password", passwordController.text);
+          isLoading = false;
           Navigator.push(context, SlideRightRoute(page: const Verification()));
           SnackNotification.snackCaller(context, 'Wait For verification');
         });

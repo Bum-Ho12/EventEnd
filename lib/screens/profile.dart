@@ -65,12 +65,14 @@ class _ProfileState extends State<Profile> {
       sharedPreferences.remove('username');
       sharedPreferences.remove('profile_picture');
       sharedPreferences.remove('token');
-      Navigator.popUntil(
-        context,
-        ModalRoute.withName(
-          Navigator.defaultRouteName,
-        ),
-      );
+      if (context.mounted) {
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName(
+            Navigator.defaultRouteName,
+          ),
+        );
+      }
     });
   }
 

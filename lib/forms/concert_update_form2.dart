@@ -278,6 +278,7 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
             children: [
               MaterialButton(
                 onPressed: () {
+                  ShowLoading.showMyDialog(context);
                   final concert = ConcertCreate(
                     title: concertAssignProvider.title,
                     eventDate: concertAssignProvider.eventDate,
@@ -289,6 +290,15 @@ class _ConcertUpdateFormSecondState extends State<ConcertUpdateFormSecond> {
                     webLink: concertAssignProvider.webLink,
                   );
                   sendPost(concert, context);
+                  Future.delayed(const Duration(seconds: 2), () async {
+                    if (isSent == true) {
+                      return;
+                    } else {
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    }
+                  });
                 },
                 color: ThemeApplication.lightTheme.backgroundColor2,
                 child: Row(

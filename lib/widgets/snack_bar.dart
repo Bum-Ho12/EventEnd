@@ -29,3 +29,35 @@ class SnackNotification {
     );
   }
 }
+
+class ShowLoading {
+  const ShowLoading._();
+  static showMyDialog(context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                'Loading...',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: ThemeApplication.lightTheme.backgroundColor2,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              CircularProgressIndicator(
+                color: ThemeApplication.lightTheme.backgroundColor2
+                    .withOpacity(0.7),
+              ),
+            ]),
+          ),
+        );
+      },
+    );
+  }
+}

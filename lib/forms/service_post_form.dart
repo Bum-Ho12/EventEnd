@@ -211,6 +211,7 @@ class _PostServiceState extends State<PostService> {
             children: [
               MaterialButton(
                 onPressed: () {
+                  ShowLoading.showMyDialog(context);
                   final concert = ServiceCreate(
                     title: serviceAssignProvider.title,
                     description: serviceAssignProvider.description,
@@ -218,6 +219,15 @@ class _PostServiceState extends State<PostService> {
                     webLink: serviceAssignProvider.webLink,
                   );
                   sendPost(concert, context);
+                  Future.delayed(const Duration(seconds: 2), () async {
+                    if (isSent == true) {
+                      return;
+                    } else {
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    }
+                  });
                 },
                 color: ThemeApplication.lightTheme.backgroundColor2,
                 child: Text('Post', style: headline2Profile),

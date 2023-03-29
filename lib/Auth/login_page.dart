@@ -1,13 +1,12 @@
 import 'package:eventend/Auth/sign_up_page.dart';
 import 'package:eventend/screens/home_page.dart';
 import 'package:eventend/utilities/personalization.dart';
+import 'package:eventend/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../widgets/snack_bar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool showPassword = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(top: 8, bottom: 16),
                       child: TextFormField(
                         controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24)),
@@ -134,11 +135,25 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton.icon(
                         onPressed: () {
+                          ShowLoading.showMyDialog(context);
+                          isLoading = true;
                           signIn(
                             context,
                             emailController.text.trim(),
                             passwordController.text.trim(),
                           );
+                          Future.delayed(const Duration(seconds: 2), () async {
+                            SharedPreferences sharedPreferences =
+                                await SharedPreferences.getInstance();
+                            if (sharedPreferences.containsKey('email') &&
+                                sharedPreferences.containsKey('password')) {
+                              return;
+                            } else {
+                              if (context.mounted) {
+                                Navigator.of(context).pop();
+                              }
+                            }
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: ThemeApplication
@@ -298,6 +313,7 @@ class _LoginPageState extends State<LoginPage> {
             sharedPreferences.setString('profile_picture', '');
           }
           sharedPreferences.setString("password", passwordController.text);
+          isLoading = false;
           Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
 
           SnackNotification.snackCaller(context, 'You have been Signed In');
