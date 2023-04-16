@@ -371,6 +371,7 @@ class _SignUpPageState extends State<SignUpPage> {
           sharedPreferences.setString("email", jsonResponse['email']);
           sharedPreferences.setString("username", jsonResponse['username']);
           sharedPreferences.setInt("category", jsonResponse['category']);
+          sharedPreferences.setBool("isActive", jsonResponse['is_active']);
           sharedPreferences.setBool("isCustomer", jsonResponse['isCustomer']);
           if (jsonResponse['weekday_from'] != null) {
             sharedPreferences.setInt(

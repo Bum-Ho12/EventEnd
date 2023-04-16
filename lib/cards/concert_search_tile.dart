@@ -142,8 +142,8 @@ class _ConcertSearchTileState extends State<ConcertSearchTile> {
                               ? SnackNotification.snackCaller(
                                   context, "Added to Favorites")
                               // ignore: use_build_context_synchronously
-                              : SnackNotification.snackCaller(context,
-                                  "Network error or You are not Allowed");
+                              : SnackNotification.snackCaller(
+                                  context, "You are not Allowed as the owner");
                           setState(() {
                             isSaved = isSent;
                           });

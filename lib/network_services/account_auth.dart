@@ -4,7 +4,8 @@ class AuthValidation {
   bool? isLoggedIn;
   Future<bool?> getAuthCheck() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    if (sharedPreferences.containsKey('email')) {
+    if (sharedPreferences.containsKey('email') &&
+        sharedPreferences.getBool('isActive') == true) {
       isLoggedIn = true;
     } else {
       isLoggedIn = false;

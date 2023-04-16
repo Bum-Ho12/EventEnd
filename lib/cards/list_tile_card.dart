@@ -19,7 +19,9 @@ class HomeTile extends StatefulWidget {
 class _HomeTileState extends State<HomeTile> {
   AddFavorite addToFavorite = AddFavorite();
   FeedBack feedBack = FeedBack();
+  Complaint complaint = Complaint();
   bool isSaved = false;
+  bool isReported = false;
   @override
   Widget build(BuildContext context) {
     double price = double.parse(widget.data.price);
@@ -155,14 +157,36 @@ class _HomeTileState extends State<HomeTile> {
                               ? SnackNotification.snackCaller(
                                   context, "Added to Favorites")
                               // ignore: use_build_context_synchronously
-                              : SnackNotification.snackCaller(context,
-                                  "Network error or You are not Allowed");
+                              : SnackNotification.snackCaller(
+                                  context, "You are not Allowed as the owner");
                           setState(() {
                             isSaved = isSent;
                           });
                         },
                         child: Icon(
                           isSaved ? Icons.favorite : Icons.favorite_outline,
+                          color: ThemeApplication.lightTheme.backgroundColor2,
+                          size: 30,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      InkWell(
+                        onTap: () async {
+                          bool isSent = await complaint.sendFeedBack(
+                              'service', widget.data.id);
+                          isSent
+                              // ignore: use_build_context_synchronously
+                              ? SnackNotification.snackCaller(
+                                  context, "The post has been reported")
+                              // ignore: use_build_context_synchronously
+                              : SnackNotification.snackCaller(
+                                  context, "You are not Allowed as the owner");
+                          setState(() {
+                            isReported = isSent;
+                          });
+                        },
+                        child: Icon(
+                          isReported ? Icons.report : Icons.report_outlined,
                           color: ThemeApplication.lightTheme.backgroundColor2,
                           size: 30,
                         ),

@@ -16,6 +16,7 @@ class Verification extends StatefulWidget {
 class _VerificationState extends State<Verification> {
   final TextEditingController codeController = TextEditingController();
   bool showPassword = false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,7 +102,21 @@ class _VerificationState extends State<Verification> {
                         ),
                       ),
                       onPressed: () {
+                        ShowLoading.showMyDialog(context);
+                        isLoading = true;
                         verify(codeController.text.trim(), context);
+                        Future.delayed(const Duration(seconds: 2), () async {
+                          SharedPreferences sharedPreferences =
+                              await SharedPreferences.getInstance();
+                          if (sharedPreferences.containsKey('isActive') ==
+                              true) {
+                            return;
+                          } else {
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                            }
+                          }
+                        });
                       },
                       child: Text(
                         'Verify',
@@ -206,10 +221,12 @@ class _VerificationState extends State<Verification> {
     if (response.statusCode == 200) {
       if (jsonResponse['response'] == 'successfully Activated your Account') {
         setState(() {
+          preferences.setBool("isActive", jsonResponse['is_active']);
           Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
           SnackNotification.snackCaller(context, jsonResponse['response']);
         });
       } else {
+        isLoading = false;
         SnackNotification.snackCaller(context, jsonResponse['response']);
       }
     } else {}

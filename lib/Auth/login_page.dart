@@ -8,6 +8,8 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'verification.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -253,6 +255,7 @@ class _LoginPageState extends State<LoginPage> {
           sharedPreferences.setString("email", jsonResponse['email']);
           sharedPreferences.setString("username", jsonResponse['username']);
           sharedPreferences.setInt("category", jsonResponse['category']);
+          sharedPreferences.setBool("isActive", jsonResponse['is_active']);
           sharedPreferences.setBool("isCustomer", jsonResponse['isCustomer']);
           if (jsonResponse['weekday_from'].toString().isNotEmpty) {
             sharedPreferences.setInt(
@@ -314,9 +317,14 @@ class _LoginPageState extends State<LoginPage> {
           }
           sharedPreferences.setString("password", passwordController.text);
           isLoading = false;
-          Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
-
-          SnackNotification.snackCaller(context, 'You have been Signed In');
+          if (jsonResponse['is_active'] == true) {
+            Navigator.push(context, SlideRightRoute(page: const MyHomePage()));
+            SnackNotification.snackCaller(context, 'You have been Signed In');
+          } else {
+            Navigator.push(
+                context, SlideRightRoute(page: const Verification()));
+            SnackNotification.snackCaller(context, 'Wait For verification');
+          }
         });
       }
     } else {
