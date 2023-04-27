@@ -21,9 +21,7 @@ import 'screens/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  // MyApp myApp = MyApp(
-  //     primaryRoute: sharedPreferences.containsKey('email') ? '/home' : '/');
+
   runApp(
     MultiProvider(
       providers: [
