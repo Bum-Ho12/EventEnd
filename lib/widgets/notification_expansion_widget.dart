@@ -50,8 +50,6 @@ class _NotificationExpansionWidgetState
                           top: 1,
                           right: 2,
                           child: Container(
-                            // height: 10,
-                            // width: 10,
                             decoration: BoxDecoration(
                                 color: ThemeApplication.lightTheme.warningColor,
                                 borderRadius: BorderRadius.circular(24)),
