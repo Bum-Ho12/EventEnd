@@ -4,14 +4,14 @@ import 'package:eventend/utilities/personalization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({super.key});
+class OnSearchBar extends StatefulWidget {
+  const OnSearchBar({super.key});
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<OnSearchBar> createState() => _OnSearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _OnSearchBarState extends State<OnSearchBar> {
   bool showSearchBar = false;
   TextEditingController _searchText = TextEditingController();
   @override

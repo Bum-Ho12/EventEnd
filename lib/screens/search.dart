@@ -77,10 +77,10 @@ class _SearchScreenState extends State<SearchScreen> {
             floating: true,
             bottom: PreferredSize(
                 preferredSize: Size(MediaQuery.of(context).size.width, 60),
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Spacer(),
-                    SearchBar(),
+                    OnSearchBar(),
                   ],
                 )),
           ),

@@ -199,9 +199,13 @@ class _LoginPageState extends State<LoginPage> {
                   vertical: 20,
                 ),
                 child: Text(
-                  'Sign Up with Email or Google',
+                  'Sign Up with Email',
                   style: headlineForTile,
                 ),
+                // child: Text(
+                //   'Sign Up with Email or Google',
+                //   style: headlineForTile,
+                // ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -218,15 +222,15 @@ class _LoginPageState extends State<LoginPage> {
                       width: 64,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.zero,
-                    icon: SvgPicture.asset(
-                      'assets/icons/google.svg',
-                      height: 64,
-                      width: 64,
-                    ),
-                  ),
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   padding: EdgeInsets.zero,
+                  //   icon: SvgPicture.asset(
+                  //     'assets/icons/google.svg',
+                  //     height: 64,
+                  //     width: 64,
+                  //   ),
+                  // ),
                 ],
               )
             ],
